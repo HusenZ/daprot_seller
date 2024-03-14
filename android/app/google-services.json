@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "211804662370",
+    "project_id": "daprot-bdd89",
+    "storage_bucket": "daprot-bdd89.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:211804662370:android:3cdc9f82e807ae5f213f3b",
+        "android_client_info": {
+          "package_name": "com.example.daprot_seller"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhySSQ72wsO5k_bXU4X5tmwriJtOoFuLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:211804662370:android:0aaf32034fc13b47213f3b",
+        "android_client_info": {
+          "package_name": "com.example.daprot_v1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhySSQ72wsO5k_bXU4X5tmwriJtOoFuLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
