@@ -33,7 +33,7 @@ class FCScreen2State extends State<FCScreen2> {
   GlobalKey<FormState> fcFormKey = GlobalKey<FormState>();
 
   XFile? _ownerPic;
-  XFile? _foodCourtPic;
+  XFile? _bannerImage;
 
   Future<void> _ownerImage(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(source: source);
@@ -48,7 +48,7 @@ class FCScreen2State extends State<FCScreen2> {
     final pickedImage = await ImagePicker().pickImage(source: source);
     if (pickedImage != null) {
       setState(() {
-        _foodCourtPic = pickedImage;
+        _bannerImage = pickedImage;
       });
     }
   }
@@ -103,7 +103,7 @@ class FCScreen2State extends State<FCScreen2> {
                         Column(
                           children: [
                             const ReturnLabel(label: "Banner Image"),
-                            _foodCourtPic != null
+                            _bannerImage != null
                                 ? Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Center(
@@ -115,7 +115,7 @@ class FCScreen2State extends State<FCScreen2> {
                                           width: 80.w,
                                           height: 20.h,
                                           child: Image.file(
-                                            File(_foodCourtPic!.path),
+                                            File(_bannerImage!.path),
                                             fit: BoxFit.cover,
                                           ),
                                         ),
@@ -253,7 +253,7 @@ class FCScreen2State extends State<FCScreen2> {
                                 ownerPhoneController.text.isNotEmpty &&
                                 ownerPhoneController.text.length == 10) {
                               context.read<ShBloc>().add(ShForm2Event(
-                                    fcImage: _foodCourtPic,
+                                    bannerImage: _bannerImage,
                                     ownerPhoto: _ownerPic,
                                     fullName: ownerNameController.text,
                                     phoneNumber: ownerPhoneController.text,
@@ -261,7 +261,7 @@ class FCScreen2State extends State<FCScreen2> {
                                   ));
                               ConnectivityHelper.naviagte(
                                   context, Routes.form3);
-                            } else if (_foodCourtPic == null) {
+                            } else if (_bannerImage == null) {
                               customSnackBar(
                                   context,
                                   "Please upload the Food Court Images!",

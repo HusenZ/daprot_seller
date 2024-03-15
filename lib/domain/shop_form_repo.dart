@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 class ShopFormRepo {
@@ -30,7 +31,7 @@ class ShopFormRepo {
   static late String gstImage;
 
   static Future<void> addForm1({
-    required String shName,
+    required String shNameIn,
     required XFile? shopLogo,
     required String location,
     required String phoneNo,
@@ -53,7 +54,7 @@ class ShopFormRepo {
       // Generate a unique ID for the 'shop' document
       _shId = const Uuid().v4();
 
-      shName = shName;
+      shName = shNameIn;
       shLoacation = location;
       shPhone = phoneNo;
       opentime = openTime;
@@ -67,7 +68,7 @@ class ShopFormRepo {
   }
 
   static Future<void> addForm2({
-    required String ownername,
+    required String name,
     required XFile? shopBanner,
     required XFile? ownerphoto,
     required String phoneNo,
@@ -90,7 +91,7 @@ class ShopFormRepo {
 
       // Get current user ID
       _cid = auth.currentUser!.uid;
-      ownerName = ownername;
+      ownerName = name;
       ownerPhoneNo = phoneNo;
       ownerPanNo = panNo;
 
@@ -119,8 +120,9 @@ class ShopFormRepo {
 
       conditionaccept = coditionacceptance;
       //add details in Application  collection which is inside clients collection
+      print("${shName}");
       await firestore
-          .collection('Clients')
+          .collection('Sellers')
           .doc(_cid)
           .collection('Applications')
           .doc(_shId)
@@ -188,13 +190,16 @@ class ShopFormRepo {
       });
 
       debugPrint("application data added successfully into admin collection");
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.setBool('SetStore', true);
     } catch (e) {
       debugPrint(e.toString());
     }
   }
 
-  static Future<void> deleteShop() {
+  static Future<void> deleteShop() async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
 
     return firestore
         .collection('Clients')
@@ -202,7 +207,9 @@ class ShopFormRepo {
         .collection('Applications')
         .doc(_shId)
         .delete()
-        .then((value) => debugPrint("Shop Deleted"))
-        .catchError((error) => debugPrint("Failed to delete Shop: $error"));
+        .then((value) {
+      preferences.setBool('SetStore', true);
+      // ignore: invalid_return_type_for_catch_error
+    }).catchError((error) => debugPrint("Failed to delete Shop: $error"));
   }
 }

@@ -36,14 +36,14 @@ class ShForm1Event extends ShEvent {
 }
 
 class ShForm2Event extends ShEvent {
-  final XFile? fcImage;
+  final XFile? bannerImage;
   final XFile? ownerPhoto;
   final String? fullName;
   final String? phoneNumber;
   final String? panNumber;
 
   ShForm2Event({
-    required this.fcImage,
+    required this.bannerImage,
     required this.ownerPhoto,
     required this.fullName,
     required this.phoneNumber,
@@ -52,7 +52,7 @@ class ShForm2Event extends ShEvent {
 
   @override
   List<Object?> get props => [
-        fcImage,
+        bannerImage,
         ownerPhoto,
         fullName,
         phoneNumber,

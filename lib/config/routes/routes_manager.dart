@@ -1,11 +1,13 @@
-import 'package:daprot_seller/features/screens/add_food_court_screens/form1_screen.dart';
-import 'package:daprot_seller/features/screens/add_food_court_screens/form2_screen.dart';
-import 'package:daprot_seller/features/screens/add_food_court_screens/form3_screen.dart';
+import 'package:daprot_seller/features/screens/forms/form1_screen.dart';
+import 'package:daprot_seller/features/screens/forms/form2_screen.dart';
+import 'package:daprot_seller/features/screens/forms/form3_screen.dart';
 import 'package:daprot_seller/features/screens/auth_screen/login_screen.dart';
 import 'package:daprot_seller/features/screens/auth_screen/otp_screen.dart';
 import 'package:daprot_seller/features/screens/auth_screen/set_profile_screen.dart';
 import 'package:daprot_seller/features/screens/home_screen.dart';
+import 'package:daprot_seller/features/screens/shop_dashboard.dart';
 import 'package:daprot_seller/features/screens/splash_screen.dart';
+import 'package:daprot_seller/features/screens/under_reivew.dart';
 import 'package:flutter/material.dart';
 
 class Routes {
@@ -22,6 +24,7 @@ class Routes {
   static const String form3 = '/form3';
   static const String noInternetRoute = '/noInternet';
   static const String underReview = '/underReview';
+  static const String dashboard = '/dashboard';
 }
 
 Map<String, WidgetBuilder> get routes {
@@ -34,19 +37,7 @@ Map<String, WidgetBuilder> get routes {
     Routes.form1: (context) => const FCScreen1(),
     Routes.form2: (context) => const FCScreen2(),
     Routes.form3: (context) => const FCScreen3(),
-    Routes.underReview: (context) => const UnderReview(),
+    Routes.underReview: (context) => const UnderReivew(),
+    Routes.dashboard: (context) => const ShopDashboard(),
   };
-}
-
-class UnderReview extends StatelessWidget {
-  const UnderReview({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: const Text("under reivew"),
-      ),
-    );
-  }
 }

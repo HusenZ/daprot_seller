@@ -17,7 +17,7 @@ class ShBloc extends Bloc<ShEvent, ShState> {
       ));
 
       ShopFormRepo.addForm1(
-          shName: event.shName!,
+          shNameIn: event.shName!,
           shopLogo: event.brandlogo,
           location: event.location!,
           phoneNo: event.phoneNumber!,
@@ -30,7 +30,7 @@ class ShBloc extends Bloc<ShEvent, ShState> {
       (event, emit) {
         // Push the data to the fire base
         emit(ShForm2State(
-          shopBanner: event.fcImage,
+          shopBanner: event.bannerImage,
           ownerPhoto: event.ownerPhoto,
           fullName: event.fullName,
           phoneNumber: event.phoneNumber,
@@ -38,8 +38,8 @@ class ShBloc extends Bloc<ShEvent, ShState> {
         ));
 
         ShopFormRepo.addForm2(
-            ownername: event.fullName!,
-            shopBanner: event.fcImage,
+            name: event.fullName!,
+            shopBanner: event.bannerImage,
             ownerphoto: event.ownerPhoto,
             phoneNo: event.panNumber!,
             panNo: event.panNumber!);

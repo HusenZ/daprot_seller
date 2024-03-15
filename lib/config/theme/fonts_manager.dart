@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' show FontWeight;
 
 class FontConstant {
-  static const String fontFamily = "Muslish";
+  static const String fontFamily = "Poppins";
 }
 
 class FontWeightManager {
