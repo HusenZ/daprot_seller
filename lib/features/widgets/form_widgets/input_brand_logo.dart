@@ -31,21 +31,41 @@ class InputBrandLogoUi extends StatelessWidget {
               'Supports : JPG,PNG,JPEG,WEBP',
               style: TextStyle(color: ColorsManager.lightGreyColor),
             )
-            // SizedBox(
-            //   height: 5.h,
-            //   child: TextFormField(
-            //     readOnly: true,
-            //     validator: (value) {
-            //       if (value == null || value.isEmpty) {
-            //         return 'Enter the LOGO';
-            //       }
-            //       return null;
-            //     },
-            //     decoration: const InputDecoration(
-            //       helperText: "45X45 \n JPG,PNG,JPEG",
-            //     ),
-            //   ),
-            // )
+          ],
+        ));
+  }
+}
+
+class InputProImaUi extends StatelessWidget {
+  const InputProImaUi({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: 13.h,
+        width: 30.w,
+        padding: EdgeInsets.symmetric(horizontal: 3.w),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(3.w),
+            border: Border.all(
+              color: ColorsManager.lightGreyColor!,
+            )),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.file_upload_outlined,
+              color: ColorsManager.lightGreyColor,
+            ),
+            Text(
+              "Image of the product",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .copyWith(color: ColorsManager.greyColor),
+            )
           ],
         ));
   }

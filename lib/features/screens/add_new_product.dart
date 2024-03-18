@@ -1,0 +1,408 @@
+import 'dart:io';
+import 'package:daprot_seller/bloc/add_product_bloc/add_prodcut_bloc.dart';
+import 'package:daprot_seller/bloc/sh_bloc/sh_bloc.dart';
+import 'package:daprot_seller/config/routes/routes_manager.dart';
+import 'package:daprot_seller/config/theme/colors_manager.dart';
+import 'package:daprot_seller/config/theme/fonts_manager.dart';
+import 'package:daprot_seller/domain/model/product_model.dart';
+import 'package:daprot_seller/features/widgets/common_widgets/custom_form_field.dart';
+import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
+import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
+import 'package:daprot_seller/features/widgets/form_widgets/d_phone_input_field.dart';
+import 'package:daprot_seller/features/widgets/form_widgets/toggle_button.dart';
+import 'package:daprot_seller/features/widgets/form_widgets/input_brand_logo.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../../domain/connectivity_helper.dart';
+
+class AddNewProdcut extends StatefulWidget {
+  const AddNewProdcut({super.key});
+
+  @override
+  State<AddNewProdcut> createState() => AddNewProdcutState();
+}
+
+class AddNewProdcutState extends State<AddNewProdcut> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController procutDescripController = TextEditingController();
+  TextEditingController originalPriceController = TextEditingController();
+  TextEditingController discountedPriceController = TextEditingController();
+
+  GlobalKey<FormState> fcFormKey = GlobalKey<FormState>();
+
+  XFile? _pImage1Pic;
+  XFile? _pImage2Pic;
+  XFile? _pImage3Pic;
+
+  Category _selectedCategory = Category.men;
+
+  bool isLoading = false;
+
+  Future<void> _pImage1(ImageSource source) async {
+    final pickedImage = await ImagePicker().pickImage(source: source);
+    if (pickedImage != null) {
+      setState(() {
+        _pImage1Pic = pickedImage;
+      });
+    }
+  }
+
+  Future<void> _pImage2(ImageSource source) async {
+    final pickedImage = await ImagePicker().pickImage(source: source);
+    if (pickedImage != null) {
+      setState(() {
+        _pImage2Pic = pickedImage;
+      });
+    }
+  }
+
+  Future<void> _pImage3(ImageSource source) async {
+    final pickedImage = await ImagePicker().pickImage(source: source);
+    if (pickedImage != null) {
+      setState(() {
+        _pImage3Pic = pickedImage;
+      });
+    }
+  }
+
+  Widget returnLabel(String label) {
+    return Container(
+      padding: const EdgeInsets.only(left: 20.0),
+      alignment: Alignment.centerLeft,
+      child: Text(
+        " $label",
+        style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<ProductBloc, ProductState>(
+      listener: (context, state) {
+        if (state is LoadingState) {
+          setState(() {
+            isLoading = true;
+          });
+        }
+        if (state is SuccessState) {
+          setState(() {
+            isLoading = false;
+          });
+        }
+        if (state is AddProductState) {
+          if (state.message.contains('successfully')) {
+            Navigator.pop(context);
+            customSnackBar(context, state.message, true);
+          } else {
+            customSnackBar(context, state.message, false);
+          }
+        }
+      },
+      child: Scaffold(
+        backgroundColor: ColorsManager.offWhiteColor,
+        body: Form(
+          key: fcFormKey,
+          child: SafeArea(
+            child: SingleChildScrollView(
+              child: Card(
+                margin: EdgeInsets.only(left: 3.w, right: 3.w, top: 5.h),
+                surfaceTintColor: ColorsManager.whiteColor,
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                    side: const BorderSide(color: ColorsManager.lightGrey),
+                    borderRadius: BorderRadius.circular(2.w)),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 3.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      /// TITLE
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: 1.5.h,
+                          bottom: 3.h,
+                        ),
+                        child: Text(
+                          'Add New Product',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(
+                                  fontWeight: FontWeightManager.semiBold,
+                                  fontSize: 14.sp),
+                        ),
+                      ),
+
+                      Column(
+                        children: [
+                          const ReturnLabel(label: "Product Images"),
+                          _pImage1Pic != null
+                              ? Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: InkWell(
+                                      onTap: () {
+                                        _pImage1(ImageSource.gallery);
+                                      },
+                                      child: SizedBox(
+                                        width: 80.w,
+                                        height: 20.h,
+                                        child: Image.file(
+                                          File(_pImage1Pic!.path),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : Center(
+                                  child: InkWell(
+                                    onTap: () {
+                                      _pImage1(ImageSource.gallery);
+                                    },
+                                    child: const InputBrandLogoUi(),
+                                  ),
+                                )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          _pImage2Pic != null
+                              ? Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: InkWell(
+                                      onTap: () {
+                                        _pImage2(ImageSource.gallery);
+                                      },
+                                      child: Image.file(
+                                        File(_pImage2Pic!.path),
+                                        width: 40.w,
+                                        height: 50.w,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : Center(
+                                  child: InkWell(
+                                    onTap: () {
+                                      _pImage2(ImageSource.gallery);
+                                    },
+                                    child: const InputProImaUi(),
+                                  ),
+                                ),
+                          _pImage3Pic != null
+                              ? Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: InkWell(
+                                      onTap: () {
+                                        _pImage3(ImageSource.gallery);
+                                      },
+                                      child: Image.file(
+                                        File(_pImage3Pic!.path),
+                                        width: 40.w,
+                                        height: 50.w,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : Center(
+                                  child: InkWell(
+                                    onTap: () {
+                                      _pImage3(ImageSource.gallery);
+                                    },
+                                    child: const InputProImaUi(),
+                                  ),
+                                ),
+                        ],
+                      ),
+
+                      SizedBox(
+                        height: 4.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: 1.5.h,
+                          bottom: 3.h,
+                        ),
+                        child: Text(
+                          "Product Details",
+                          style: TextStyle(
+                              fontWeight: FontWeightManager.semiBold,
+                              fontSize: 16.sp),
+                        ),
+                      ),
+
+                      /// NAME
+                      Column(
+                        children: [
+                          const ReturnLabel(label: "Name"),
+                          CustomFormField(
+                            controller: nameController,
+                            hintText: 'Type here',
+                            keyboardType: TextInputType.name,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Enter name of the Product';
+                              }
+                              return null;
+                            },
+                          ),
+                        ],
+                      ),
+
+                      /// MOBILE NUMBER
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 2.h),
+                        child: Column(
+                          children: [
+                            const ReturnLabel(label: "Description"),
+                            DescriptionFormField(
+                              height: 20.h,
+                              width: 90.h,
+                              controller: procutDescripController,
+                              hintText: "Enter the description",
+                            )
+                          ],
+                        ),
+                      ),
+
+                      /// Dropdown field
+                      Column(
+                        children: [
+                          ReturnLabel(label: 'Select the category'),
+                          DropdownButton(
+                            value: _selectedCategory,
+                            items: Category.values
+                                .map(
+                                  (category) => DropdownMenuItem(
+                                    value: category,
+                                    child: Text(
+                                      category.name.toUpperCase(),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                            onChanged: (value) {
+                              if (value == null) {
+                                return;
+                              }
+                              setState(() {
+                                _selectedCategory = value;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+
+                      ///Price.
+                      Column(
+                        children: [
+                          const ReturnLabel(label: "Price"),
+                          CustomFormField(
+                            controller: originalPriceController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Enter the price';
+                              }
+
+                              return null;
+                            },
+                            keyboardType: TextInputType.number,
+                            hintText: 'Type here',
+                          ),
+                        ],
+                      ),
+
+                      Column(
+                        children: [
+                          const ReturnLabel(label: "Discounted Price"),
+                          CustomFormField(
+                            controller: discountedPriceController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Enter the Discounted Price';
+                              }
+
+                              return null;
+                            },
+                            keyboardType: TextInputType.number,
+                            hintText: 'Type here',
+                          ),
+                        ],
+                      ),
+                      isLoading
+                          ? const CircularProgressIndicator()
+                          : ToggleButton(
+                              back: "Cancel",
+                              next: "Add",
+                              onPressedBack: () {
+                                Navigator.pop(context);
+                              },
+                              onPressedNext: () {
+                                if (fcFormKey.currentState!.validate() &&
+                                    procutDescripController.text.isNotEmpty &&
+                                    _pImage1Pic != null &&
+                                    _pImage2Pic != null &&
+                                    _pImage3Pic != null) {
+                                  context.read<ProductBloc>().add(
+                                        AddProductEvent(
+                                          Product(
+                                              name: nameController.text,
+                                              description:
+                                                  procutDescripController.text,
+                                              category: _selectedCategory.name,
+                                              price:
+                                                  originalPriceController.text,
+                                              discountedPrice:
+                                                  discountedPriceController
+                                                      .text,
+                                              photos: [
+                                                _pImage1Pic!,
+                                                _pImage2Pic!,
+                                                _pImage3Pic!,
+                                              ]),
+                                        ),
+                                      );
+                                } else if (_pImage2Pic == null) {
+                                  customSnackBar(
+                                      context,
+                                      "Please upload the Product Images!",
+                                      false);
+                                } else if (procutDescripController
+                                    .text.isEmpty) {
+                                  customSnackBar(
+                                      context,
+                                      "Please enter product description",
+                                      false);
+                                } else if (procutDescripController
+                                    .text.length.isNegative) {
+                                  customSnackBar(context, "Price", false);
+                                }
+                              },
+                            ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+enum Category { men, women, baby, cosmetic }

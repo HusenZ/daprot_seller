@@ -31,30 +31,27 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height: 17.h,
+              height: 15.h,
             ),
             Image.asset(
               "assets/images/dp.png",
               width: 95.h,
-              height: 35.h,
+              height: 30.h,
             ),
             SizedBox(
               height: 2.h,
             ),
             Padding(
-              padding: EdgeInsets.only(left: 8.w, top: 4.h),
+              padding: EdgeInsets.only(left: 6.w, top: 4.h),
               child: Text(
                 'Login',
-                style: TextStyle(
-                  fontSize: 4.h,
-                  fontWeight: FontWeight.w800,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
             SizedBox(height: 2.h),
             SizedBox(
               width: 88.w,
-              height: 10.h,
+              height: 7.h,
               child: InputTextField(
                   contactEditingController: _contactEditingController),
             ),
@@ -189,22 +186,21 @@ class InputTextField extends StatelessWidget {
       },
       decoration: InputDecoration(
         prefixText: '+91 ',
-        prefixStyle: TextStyle(
-          fontSize: 3.h,
-          color: Colors.black,
-          fontWeight: FontWeight.w600,
-        ),
+        prefixStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
+            ),
         hintText: 'Enter your phone number',
-        hintStyle: TextStyle(
-          fontSize: 3.h,
-          color: Colors.grey[400],
-        ),
+        hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              color: Colors.grey[400],
+            ),
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: ColorsManager.primaryColor),
           borderRadius: BorderRadius.circular(10.0),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey[400]!, width: 1.0),
+          borderSide: const BorderSide(
+              color: Color.fromARGB(255, 122, 119, 119), width: 1.0),
           borderRadius: BorderRadius.circular(10.0),
         ),
       ),
@@ -213,7 +209,7 @@ class InputTextField extends StatelessWidget {
       inputFormatters: [
         LengthLimitingTextInputFormatter(10),
       ],
-      style: TextStyle(fontSize: 3.h),
+      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 2.h),
     );
   }
 }

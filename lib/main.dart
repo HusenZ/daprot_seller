@@ -1,3 +1,4 @@
+import 'package:daprot_seller/bloc/add_product_bloc/add_prodcut_bloc.dart';
 import 'package:daprot_seller/bloc/app_bloc_provider.dart';
 import 'package:daprot_seller/bloc/auth_bloc/auth_bloc.dart';
 import 'package:daprot_seller/bloc/sh_bloc/sh_bloc.dart';
@@ -28,6 +29,9 @@ void main() async {
         ),
         BlocProvider(
           create: (context) => ShBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ProductBloc(),
         ),
       ],
       child: MyApp(),

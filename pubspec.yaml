@@ -52,6 +52,7 @@ dependencies:
   cached_network_image: ^3.3.1
   shimmer: ^3.0.0
   uuid: ^4.3.3
+  sliver_tools: ^0.2.12
 
 dev_dependencies:
   flutter_test:

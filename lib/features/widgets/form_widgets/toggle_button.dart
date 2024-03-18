@@ -51,7 +51,13 @@ class ToggleButton extends StatelessWidget {
                       borderRadius: BorderRadius.circular(25),
                       color: ColorsManager.primaryColor),
                   child: Center(
-                    child: Text(next),
+                    child: Text(
+                      next,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(color: ColorsManager.whiteColor),
+                    ),
                   ),
                 ),
               ),

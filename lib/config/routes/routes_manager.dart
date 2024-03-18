@@ -1,3 +1,4 @@
+import 'package:daprot_seller/features/screens/add_new_product.dart';
 import 'package:daprot_seller/features/screens/forms/form1_screen.dart';
 import 'package:daprot_seller/features/screens/forms/form2_screen.dart';
 import 'package:daprot_seller/features/screens/forms/form3_screen.dart';
@@ -25,6 +26,7 @@ class Routes {
   static const String noInternetRoute = '/noInternet';
   static const String underReview = '/underReview';
   static const String dashboard = '/dashboard';
+  static const String addNewProduct = '/addNewProduct';
 }
 
 Map<String, WidgetBuilder> get routes {
@@ -39,5 +41,6 @@ Map<String, WidgetBuilder> get routes {
     Routes.form3: (context) => const FCScreen3(),
     Routes.underReview: (context) => const UnderReivew(),
     Routes.dashboard: (context) => const ShopDashboard(),
+    Routes.addNewProduct: (context) => const AddNewProdcut(),
   };
 }

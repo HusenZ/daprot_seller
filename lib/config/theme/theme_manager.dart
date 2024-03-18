@@ -7,6 +7,7 @@ ColorScheme kColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.light,
   seedColor: ColorsManager.primaryColor,
   secondary: ColorsManager.secondaryColor,
+  background: ColorsManager.backgroundColor,
 );
 ThemeData getApplicationTheme() {
   return ThemeData(
