@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/domain/shop_data_repo.dart';
+import 'package:daprot_seller/features/screens/add_new_product.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -29,7 +30,22 @@ class MyStore extends StatelessWidget {
           }
 
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Text('No data available');
+            return Center(
+              child: InkWell(
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const AddNewProdcut(),
+                )),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.sp),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.rectangle,
+                    ),
+                    child: const Text("Add Products"),
+                  ),
+                ),
+              ),
+            );
           }
           return CustomScrollView(
             slivers: [
@@ -37,6 +53,7 @@ class MyStore extends StatelessWidget {
                 flexibleSpace: FlexibleSpaceBar(
                   background: CachedNetworkImage(
                     imageUrl: snapshot.data!.docs.first["shopImage"],
+                    fit: BoxFit.cover,
                   ),
                 ),
                 floating: false,
@@ -48,6 +65,8 @@ class MyStore extends StatelessWidget {
                   child: CircleAvatar(
                     backgroundImage:
                         NetworkImage(snapshot.data!.docs.first["shopLogo"]),
+                    backgroundColor: Colors.white,
+                    radius: 25.sp,
                   ),
                 ),
               ),
@@ -60,9 +79,35 @@ class MyStore extends StatelessWidget {
                   stream: repository.getProductStream(uid),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                      return const SliverToBoxAdapter(
-                        child: Center(
-                          child: Text('No products available'),
+                      return SliverToBoxAdapter(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: InkWell(
+                            onTap: () =>
+                                Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const AddNewProdcut(),
+                            )),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.sp),
+                              child: Container(
+                                width: 22.h,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  color: ColorsManager.primaryColor,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "Add Products",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(
+                                            color: ColorsManager.offWhiteColor),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       );
                     }

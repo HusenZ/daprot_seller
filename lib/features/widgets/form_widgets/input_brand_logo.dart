@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 
 class InputBrandLogoUi extends StatelessWidget {
@@ -28,7 +31,42 @@ class InputBrandLogoUi extends StatelessWidget {
               height: 2.h,
             ),
             Text(
-              'Supports : JPG,PNG,JPEG,WEBP',
+              'Supports : JPG,PNG',
+              style: TextStyle(color: ColorsManager.lightGreyColor),
+            )
+          ],
+        ));
+  }
+}
+
+class InputShopLogoUi extends StatelessWidget {
+  const InputShopLogoUi({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: 13.h,
+        padding: EdgeInsets.symmetric(horizontal: 3.w),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: ColorsManager.lightGreyColor!,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.file_upload_outlined,
+              color: ColorsManager.lightGreyColor,
+            ),
+            SizedBox(
+              height: 0.5.h,
+            ),
+            Text(
+              'Supports:\nJPG,PNG',
               style: TextStyle(color: ColorsManager.lightGreyColor),
             )
           ],

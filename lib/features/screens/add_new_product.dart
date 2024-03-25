@@ -7,6 +7,7 @@ import 'package:daprot_seller/config/theme/fonts_manager.dart';
 import 'package:daprot_seller/domain/model/product_model.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/custom_form_field.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
+import 'package:daprot_seller/features/widgets/common_widgets/loading_dailog.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/d_phone_input_field.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/toggle_button.dart';
@@ -80,6 +81,10 @@ class AddNewProdcutState extends State<AddNewProdcut> {
     );
   }
 
+  void showLoading() {
+    LoadingDialog.showLoadingDialog(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<ProductBloc, ProductState>(
@@ -88,14 +93,20 @@ class AddNewProdcutState extends State<AddNewProdcut> {
           setState(() {
             isLoading = true;
           });
+          showLoading();
         }
         if (state is SuccessState) {
           setState(() {
             isLoading = false;
           });
+          Navigator.pop(context);
         }
         if (state is AddProductState) {
           if (state.message.contains('successfully')) {
+            setState(() {
+              isLoading = false;
+            });
+            Navigator.pop(context);
             Navigator.pop(context);
             customSnackBar(context, state.message, true);
           } else {
@@ -105,6 +116,10 @@ class AddNewProdcutState extends State<AddNewProdcut> {
       },
       child: Scaffold(
         backgroundColor: ColorsManager.offWhiteColor,
+        appBar: AppBar(
+          backgroundColor: ColorsManager.lightGreyColor,
+          title: const Text("Add Latest Product"),
+        ),
         body: Form(
           key: fcFormKey,
           child: SafeArea(
@@ -154,7 +169,7 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                                         height: 20.h,
                                         child: Image.file(
                                           File(_pImage1Pic!.path),
-                                          fit: BoxFit.cover,
+                                          fit: BoxFit.fill,
                                         ),
                                       ),
                                     ),
@@ -186,9 +201,9 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                                       },
                                       child: Image.file(
                                         File(_pImage2Pic!.path),
-                                        width: 40.w,
+                                        width: 35.w,
                                         height: 50.w,
-                                        fit: BoxFit.cover,
+                                        fit: BoxFit.fill,
                                       ),
                                     ),
                                   ),
@@ -211,9 +226,9 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                                       },
                                       child: Image.file(
                                         File(_pImage3Pic!.path),
-                                        width: 40.w,
+                                        width: 35.w,
                                         height: 50.w,
-                                        fit: BoxFit.cover,
+                                        fit: BoxFit.fill,
                                       ),
                                     ),
                                   ),
@@ -282,7 +297,7 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                       /// Dropdown field
                       Column(
                         children: [
-                          ReturnLabel(label: 'Select the category'),
+                          const ReturnLabel(label: 'Select the category'),
                           DropdownButton(
                             value: _selectedCategory,
                             items: Category.values
@@ -344,7 +359,7 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                         ],
                       ),
                       isLoading
-                          ? const CircularProgressIndicator()
+                          ? const Center(child: CircularProgressIndicator())
                           : ToggleButton(
                               back: "Cancel",
                               next: "Add",

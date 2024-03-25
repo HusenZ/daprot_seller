@@ -53,7 +53,12 @@ dependencies:
   shimmer: ^3.0.0
   uuid: ^4.3.3
   sliver_tools: ^0.2.12
-
+  animated_text_kit: ^4.2.2
+  geolocator: ^11.0.0
+  permission_handler: ^11.3.0
+  geocoding: ^3.0.0
+  fluttertoast: ^8.2.4
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -80,6 +85,7 @@ flutter:
   assets:
     - assets/images/dp.png
     - assets/images/
+    - assets/lottie/
     - assets/images/dummy_image/shirt1.jpg
     - assets/images/dummy_image/shoe1.jpg
     - assets/images/dummy_image/wtop.jpg
@@ -87,6 +93,8 @@ flutter:
     - assets/images/dummy_image/cosmetic.jpg
     - assets/lottie/splashLottei.json
     - assets/lottie/no_network.json
+    - assets/lottie/product_uploading_lottie.json
+    - assets/lottie/no_products.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

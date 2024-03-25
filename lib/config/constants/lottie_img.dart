@@ -3,6 +3,8 @@ const lottiePath = "assets/lottie/";
 class AppLottie {
   static const noNetwork = "${lottiePath}no_network.json";
   static const splashScreenBottom = "${lottiePath}splashLottei.json";
+  static const productUploading = "${lottiePath}product_uploading_lottie.json";
+  static const onOrders = "${lottiePath}no_products.json";
 }
 
 /*

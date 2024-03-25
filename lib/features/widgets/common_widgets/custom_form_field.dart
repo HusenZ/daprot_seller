@@ -29,7 +29,7 @@ class CustomFormField extends StatelessWidget {
           controller: controller,
           validator: validator,
           style: TextStyle(
-            fontSize: 16.sp,
+            fontSize: 14.sp,
           ),
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(

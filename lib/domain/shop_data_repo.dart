@@ -4,20 +4,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 class ProductStream {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth auth = FirebaseAuth.instance;
+  String shopId = FirebaseAuth.instance.currentUser!.uid;
 
   Stream<QuerySnapshot> getProductStream(String uid) {
     return _firestore
-        .collection('Sellers')
-        .doc(uid)
         .collection('Products')
+        .where('shopId', isEqualTo: shopId)
         .snapshots();
   }
 
   Stream<QuerySnapshot> getShopStream(String uid) {
     return _firestore
-        .collection('Sellers')
-        .doc(uid)
-        .collection('Applications')
+        .collection('Shops')
+        .where('cid', isEqualTo: shopId)
         .snapshots();
   }
 }

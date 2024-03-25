@@ -7,26 +7,18 @@ void customSnackBar(BuildContext context, String message, bool success) {
     behavior: SnackBarBehavior.floating,
     shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(20))),
-    backgroundColor: success ? Colors.green : Colors.red,
+    backgroundColor: success ? ColorsManager.accentColor : Colors.red,
     content: Row(
       children: [
-        success
-            ? Icon(
-                Icons.gpp_good,
-                size: 7.w,
-              )
-            : Icon(
-                Icons.gpp_bad,
-                size: 7.w,
-              ),
         SizedBox(width: 5.w),
         Text(
           message,
+          overflow: TextOverflow.fade,
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               color: success
                   ? ColorsManager.whiteColor
                   : ColorsManager.lightRedColor,
-              fontSize: 15.sp),
+              fontSize: 12.sp),
         ),
       ],
     ),

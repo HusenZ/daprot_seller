@@ -1,5 +1,7 @@
 import 'package:daprot_seller/bloc/auth_bloc/auth_bloc.dart';
 import 'package:daprot_seller/bloc/auth_bloc/auth_state.dart';
+import 'package:daprot_seller/bloc/location_bloc/user_locaion_events.dart';
+import 'package:daprot_seller/bloc/location_bloc/user_location_bloc.dart';
 import 'package:daprot_seller/bloc/location_bloc/user_location_state.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/config/theme/fonts_manager.dart';
@@ -18,17 +20,17 @@ class InputLocation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String? locationText = locationController.text;
-    return BlocListener<AppBloc, AppState>(
+    return BlocListener<LocationBloc, LocationState>(
       listener: (context, state) {
         if (state is LocationLoadingState) {
           locationController.text = 'Loading...';
         }
         if (state is LocationLoadedState) {
-          locationController.text = "";
+          locationController.text = state.placeName;
           debugPrint(locationText);
         }
       },
-      child: BlocBuilder<AppBloc, AppState>(
+      child: BlocBuilder<LocationBloc, LocationState>(
         builder: (context, state) {
           return SizedBox(
             height: 10.h,
@@ -37,7 +39,7 @@ class InputLocation extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  width: 80.w,
+                  width: 60.w,
                   child: TextFormField(
                     keyboardType: TextInputType.streetAddress,
                     controller: locationController,
@@ -47,9 +49,9 @@ class InputLocation extends StatelessWidget {
                       }
                       return null;
                     },
-                    style: TextStyle(
-                      fontSize: 17.sp,
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontSize: 12.sp,
+                        ),
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderSide: const BorderSide(
@@ -78,27 +80,34 @@ class InputLocation extends StatelessWidget {
                     ),
                   ),
                 ),
-                // InkWell(
-                //   onTap: () {
-                //     context.read<LocationBloc>().add(GetLocationEvent());
-                //   },
-                //   child: Container(
-                //     padding: const EdgeInsets.all(8),
-                //     margin: const EdgeInsets.only(bottom: 15),
-                //     width: 25.w,
-                //     height: 5.h,
-                //     decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(15),
-                //       color: ColorsManager.primaryColor,
-                //     ),
-                //     child: const Row(
-                //       children: [
-                //         Icon(Icons.location_searching_outlined),
-                //         Text(StringManager.detect),
-                //       ],
-                //     ),
-                //   ),
-                // ),
+                InkWell(
+                  onTap: () {
+                    context.read<LocationBloc>().add(GetLocationEvent());
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(2.sp),
+                    margin: EdgeInsets.only(bottom: 20.sp),
+                    width: 25.w,
+                    height: 5.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15.sp),
+                      color: ColorsManager.primaryColor,
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(
+                          Icons.location_searching_outlined,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          'Detect',
+                          style: TextStyle(color: Colors.white),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           );

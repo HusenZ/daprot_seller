@@ -6,6 +6,7 @@ import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/config/theme/fonts_manager.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/custom_form_field.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
+import 'package:daprot_seller/features/widgets/common_widgets/profile_photo_widget.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/d_phone_input_field.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/toggle_button.dart';
@@ -152,31 +153,12 @@ class FCScreen2State extends State<FCScreen2> {
                         Column(
                           children: [
                             const ReturnLabel(label: "Upload your photo"),
-                            _ownerPic != null
-                                ? Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Center(
-                                      child: InkWell(
-                                        onTap: () {
-                                          _ownerImage(ImageSource.gallery);
-                                        },
-                                        child: Image.file(
-                                          File(_ownerPic!.path),
-                                          width: 40.w,
-                                          height: 50.w,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                : Center(
-                                    child: InkWell(
-                                      onTap: () {
-                                        _ownerImage(ImageSource.gallery);
-                                      },
-                                      child: const InputBrandLogoUi(),
-                                    ),
-                                  ),
+                            InkWell(
+                              onTap: () {
+                                _ownerImage(ImageSource.gallery);
+                              },
+                              child: ProfilePhoto(profileImage: _ownerPic),
+                            ),
                           ],
                         ),
 

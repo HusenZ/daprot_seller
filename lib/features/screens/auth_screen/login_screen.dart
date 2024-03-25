@@ -7,6 +7,7 @@ import 'package:daprot_seller/features/widgets/common_widgets/loading_button.dar
 import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
@@ -24,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorsManager.offWhiteColor,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         reverse: true,
@@ -33,16 +35,19 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               height: 15.h,
             ),
-            Image.asset(
-              "assets/images/dp.png",
-              width: 95.h,
-              height: 30.h,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(22.sp),
+              child: Image.asset(
+                "assets/images/dp.png",
+                width: 95.h,
+                height: 30.h,
+              ),
             ),
             SizedBox(
               height: 2.h,
             ),
             Padding(
-              padding: EdgeInsets.only(left: 6.w, top: 4.h),
+              padding: EdgeInsets.only(left: 6.w, top: 4.h, right: 2.h),
               child: Text(
                 'Login',
                 style: Theme.of(context).textTheme.bodyLarge,

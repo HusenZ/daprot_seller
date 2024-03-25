@@ -235,7 +235,11 @@ class OtpScreenState extends State<OtpScreen> {
                     },
                     child: const Text('Resend OTP'),
                   )
-                : Text('Didn\'t receive OTP? (Resend in $_countdown seconds))'),
+                : Center(
+                    child: Center(
+                    child: Text(
+                        'Didn\'t receive OTP? (Resend in $_countdown seconds))'),
+                  )),
             SizedBox(
               height: screenHeight * 0.05,
             ),

@@ -7,7 +7,7 @@ class OrderRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final String sellerId = FirebaseAuth.instance.currentUser!.uid;
   Stream<List<OrderModel>> getUserOrdersStream(String userId) {
-    return FirebaseFirestore.instance
+    return _firestore
         .collection('orders')
         .where('shopId', isEqualTo: userId)
         .snapshots()

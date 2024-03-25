@@ -30,19 +30,20 @@ class AddProductRepo {
       }
 
       String productId = _uuid.v4();
-      await _firestore
-          .collection('Sellers')
-          .doc(uid)
-          .collection('Products')
-          .add({
-        'name': product.name,
-        'description': product.description,
-        'price': product.price,
-        'discountedPrice': product.discountedPrice,
-        'category': product.category,
-        'selectedPhotos': imageUrls,
-      });
+      // await _firestore
+      //     .collection('Sellers')
+      //     .doc(uid)
+      //     .collection('Products')
+      //     .add({
+      //   'name': product.name,
+      //   'description': product.description,
+      //   'price': product.price,
+      //   'discountedPrice': product.discountedPrice,
+      //   'category': product.category,
+      //   'selectedPhotos': imageUrls,
+      // });
       await _firestore.collection('Products').add({
+        'productId': productId,
         'shopId': uid,
         'name': product.name,
         'description': product.description,

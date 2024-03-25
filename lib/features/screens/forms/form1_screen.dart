@@ -9,6 +9,7 @@ import 'package:daprot_seller/config/theme/fonts_manager.dart';
 import 'package:daprot_seller/domain/connectivity_helper.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/custom_form_field.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
+import 'package:daprot_seller/features/widgets/common_widgets/profile_photo_widget.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/d_phone_input_field.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/toggle_button.dart';
@@ -131,30 +132,12 @@ class _FCScreen1State extends State<FCScreen1> {
                             SizedBox(
                               height: 1.w,
                             ),
-                            _shopLogo != null
-                                ? InkWell(
-                                    onTap: () {
-                                      _shopLogo!;
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(1.w),
-                                      ),
-                                      child: Image.file(
-                                        File(_shopLogo!.path),
-                                        width: 80.w,
-                                        height: 20.h,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  )
-                                : InkWell(
-                                    onTap: () {
-                                      _pickShopLogo(ImageSource.gallery);
-                                    },
-                                    child: const InputBrandLogoUi(),
-                                  )
+                            InkWell(
+                              onTap: () {
+                                _pickShopLogo(ImageSource.gallery);
+                              },
+                              child: ProfilePhoto(profileImage: _shopLogo),
+                            ),
                           ],
                         ),
                       ),

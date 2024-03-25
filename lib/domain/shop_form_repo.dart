@@ -121,12 +121,7 @@ class ShopFormRepo {
       conditionaccept = coditionacceptance;
       //add details in Application  collection which is inside clients collection
       print("${shName}");
-      await firestore
-          .collection('Sellers')
-          .doc(_cid)
-          .collection('Applications')
-          .doc(_shId)
-          .set({
+      await firestore.collection('Shops').doc(_cid).set({
         'type': 'shop',
         'cid': _cid,
         'id': _shId,
@@ -170,8 +165,6 @@ class ShopFormRepo {
       await firestore
           .collection('Clients')
           .doc(_cid)
-          .collection('Applications')
-          .doc(_shId)
           .collection('OwnerDetails')
           .add({
         'ownerName': ownerName,
