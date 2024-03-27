@@ -46,14 +46,22 @@ class ShBloc extends Bloc<ShEvent, ShState> {
       },
     );
 
-    on<ShForm3Event>((event, emit) {
+    on<ShForm3Event>((event, emit) async {
       emit(ShForm3State(
         gstCeritificate: event.gstImage,
         isAccepted: event.isAccepted,
       ));
+      emit(ShopLoadingState());
 
-      ShopFormRepo.addForm3(
-          coditionacceptance: event.isAccepted!, gstImg: event.gstImage);
+      await ShopFormRepo.addForm3(
+              coditionacceptance: event.isAccepted!, gstImg: event.gstImage)
+          .then((value) {
+        if (value == true) {
+          emit(ShopSuccessState());
+        } else {
+          emit(ShopFailurState(message: 'Some Error Occured Try Later'));
+        }
+      });
     });
   }
 }

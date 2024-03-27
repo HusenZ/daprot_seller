@@ -2,6 +2,7 @@ import 'package:daprot_seller/bloc/add_product_bloc/add_prodcut_bloc.dart';
 import 'package:daprot_seller/bloc/app_bloc_provider.dart';
 import 'package:daprot_seller/bloc/auth_bloc/auth_bloc.dart';
 import 'package:daprot_seller/bloc/location_bloc/user_location_bloc.dart';
+import 'package:daprot_seller/bloc/order_bloc/order_bloc.dart';
 import 'package:daprot_seller/bloc/sh_bloc/sh_bloc.dart';
 import 'package:daprot_seller/config/app.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,9 @@ void main() async {
         ),
         BlocProvider(
           create: (context) => LocationBloc(),
+        ),
+        BlocProvider(
+          create: (context) => OrderBloc(),
         ),
       ],
       child: MyApp(),

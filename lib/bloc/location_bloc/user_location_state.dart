@@ -11,11 +11,13 @@ class LocationLoadingState extends LocationState {}
 
 class LocationLoadedState extends LocationState {
   final String placeName;
+  final double latitude;
+  final double longitude;
 
-  LocationLoadedState(this.placeName);
+  LocationLoadedState(this.placeName, this.latitude, this.longitude);
 
   @override
-  List<Object?> get props => [placeName];
+  List<Object?> get props => [placeName, longitude, latitude];
 }
 
 class LocationErrorState extends LocationState {

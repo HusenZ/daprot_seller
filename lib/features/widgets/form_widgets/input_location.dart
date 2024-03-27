@@ -1,5 +1,3 @@
-import 'package:daprot_seller/bloc/auth_bloc/auth_bloc.dart';
-import 'package:daprot_seller/bloc/auth_bloc/auth_state.dart';
 import 'package:daprot_seller/bloc/location_bloc/user_locaion_events.dart';
 import 'package:daprot_seller/bloc/location_bloc/user_location_bloc.dart';
 import 'package:daprot_seller/bloc/location_bloc/user_location_state.dart';
@@ -40,8 +38,10 @@ class InputLocation extends StatelessWidget {
               children: [
                 SizedBox(
                   width: 60.w,
+                  height: 30.h,
                   child: TextFormField(
                     keyboardType: TextInputType.streetAddress,
+                    readOnly: true,
                     controller: locationController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -49,8 +49,9 @@ class InputLocation extends StatelessWidget {
                       }
                       return null;
                     },
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontSize: 12.sp,
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          fontSize: 9.sp,
+                          overflow: TextOverflow.clip,
                         ),
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(

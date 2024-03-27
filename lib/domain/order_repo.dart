@@ -15,6 +15,27 @@ class OrderRepository {
             snapshot.docs.map((doc) => OrderModel.fromSnapshot(doc)).toList());
   }
 
+  Future<void> updateOrderStatus(
+      {required String newStatus, required String orderId}) async {
+    try {
+      final CollectionReference ordersCollection =
+          FirebaseFirestore.instance.collection('orders');
+
+      // Query orders where shopId matches
+      QuerySnapshot ordersSnapshot =
+          await ordersCollection.where('orderId', isEqualTo: orderId).get();
+      print("Order Id ---> $orderId");
+
+      for (DocumentSnapshot doc in ordersSnapshot.docs) {
+        await doc.reference.update({'orderStatus': newStatus});
+      }
+
+      print('Order status updated successfully.');
+    } catch (e) {
+      print('Error updating order status: $e');
+    }
+  }
+
   Stream<UserModel> streamUser(String uid) {
     if (uid.isEmpty) {
       return Stream.value(UserModel(

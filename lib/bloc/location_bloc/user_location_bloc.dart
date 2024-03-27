@@ -19,7 +19,11 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
         String? locality =
             await fetchPlaceName(position.latitude, position.longitude);
         if (locality != null) {
-          emit(LocationLoadedState(locality));
+          emit(LocationLoadedState(
+            locality,
+            position.latitude,
+            position.longitude,
+          ));
         } else {
           emit(LocationErrorState('NO LOCATION FOUND'));
         }
@@ -38,8 +42,8 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       );
 
       if (placemarks.isNotEmpty) {
-        Placemark place = placemarks[0];
-        name = "${place.locality}, ${place.locality}, ${place.country} ";
+        Placemark place = placemarks[1];
+        name = '${place.name}, ${place.locality}';
         debugPrint(
             'Place Name: ${place.name}, ${place.locality}, ${place.country}');
       } else {

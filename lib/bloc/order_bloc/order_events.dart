@@ -1,5 +1,3 @@
-import 'package:daprot_seller/domain/model/order_models.dart';
-
 abstract class OrderEvent {
   const OrderEvent();
 }
@@ -10,7 +8,7 @@ class FetchOrders extends OrderEvent {
 
 class UpdateOrderStatus extends OrderEvent {
   final String orderId;
-  final OrderStatus newStatus;
+  final String newStatus;
 
-  const UpdateOrderStatus(this.orderId, this.newStatus);
+  const UpdateOrderStatus({required this.orderId, required this.newStatus});
 }

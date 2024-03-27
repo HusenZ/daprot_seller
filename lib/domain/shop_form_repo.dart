@@ -41,16 +41,24 @@ class ShopFormRepo {
   }) async {
     try {
       final FirebaseAuth auth = FirebaseAuth.instance;
+      if (auth.currentUser == null) {
+        throw Exception("User not authenticated");
+      }
+
+      if (shopLogo == null) {
+        throw Exception("Shop logo not provided");
+      }
+
       // Upload brand logo to Firebase Storage
       Reference ref = FirebaseStorage.instance
           .ref('ShopLogos-images/${auth.currentUser!.uid}.jpg');
-      await ref.putFile(File(shopLogo!.path));
+      await ref.putFile(File(shopLogo.path));
 
       brandlogoImage = await ref.getDownloadURL();
 
       // Get current user ID
       _cid = auth.currentUser!.uid;
-
+      print(_cid);
       // Generate a unique ID for the 'shop' document
       _shId = const Uuid().v4();
 
@@ -76,16 +84,27 @@ class ShopFormRepo {
   }) async {
     try {
       final FirebaseAuth auth = FirebaseAuth.instance;
+      if (auth.currentUser == null) {
+        throw Exception("User not authenticated");
+      }
+
+      if (shopBanner == null) {
+        throw Exception("Shop logo not provided");
+      }
+      if (ownerphoto == null) {
+        throw Exception("Shop logo not provided");
+      }
+
       // Upload brand logo to Firebase Storage
       Reference ref = FirebaseStorage.instance
           .ref('shop-banners/${auth.currentUser!.uid}.jpg');
-      await ref.putFile(File(shopBanner!.path));
+      await ref.putFile(File(shopBanner.path));
 
       bannerImage = await ref.getDownloadURL();
       // Upload brand ownweimg to Firebase Storage
       Reference ref2 = FirebaseStorage.instance
           .ref('owner-images/${auth.currentUser!.uid}.jpg');
-      await ref2.putFile(File(ownerphoto!.path));
+      await ref2.putFile(File(ownerphoto.path));
 
       ownerImg = await ref2.getDownloadURL();
 
@@ -101,17 +120,25 @@ class ShopFormRepo {
     }
   }
 
-  static Future<void> addForm3({
+  static Future<bool> addForm3({
     required bool coditionacceptance,
     required XFile? gstImg,
   }) async {
     try {
       final FirebaseFirestore firestore = FirebaseFirestore.instance;
       final FirebaseAuth auth = FirebaseAuth.instance;
+      if (auth.currentUser == null) {
+        throw Exception("User not authenticated");
+      }
+
+      if (gstImg == null) {
+        throw Exception("Shop logo not provided");
+      }
+
       // Upload leaseAgreement image to Firebase Storage
       Reference ref = FirebaseStorage.instance
           .ref('gst-images/${auth.currentUser!.uid}.jpg');
-      await ref.putFile(File(gstImg!.path));
+      await ref.putFile(File(gstImg.path));
 
       gstImage = await ref.getDownloadURL();
 
@@ -129,50 +156,14 @@ class ShopFormRepo {
         'shopLogo': brandlogoImage,
         'location': shLoacation,
         'phoneNo': shPhone,
-        'openTime': opentime,
-        'closeTime': closetime,
+        'openTime': opentime ?? ' ',
+        'closeTime': closetime ?? ' ',
         'dilivery': delivery,
         'shopImage': bannerImage,
         'conditionAcceptstatus': conditionaccept,
         'applicationStatus': 'pending'
       });
       //create interest collection inside application collection
-      await firestore
-          .collection('Clients')
-          .doc(_cid)
-          .collection('Applications')
-          .doc(_shId)
-          .collection('Interests')
-          .doc('Qrscans')
-          .set({});
-      await firestore
-          .collection('Clients')
-          .doc(_cid)
-          .collection('Applications')
-          .doc(_shId)
-          .collection('Interests')
-          .doc('Searches')
-          .set({});
-      await firestore
-          .collection('Clients')
-          .doc(_cid)
-          .collection('Applications')
-          .doc(_shId)
-          .collection('Interests')
-          .doc('Clicks')
-          .set({});
-      //add ownerdetails inside owner collection
-      await firestore
-          .collection('Clients')
-          .doc(_cid)
-          .collection('OwnerDetails')
-          .add({
-        'ownerName': ownerName,
-        'ownerImg': ownerImg,
-        'ownerphoneNo': ownerPhoneNo,
-        'ownerpanNo': ownerPanNo,
-        'gstimage': gstImage,
-      });
 
       debugPrint("owner details added into ownerdetails collection");
       await firestore.collection('Admin').doc(_shId).set({
@@ -185,8 +176,10 @@ class ShopFormRepo {
       debugPrint("application data added successfully into admin collection");
       SharedPreferences preferences = await SharedPreferences.getInstance();
       preferences.setBool('SetStore', true);
+      return Future.value(true);
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint('Error in Creating the shop ---> ${e.toString()}');
+      return Future.value(false);
     }
   }
 

@@ -76,3 +76,13 @@ class ShForm3State extends ShState {
         isAccepted,
       ];
 }
+
+class ShopSuccessState extends ShState {}
+
+class ShopLoadingState extends ShState {}
+
+class ShopFailurState extends ShState {
+  final String message;
+
+  ShopFailurState({required this.message});
+}

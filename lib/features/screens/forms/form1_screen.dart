@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:daprot_seller/bloc/sh_bloc/sh_bloc.dart';
 import 'package:daprot_seller/bloc/sh_bloc/sh_event.dart';
 import 'package:daprot_seller/bloc/sh_bloc/sh_state.dart';
@@ -7,14 +5,13 @@ import 'package:daprot_seller/config/routes/routes_manager.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/config/theme/fonts_manager.dart';
 import 'package:daprot_seller/domain/connectivity_helper.dart';
+import 'package:daprot_seller/domain/time_picker.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/custom_form_field.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/profile_photo_widget.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/d_phone_input_field.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/toggle_button.dart';
-import 'package:daprot_seller/features/widgets/form_widgets/input_brand_logo.dart';
-import 'package:daprot_seller/features/widgets/form_widgets/input_time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -39,8 +36,8 @@ class _FCScreen1State extends State<FCScreen1> {
   TextEditingController shNameController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController phoneNoController = TextEditingController();
-  TextEditingController openTimeController = TextEditingController();
-  TextEditingController closeTimeController = TextEditingController();
+  String? openTime;
+  String? closeTime;
 
   //
   XFile? _shopLogo;
@@ -175,35 +172,59 @@ class _FCScreen1State extends State<FCScreen1> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const ReturnLabel(label: "Open Timing"),
-                              InputTimeWidget(
-                                openTimeController: openTimeController,
-                                width: 40.w,
-                                height: 10.h,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Opens at??';
-                                  }
-                                  return null;
+                              InkWell(
+                                onTap: () {
+                                  showCustomTimePicker(context)
+                                      .then((value) => setState(() {
+                                            openTime = value;
+                                          }));
                                 },
-                                hintText: "00:00",
+                                child: Container(
+                                  width: 40.w,
+                                  height: 10.h,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      openTime == null ? "00:00" : openTime!,
+                                      style: TextStyle(fontSize: 16.sp),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const ReturnLabel(label: 'close time'),
-                              InputTimeWidget(
-                                openTimeController: closeTimeController,
-                                width: 40.w,
-                                height: 10.h,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Closes at??';
-                                  }
-                                  return null;
+                              const ReturnLabel(label: 'Close Time'),
+                              InkWell(
+                                onTap: () {
+                                  showCustomTimePicker(context)
+                                      .then((value) => setState(() {
+                                            closeTime = value;
+                                          }));
                                 },
-                                hintText: "00:00",
+                                child: Container(
+                                  width: 40.w,
+                                  height: 10.h,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: const Color.fromARGB(
+                                            255, 76, 75, 75)),
+                                    borderRadius: BorderRadius.circular(5.sp),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      closeTime == null ? "00:00" : closeTime!,
+                                      style: TextStyle(fontSize: 16.sp),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -243,15 +264,17 @@ class _FCScreen1State extends State<FCScreen1> {
                         onPressedNext: () {
                           if (fcFormKey.currentState!.validate() &&
                               phoneNoController.text.isNotEmpty &&
-                              phoneNoController.text.length == 10) {
+                              phoneNoController.text.length == 10 &&
+                              openTime != null &&
+                              closeTime != null) {
                             context.read<ShBloc>().add(
                                   ShForm1Event(
                                     brandlogo: _shopLogo,
                                     shName: shNameController.text,
                                     location: locationController.text,
                                     phoneNumber: phoneNoController.text,
-                                    openTime: openTimeController.text,
-                                    closeTime: closeTimeController.text,
+                                    openTime: openTime ?? '',
+                                    closeTime: closeTime ?? '',
                                     isParking: _dilivery,
                                   ),
                                 );
@@ -262,6 +285,12 @@ class _FCScreen1State extends State<FCScreen1> {
                           } else if (phoneNoController.text.length != 10) {
                             customSnackBar(
                                 context, "Enter a valid Mobile Number", false);
+                          } else if (openTime == null) {
+                            customSnackBar(
+                                context, "Pick The Open time", false);
+                          } else if (closeTime == null) {
+                            customSnackBar(
+                                context, "Pick The Close time", false);
                           }
                         },
                       ),

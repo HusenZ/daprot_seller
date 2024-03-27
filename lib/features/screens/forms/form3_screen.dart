@@ -49,10 +49,24 @@ class _FCScreen3State extends State<FCScreen3> {
   }
 
   bool _accept = false;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ShBloc, ShState>(
+    return BlocConsumer<ShBloc, ShState>(
+      listener: (context, state) {
+        if (state is ShopLoadingState) {
+          isLoading = true;
+        }
+        if (state is ShopSuccessState) {
+          isLoading = false;
+          Navigator.of(context).pushReplacementNamed(Routes.underReview);
+        }
+        if (state is ShopFailurState) {
+          isLoading = false;
+          customSnackBar(context, state.message, false);
+        }
+      },
       builder: (context, state) {
         return Scaffold(
           backgroundColor: ColorsManager.offWhiteColor,
@@ -156,6 +170,10 @@ class _FCScreen3State extends State<FCScreen3> {
                           ),
 
                           /// NAVIGATOR
+                          if (isLoading)
+                            const Center(
+                              child: CircularProgressIndicator(),
+                            ),
                           ToggleButton(
                             back: "Cancel",
                             next: "Next",
@@ -190,8 +208,6 @@ class _FCScreen3State extends State<FCScreen3> {
                                           gstImage: _gstImage,
                                           isAccepted: _accept),
                                     );
-                                Navigator.of(context)
-                                    .pushReplacementNamed(Routes.underReview);
                               } else if (!_accept) {
                                 customSnackBar(
                                     context,

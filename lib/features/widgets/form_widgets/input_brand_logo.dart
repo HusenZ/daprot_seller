@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 
 class InputBrandLogoUi extends StatelessWidget {
