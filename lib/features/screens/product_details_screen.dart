@@ -1,28 +1,29 @@
 import 'dart:io';
-import 'package:daprot_seller/bloc/add_product_bloc/add_prodcut_bloc.dart';
 
+import 'package:daprot_seller/bloc/add_product_bloc/add_prodcut_bloc.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/config/theme/fonts_manager.dart';
 import 'package:daprot_seller/domain/model/product_model.dart';
+import 'package:daprot_seller/features/screens/add_new_product.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/custom_form_field.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/loading_dailog.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/toggle_button.dart';
-import 'package:daprot_seller/features/widgets/form_widgets/input_brand_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 
-class AddNewProdcut extends StatefulWidget {
-  const AddNewProdcut({super.key});
+class ProductScreen extends StatefulWidget {
+  final ProductFromDB product;
+  const ProductScreen({super.key, required this.product});
 
   @override
-  State<AddNewProdcut> createState() => AddNewProdcutState();
+  State<ProductScreen> createState() => _ProductScreenState();
 }
 
-class AddNewProdcutState extends State<AddNewProdcut> {
+class _ProductScreenState extends State<ProductScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController procutDescripController = TextEditingController();
   TextEditingController originalPriceController = TextEditingController();
@@ -37,6 +38,20 @@ class AddNewProdcutState extends State<AddNewProdcut> {
   Category _selectedCategory = Category.men;
 
   bool isLoading = false;
+
+  bool isUpdate = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    nameController.text = widget.product.name;
+    procutDescripController.text = widget.product.description;
+    originalPriceController.text = widget.product.price;
+    discountedPriceController.text = widget.product.discountedPrice;
+    _selectedCategory = Category.values
+        .firstWhere((cat) => cat.name == widget.product.category);
+  }
 
   Future<void> _pImage1(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(source: source);
@@ -113,7 +128,16 @@ class AddNewProdcutState extends State<AddNewProdcut> {
         backgroundColor: ColorsManager.offWhiteColor,
         appBar: AppBar(
           backgroundColor: ColorsManager.lightGreyColor,
-          title: const Text("Add Latest Product"),
+          actions: [
+            ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    isUpdate = true;
+                  });
+                },
+                child: const Text("Update"))
+          ],
+          title: Text(widget.product.name),
         ),
         body: Form(
           key: fcFormKey,
@@ -175,7 +199,12 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                                     onTap: () {
                                       _pImage1(ImageSource.gallery);
                                     },
-                                    child: const InputBrandLogoUi(),
+                                    child: Image.network(
+                                      widget.product.photos[2],
+                                      width: 35.w,
+                                      height: 50.w,
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
                                 )
                         ],
@@ -186,7 +215,7 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          _pImage2Pic != null
+                          isUpdate && _pImage2Pic != null
                               ? Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Center(
@@ -203,15 +232,23 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                                     ),
                                   ),
                                 )
-                              : Center(
-                                  child: InkWell(
-                                    onTap: () {
-                                      _pImage2(ImageSource.gallery);
-                                    },
-                                    child: const InputProImaUi(),
+                              : Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: InkWell(
+                                      onTap: () {
+                                        _pImage2(ImageSource.gallery);
+                                      },
+                                      child: Image.network(
+                                        widget.product.photos.first,
+                                        width: 35.w,
+                                        height: 50.w,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                          _pImage3Pic != null
+                          isUpdate && _pImage3Pic != null
                               ? Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Center(
@@ -233,7 +270,12 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                                     onTap: () {
                                       _pImage3(ImageSource.gallery);
                                     },
-                                    child: const InputProImaUi(),
+                                    child: Image.network(
+                                      widget.product.photos[1],
+                                      width: 35.w,
+                                      height: 50.w,
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
                                 ),
                         ],
@@ -260,6 +302,7 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                         children: [
                           const ReturnLabel(label: "Name"),
                           CustomFormField(
+                            readOnly: !isUpdate,
                             controller: nameController,
                             hintText: 'Type here',
                             keyboardType: TextInputType.name,
@@ -323,6 +366,7 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                           const ReturnLabel(label: "Price"),
                           CustomFormField(
                             controller: originalPriceController,
+                            readOnly: !isUpdate,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Enter the price';
@@ -341,6 +385,7 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                           const ReturnLabel(label: "Discounted Price"),
                           CustomFormField(
                             controller: discountedPriceController,
+                            readOnly: !isUpdate,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Enter the Discounted Price';
@@ -368,7 +413,7 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                                     _pImage2Pic != null &&
                                     _pImage3Pic != null) {
                                   context.read<ProductBloc>().add(
-                                        AddProductEvent(
+                                        UpdateProductEvent(
                                           Product(
                                               name: nameController.text,
                                               description:
@@ -414,5 +459,3 @@ class AddNewProdcutState extends State<AddNewProdcut> {
     );
   }
 }
-
-enum Category { men, women, baby, cosmetic }

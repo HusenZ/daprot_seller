@@ -30,18 +30,7 @@ class AddProductRepo {
       }
 
       String productId = _uuid.v4();
-      // await _firestore
-      //     .collection('Sellers')
-      //     .doc(uid)
-      //     .collection('Products')
-      //     .add({
-      //   'name': product.name,
-      //   'description': product.description,
-      //   'price': product.price,
-      //   'discountedPrice': product.discountedPrice,
-      //   'category': product.category,
-      //   'selectedPhotos': imageUrls,
-      // });
+
       await _firestore.collection('Products').add({
         'productId': productId,
         'shopId': uid,
@@ -58,6 +47,22 @@ class AddProductRepo {
     } catch (e) {
       print('Error adding product: $e');
       return 'Error adding product: $e';
+    }
+  }
+
+  Future<void> deleteProduct(ProductFromDB product, String productId) async {
+    final snapshot = await _firestore
+        .collection('Products')
+        .where('productId', isEqualTo: productId)
+        .get();
+    for (DocumentSnapshot doc in snapshot.docs) {
+      await doc.reference.update({
+        'name': product.name,
+        'description': product.description,
+        'price': product.price,
+        'discountedPrice': product.discountedPrice,
+        'category': product.category,
+      });
     }
   }
 }

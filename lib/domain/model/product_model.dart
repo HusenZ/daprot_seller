@@ -25,13 +25,17 @@ class ProductFromDB {
   final String description;
   final String price;
   final String discountedPrice;
-  final List<String> photos;
+  final List<dynamic> photos;
+  final String productId;
+  final String category;
 
   ProductFromDB(
       {required this.name,
       required this.description,
       required this.price,
       required this.discountedPrice,
+      required this.productId,
+      required this.category,
       required this.photos});
 
   Map<String, dynamic> toMap() {
@@ -53,6 +57,8 @@ class ProductFromDB {
       price: map['price'] ?? '',
       discountedPrice: map['discountedPrice'] ?? '',
       photos: List<String>.from(map['photos']),
+      productId: map['productId'] ?? '',
+      category: map['category'] ?? '',
     );
   }
 

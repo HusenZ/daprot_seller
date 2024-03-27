@@ -9,6 +9,11 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       String message = await AddProductRepo().addProduct(event.product);
       emit(AddProductState(message: message));
     });
+    on<UpdateProductEvent>((event, emit) async {
+      emit(LoadingState());
+      String message = await AddProductRepo().addProduct(event.product);
+      emit(AddProductState(message: message));
+    });
   }
 }
 
@@ -18,6 +23,11 @@ abstract class ProductEvent {}
 class AddProductEvent extends ProductEvent {
   final Product product;
   AddProductEvent(this.product);
+}
+
+class UpdateProductEvent extends ProductEvent {
+  final Product product;
+  UpdateProductEvent(this.product);
 }
 
 // States

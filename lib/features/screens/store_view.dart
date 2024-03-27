@@ -1,12 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
+import 'package:daprot_seller/domain/model/product_model.dart';
 import 'package:daprot_seller/domain/shop_data_repo.dart';
 import 'package:daprot_seller/features/screens/add_new_product.dart';
+import 'package:daprot_seller/features/screens/product_details_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sliver_tools/sliver_tools.dart';
+import 'package:uuid/uuid.dart';
 
 class MyStore extends StatelessWidget {
   final ProductStream repository = ProductStream();
@@ -123,7 +126,20 @@ class MyStore extends StatelessWidget {
                         (context, index) {
                           DocumentSnapshot product = snapshot.data!.docs[index];
                           return RowOfProductCard(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ProductScreen(
+                                    product: ProductFromDB(
+                                  name: product['name'],
+                                  description: product['description'],
+                                  price: product['price'],
+                                  discountedPrice: product['discountedPrice'],
+                                  photos: product['selectedPhotos'],
+                                  productId: product['productId'],
+                                  category: product['category'],
+                                )),
+                              ));
+                            },
                             title: product['name'],
                             price: product['price'],
                             image: product['selectedPhotos'].first,
