@@ -11,14 +11,13 @@ void customSnackBar(BuildContext context, String message, bool success) {
     content: Row(
       children: [
         SizedBox(
-          width: 90.w,
+          width: 70.w,
           child: Text(
             message,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: ColorsManager.whiteColor,
                   fontSize: 12.sp,
-                  overflow: TextOverflow.ellipsis,
                 ),
           ),
         ),

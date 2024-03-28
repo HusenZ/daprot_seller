@@ -76,42 +76,26 @@ class ProductRepository {
     }
   }
 
-  Future<String> updateProduct(
-      Product product, ProductFromDB originalProduct) async {
+  Future<String> updateProduct(Product product, ProductFromDB originalProduct,
+      List<dynamic> images) async {
     try {
-      String uid = FirebaseAuth.instance.currentUser?.uid ?? '';
-      List<String> updatedImageUrls = [];
       print("Entered int the update fucntion");
 
-      // Upload new images to Firebase Storage if updated
-      if (product.photos != null) {
-        for (XFile image in product.photos!) {
-          Reference ref = FirebaseStorage.instance
-              .ref('product-images/$uid/${_uuid.v4()}.jpg');
-          await ref.putFile(File(image.path));
-          String url = await ref.getDownloadURL();
-          updatedImageUrls.add(url);
-        }
-      }
-
-      // Retrieve the document to update
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('Products')
           .where('productId', isEqualTo: originalProduct.productId)
           .get();
 
-      // Check if the document exists
       if (querySnapshot.docs.isNotEmpty) {
-        // Get the document reference
         DocumentReference docRef = querySnapshot.docs.first.reference;
 
-        // Update the document with the provided product information
         await docRef.update({
           'name': product.name,
           'description': product.description,
           'price': product.price,
           'discountedPrice': product.discountedPrice,
           'category': product.category,
+          'selectedPhotos': images,
         });
 
         print('Product updated successfully');

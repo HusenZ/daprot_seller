@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:daprot_seller/bloc/add_product_bloc/add_prodcut_bloc.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/config/theme/fonts_manager.dart';
-import 'package:daprot_seller/domain/add_product_repo.dart';
 import 'package:daprot_seller/domain/model/product_model.dart';
 import 'package:daprot_seller/features/screens/add_new_product.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/custom_form_field.dart';
@@ -12,11 +11,13 @@ import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/loading_dailog.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/toggle_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
+import 'package:uuid/uuid.dart';
 
 class ProductScreen extends StatefulWidget {
   final ProductFromDB product;
@@ -81,6 +82,17 @@ class _ProductScreenState extends State<ProductScreen> {
         _pImage3Pic = pickedImage;
       });
     }
+  }
+
+  Future<String> getUrl(XFile image) async {
+    Uuid uuid = const Uuid();
+    String uid = FirebaseAuth.instance.currentUser?.uid ?? '';
+
+    Reference ref =
+        FirebaseStorage.instance.ref('product-images/$uid/${uuid.v4()}.jpg');
+    await ref.putFile(File(image.path));
+    String url = await ref.getDownloadURL();
+    return url;
   }
 
   Widget returnLabel(String label) {
@@ -430,79 +442,63 @@ class _ProductScreenState extends State<ProductScreen> {
                                     }
                                     Navigator.pop(context);
                                   },
-                                  onPressedNext: () {
-                                    List<XFile?> updatedPhotos = [
-                                      _pImage1Pic,
-                                      _pImage2Pic,
-                                      _pImage3Pic
-                                    ];
-                                    List<XFile> validPhotos = updatedPhotos
-                                        .where((photo) => photo != null)
-                                        .map((photo) => photo!)
-                                        .toList();
+                                  onPressedNext: () async {
+                                    List<String>? updatedPhotos;
                                     if (isUpdate) {
-                                      if (fcFormKey.currentState!.validate()) {
-                                        ProductRepository()
-                                            .updateProduct(
-                                                Product(
-                                                  name: nameController.text,
-                                                  description:
-                                                      procutDescripController
-                                                          .text,
-                                                  category:
-                                                      _selectedCategory.name,
-                                                  price: originalPriceController
-                                                      .text,
-                                                  discountedPrice:
-                                                      discountedPriceController
-                                                          .text,
-                                                  photos: validPhotos,
-                                                ),
-                                                widget.product)
-                                            .then((value) =>
-                                                Navigator.of(context).pop());
-                                        /*context.read<ProductBloc>().add(
-                                              UpdateProductEvent(
-                                                Product(
-                                                  name: nameController.text,
-                                                  description:
-                                                      procutDescripController
-                                                          .text,
-                                                  category:
-                                                      _selectedCategory.name,
-                                                  price: originalPriceController
-                                                      .text,
-                                                  discountedPrice:
-                                                      discountedPriceController
-                                                          .text,
-                                                  photos: validPhotos,
-                                                ),
-                                                widget.product,
-                                              ),
-                                            );*/
-                                      } else if (_pImage2Pic == null) {
-                                        customSnackBar(
-                                            context,
-                                            "Please upload the Product Images!",
-                                            false);
-                                      } else if (procutDescripController
-                                          .text.isEmpty) {
-                                        customSnackBar(
-                                            context,
-                                            "Please enter product description",
-                                            false);
-                                      } else if (procutDescripController
-                                          .text.length.isNegative) {
-                                        customSnackBar(context, "Price", false);
+                                      if (_pImage1Pic != null ||
+                                          _pImage2Pic != null ||
+                                          _pImage3Pic != null) {
+                                        updatedPhotos = [];
+                                        setState(() {
+                                          isLoading = true;
+                                        });
+
+                                        if (_pImage1Pic != null) {
+                                          String url1 =
+                                              await getUrl(_pImage1Pic!);
+                                          updatedPhotos.add(url1);
+                                        } else {
+                                          updatedPhotos
+                                              .add(widget.product.photos[0]);
+                                        }
+
+                                        if (_pImage2Pic != null) {
+                                          String url2 =
+                                              await getUrl(_pImage2Pic!);
+                                          updatedPhotos.add(url2);
+                                        } else {
+                                          updatedPhotos
+                                              .add(widget.product.photos[1]);
+                                        }
+                                        if (_pImage3Pic != null) {
+                                          String url3 =
+                                              await getUrl(_pImage3Pic!);
+
+                                          updatedPhotos.add(url3);
+                                        } else {
+                                          updatedPhotos
+                                              .add(widget.product.photos[2]);
+                                        }
                                       }
-                                    } else {
-                                      customSnackBar(
-                                          context,
-                                          'Please press Update button on top',
-                                          false);
+                                      Product updatedProduct = Product(
+                                        name: nameController.text,
+                                        description:
+                                            procutDescripController.text,
+                                        category: _selectedCategory.name,
+                                        price: originalPriceController.text,
+                                        discountedPrice:
+                                            discountedPriceController.text,
+                                        photos: [],
+                                      );
+                                      BlocProvider.of<ProductBloc>(context).add(
+                                        UpdateProductEvent(
+                                            updatedProduct,
+                                            widget.product,
+                                            updatedPhotos ??
+                                                widget.product.photos),
+                                      );
                                     }
-                                  },
-                                )
+                                  })
                               : Center(
                                   child: Column(
                                     crossAxisAlignment:

@@ -12,8 +12,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     });
     on<UpdateProductEvent>((event, emit) async {
       emit(LoadingState());
-      String message =
-          await productRepo.updateProduct(event.product, event.originalProduct);
+      String message = await productRepo.updateProduct(
+          event.product, event.originalProduct, event.imagesUrls);
       emit(AddProductState(message: message));
     });
     on<DeleteProductEvent>((event, emit) async {
@@ -40,7 +40,8 @@ class AddProductEvent extends ProductEvent {
 class UpdateProductEvent extends ProductEvent {
   final Product product;
   final ProductFromDB originalProduct;
-  UpdateProductEvent(this.product, this.originalProduct);
+  final List<dynamic> imagesUrls;
+  UpdateProductEvent(this.product, this.originalProduct, this.imagesUrls);
 }
 
 class DeleteProductEvent extends ProductEvent {
