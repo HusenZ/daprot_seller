@@ -7,7 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
-class AddProductRepo {
+class ProductRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -21,12 +21,14 @@ class AddProductRepo {
       List<String> imageUrls = [];
 
       // Upload images to Firebase Storage
-      for (XFile image in product.photos) {
-        Reference ref = FirebaseStorage.instance
-            .ref('product-images/$uid/${_uuid.v4()}.jpg');
-        await ref.putFile(File(image.path));
-        String url = await ref.getDownloadURL();
-        imageUrls.add(url);
+      if (product.photos != null) {
+        for (XFile image in product.photos!) {
+          Reference ref = FirebaseStorage.instance
+              .ref('product-images/$uid/${_uuid.v4()}.jpg');
+          await ref.putFile(File(image.path));
+          String url = await ref.getDownloadURL();
+          imageUrls.add(url);
+        }
       }
 
       String productId = _uuid.v4();
@@ -50,19 +52,77 @@ class AddProductRepo {
     }
   }
 
-  Future<void> deleteProduct(ProductFromDB product, String productId) async {
-    final snapshot = await _firestore
-        .collection('Products')
-        .where('productId', isEqualTo: productId)
-        .get();
-    for (DocumentSnapshot doc in snapshot.docs) {
-      await doc.reference.update({
-        'name': product.name,
-        'description': product.description,
-        'price': product.price,
-        'discountedPrice': product.discountedPrice,
-        'category': product.category,
-      });
+  Future<bool> deleteProduct(String productId) async {
+    try {
+      await _firestore
+          .collection('Products')
+          .where('productId', isEqualTo: productId)
+          .get()
+          .then(
+        (value) {
+          for (var element in value.docs) {
+            _firestore.collection('Products').doc(element.id).delete().then(
+              (value) {
+                return Future.value(true);
+              },
+            );
+          }
+        },
+      );
+      return Future.value(true);
+    } catch (e) {
+      print("Error in Deleteing produc ------> $e");
+      return Future.value(false);
+    }
+  }
+
+  Future<String> updateProduct(
+      Product product, ProductFromDB originalProduct) async {
+    try {
+      String uid = FirebaseAuth.instance.currentUser?.uid ?? '';
+      List<String> updatedImageUrls = [];
+      print("Entered int the update fucntion");
+
+      // Upload new images to Firebase Storage if updated
+      if (product.photos != null) {
+        for (XFile image in product.photos!) {
+          Reference ref = FirebaseStorage.instance
+              .ref('product-images/$uid/${_uuid.v4()}.jpg');
+          await ref.putFile(File(image.path));
+          String url = await ref.getDownloadURL();
+          updatedImageUrls.add(url);
+        }
+      }
+
+      // Retrieve the document to update
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('Products')
+          .where('productId', isEqualTo: originalProduct.productId)
+          .get();
+
+      // Check if the document exists
+      if (querySnapshot.docs.isNotEmpty) {
+        // Get the document reference
+        DocumentReference docRef = querySnapshot.docs.first.reference;
+
+        // Update the document with the provided product information
+        await docRef.update({
+          'name': product.name,
+          'description': product.description,
+          'price': product.price,
+          'discountedPrice': product.discountedPrice,
+          'category': product.category,
+        });
+
+        print('Product updated successfully');
+        return 'Product updated successfully';
+      } else {
+        // Document not found
+        throw Exception('Document not found');
+      }
+    } catch (e) {
+      print('Error updating product: $e');
+      return 'Error updating product: $e';
     }
   }
 }

@@ -11,6 +11,8 @@ class CustomFormField extends StatelessWidget {
     this.validator,
     this.width,
     this.readOnly,
+    this.autofocus,
+    this.focusNode,
   });
 
   final TextEditingController controller;
@@ -19,6 +21,8 @@ class CustomFormField extends StatelessWidget {
   final FormFieldValidator? validator;
   final double? width;
   final bool? readOnly;
+  final bool? autofocus;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,9 @@ class CustomFormField extends StatelessWidget {
       child: SizedBox(
         width: width,
         child: TextFormField(
+          autofocus: autofocus ?? false,
           readOnly: readOnly ?? false,
+          focusNode: focusNode,
           keyboardType: keyboardType,
           controller: controller,
           validator: validator,

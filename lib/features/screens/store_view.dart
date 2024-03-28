@@ -9,7 +9,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sliver_tools/sliver_tools.dart';
-import 'package:uuid/uuid.dart';
 
 class MyStore extends StatelessWidget {
   final ProductStream repository = ProductStream();

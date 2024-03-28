@@ -8,7 +8,7 @@ class Product {
   final String price;
   final String discountedPrice;
   final String category;
-  final List<XFile> photos;
+  final List<XFile>? photos;
 
   Product({
     required this.name,
@@ -44,7 +44,9 @@ class ProductFromDB {
     result.addAll({'name': name});
     result.addAll({'description': description});
     result.addAll({'price': price});
+    result.addAll({'productId': productId});
     result.addAll({'discountedPrice': discountedPrice});
+    result.addAll({'category': category});
     result.addAll({'photos': photos});
 
     return result;

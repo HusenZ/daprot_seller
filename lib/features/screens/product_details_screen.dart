@@ -3,14 +3,17 @@ import 'dart:io';
 import 'package:daprot_seller/bloc/add_product_bloc/add_prodcut_bloc.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/config/theme/fonts_manager.dart';
+import 'package:daprot_seller/domain/add_product_repo.dart';
 import 'package:daprot_seller/domain/model/product_model.dart';
 import 'package:daprot_seller/features/screens/add_new_product.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/custom_form_field.dart';
+import 'package:daprot_seller/features/widgets/common_widgets/delevated_button.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/loading_dailog.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/toggle_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
@@ -91,6 +94,12 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
+  FocusNode inputNode = FocusNode();
+// to open keyboard call this function;
+  void openKeyboard() {
+    FocusScope.of(context).requestFocus(inputNode);
+  }
+
   void showLoading() {
     LoadingDialog.showLoadingDialog(context);
   }
@@ -105,10 +114,24 @@ class _ProductScreenState extends State<ProductScreen> {
           });
           showLoading();
         }
+        if (state is DeleteLoadingState) {
+          setState(() {
+            isLoading = true;
+          });
+          showLoading();
+        }
+
         if (state is SuccessState) {
           setState(() {
             isLoading = false;
           });
+          Navigator.pop(context);
+        }
+        if (state is DeleteSuccessState) {
+          setState(() {
+            isLoading = false;
+          });
+          Navigator.pop(context);
           Navigator.pop(context);
         }
         if (state is AddProductState) {
@@ -129,13 +152,23 @@ class _ProductScreenState extends State<ProductScreen> {
         appBar: AppBar(
           backgroundColor: ColorsManager.lightGreyColor,
           actions: [
-            ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    isUpdate = true;
-                  });
-                },
-                child: const Text("Update"))
+            Visibility(
+              visible: !isUpdate,
+              child: ElevatedButton(
+                  onPressed: () {
+                    if (isUpdate) {
+                      setState(() {
+                        isUpdate = false;
+                      });
+                    } else {
+                      setState(() {
+                        isUpdate = true;
+                      });
+                      openKeyboard();
+                    }
+                  },
+                  child: const Text("Update")),
+            )
           ],
           title: Text(widget.product.name),
         ),
@@ -155,27 +188,10 @@ class _ProductScreenState extends State<ProductScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      /// TITLE
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: 1.5.h,
-                          bottom: 3.h,
-                        ),
-                        child: Text(
-                          'Add New Product',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge!
-                              .copyWith(
-                                  fontWeight: FontWeightManager.semiBold,
-                                  fontSize: 14.sp),
-                        ),
-                      ),
-
                       Column(
                         children: [
                           const ReturnLabel(label: "Product Images"),
-                          _pImage1Pic != null
+                          isUpdate && _pImage1Pic != null
                               ? Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Center(
@@ -200,7 +216,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                       _pImage1(ImageSource.gallery);
                                     },
                                     child: Image.network(
-                                      widget.product.photos[2],
+                                      widget.product.photos[0],
                                       width: 35.w,
                                       height: 50.w,
                                       fit: BoxFit.fill,
@@ -240,7 +256,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                         _pImage2(ImageSource.gallery);
                                       },
                                       child: Image.network(
-                                        widget.product.photos.first,
+                                        widget.product.photos[1],
                                         width: 35.w,
                                         height: 50.w,
                                         fit: BoxFit.fill,
@@ -271,7 +287,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                       _pImage3(ImageSource.gallery);
                                     },
                                     child: Image.network(
-                                      widget.product.photos[1],
+                                      widget.product.photos[2],
                                       width: 35.w,
                                       height: 50.w,
                                       fit: BoxFit.fill,
@@ -302,6 +318,8 @@ class _ProductScreenState extends State<ProductScreen> {
                         children: [
                           const ReturnLabel(label: "Name"),
                           CustomFormField(
+                            autofocus: isUpdate,
+                            focusNode: inputNode,
                             readOnly: !isUpdate,
                             controller: nameController,
                             hintText: 'Type here',
@@ -400,54 +418,118 @@ class _ProductScreenState extends State<ProductScreen> {
                       ),
                       isLoading
                           ? const Center(child: CircularProgressIndicator())
-                          : ToggleButton(
-                              back: "Cancel",
-                              next: "Add",
-                              onPressedBack: () {
-                                Navigator.pop(context);
-                              },
-                              onPressedNext: () {
-                                if (fcFormKey.currentState!.validate() &&
-                                    procutDescripController.text.isNotEmpty &&
-                                    _pImage1Pic != null &&
-                                    _pImage2Pic != null &&
-                                    _pImage3Pic != null) {
-                                  context.read<ProductBloc>().add(
-                                        UpdateProductEvent(
-                                          Product(
-                                              name: nameController.text,
-                                              description:
-                                                  procutDescripController.text,
-                                              category: _selectedCategory.name,
-                                              price:
-                                                  originalPriceController.text,
-                                              discountedPrice:
-                                                  discountedPriceController
+                          : isUpdate
+                              ? ToggleButton(
+                                  back: "Cancel",
+                                  next: "Update",
+                                  onPressedBack: () {
+                                    if (isUpdate) {
+                                      setState(() {
+                                        isUpdate = false;
+                                      });
+                                    }
+                                    Navigator.pop(context);
+                                  },
+                                  onPressedNext: () {
+                                    List<XFile?> updatedPhotos = [
+                                      _pImage1Pic,
+                                      _pImage2Pic,
+                                      _pImage3Pic
+                                    ];
+                                    List<XFile> validPhotos = updatedPhotos
+                                        .where((photo) => photo != null)
+                                        .map((photo) => photo!)
+                                        .toList();
+                                    if (isUpdate) {
+                                      if (fcFormKey.currentState!.validate()) {
+                                        ProductRepository()
+                                            .updateProduct(
+                                                Product(
+                                                  name: nameController.text,
+                                                  description:
+                                                      procutDescripController
+                                                          .text,
+                                                  category:
+                                                      _selectedCategory.name,
+                                                  price: originalPriceController
                                                       .text,
-                                              photos: [
-                                                _pImage1Pic!,
-                                                _pImage2Pic!,
-                                                _pImage3Pic!,
-                                              ]),
-                                        ),
-                                      );
-                                } else if (_pImage2Pic == null) {
-                                  customSnackBar(
-                                      context,
-                                      "Please upload the Product Images!",
-                                      false);
-                                } else if (procutDescripController
-                                    .text.isEmpty) {
-                                  customSnackBar(
-                                      context,
-                                      "Please enter product description",
-                                      false);
-                                } else if (procutDescripController
-                                    .text.length.isNegative) {
-                                  customSnackBar(context, "Price", false);
-                                }
-                              },
-                            ),
+                                                  discountedPrice:
+                                                      discountedPriceController
+                                                          .text,
+                                                  photos: validPhotos,
+                                                ),
+                                                widget.product)
+                                            .then((value) =>
+                                                Navigator.of(context).pop());
+                                        /*context.read<ProductBloc>().add(
+                                              UpdateProductEvent(
+                                                Product(
+                                                  name: nameController.text,
+                                                  description:
+                                                      procutDescripController
+                                                          .text,
+                                                  category:
+                                                      _selectedCategory.name,
+                                                  price: originalPriceController
+                                                      .text,
+                                                  discountedPrice:
+                                                      discountedPriceController
+                                                          .text,
+                                                  photos: validPhotos,
+                                                ),
+                                                widget.product,
+                                              ),
+                                            );*/
+                                      } else if (_pImage2Pic == null) {
+                                        customSnackBar(
+                                            context,
+                                            "Please upload the Product Images!",
+                                            false);
+                                      } else if (procutDescripController
+                                          .text.isEmpty) {
+                                        customSnackBar(
+                                            context,
+                                            "Please enter product description",
+                                            false);
+                                      } else if (procutDescripController
+                                          .text.length.isNegative) {
+                                        customSnackBar(context, "Price", false);
+                                      }
+                                    } else {
+                                      customSnackBar(
+                                          context,
+                                          'Please press Update button on top',
+                                          false);
+                                    }
+                                  },
+                                )
+                              : Center(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      DelevatedButton(
+                                        onTap: () {
+                                          BlocProvider.of<ProductBloc>(context)
+                                              .add(
+                                            DeleteProductEvent(
+                                              widget.product.productId,
+                                            ),
+                                          );
+                                        },
+                                        text: 'Delete',
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                                ColorsManager.lightRedColor,
+                                            foregroundColor:
+                                                ColorsManager.offWhiteColor,
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                     ],
                   ),
                 ),
