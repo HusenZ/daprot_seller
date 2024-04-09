@@ -5,6 +5,7 @@ import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/config/theme/fonts_manager.dart';
 import 'package:daprot_seller/domain/model/product_model.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/custom_form_field.dart';
+import 'package:daprot_seller/features/widgets/common_widgets/delevated_button.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/loading_dailog.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
@@ -34,7 +35,7 @@ class AddNewProdcutState extends State<AddNewProdcut> {
   XFile? _pImage2Pic;
   XFile? _pImage3Pic;
 
-  Category _selectedCategory = Category.men;
+  Category? _selectedCategory;
 
   bool isLoading = false;
 
@@ -112,8 +113,14 @@ class AddNewProdcutState extends State<AddNewProdcut> {
       child: Scaffold(
         backgroundColor: ColorsManager.offWhiteColor,
         appBar: AppBar(
-          backgroundColor: ColorsManager.lightGreyColor,
-          title: const Text("Add Latest Product"),
+          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+          title: Text(
+            "Add Latest Product",
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(fontSize: 16.sp, color: ColorsManager.whiteColor),
+          ),
         ),
         body: Form(
           key: fcFormKey,
@@ -138,13 +145,11 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                           bottom: 3.h,
                         ),
                         child: Text(
-                          'Add New Product',
+                          'Add New Product'.toUpperCase(),
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge!
-                              .copyWith(
-                                  fontWeight: FontWeightManager.semiBold,
-                                  fontSize: 14.sp),
+                              .copyWith(fontSize: 14.sp),
                         ),
                       ),
 
@@ -251,7 +256,7 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                           "Product Details",
                           style: TextStyle(
                               fontWeight: FontWeightManager.semiBold,
-                              fontSize: 16.sp),
+                              fontSize: 14.sp),
                         ),
                       ),
 
@@ -289,31 +294,28 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                         ),
                       ),
 
-                      /// Dropdown field
+                      /// Category field
                       Column(
                         children: [
                           const ReturnLabel(label: 'Select the category'),
-                          DropdownButton(
-                            value: _selectedCategory,
-                            items: Category.values
-                                .map(
-                                  (category) => DropdownMenuItem(
-                                    value: category,
-                                    child: Text(
-                                      category.name.toUpperCase(),
-                                    ),
-                                  ),
-                                )
-                                .toList(),
-                            onChanged: (value) {
-                              if (value == null) {
-                                return;
-                              }
-                              setState(() {
-                                _selectedCategory = value;
-                              });
+                          DelevatedButton(
+                            text: _selectedCategory == null
+                                ? "Select A Category"
+                                : _selectedCategory!.name.toUpperCase(),
+                            onTap: () {
+                              showDialog<Category>(
+                                context: context,
+                                builder: (context) => _CategoryDialog(
+                                  selectedCategory: _selectedCategory,
+                                  onChanged: (cat) {
+                                    setState(() {
+                                      _selectedCategory = cat;
+                                    });
+                                  },
+                                ),
+                              );
                             },
-                          ),
+                          )
                         ],
                       ),
 
@@ -373,7 +375,7 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                                               name: nameController.text,
                                               description:
                                                   procutDescripController.text,
-                                              category: _selectedCategory.name,
+                                              category: _selectedCategory!.name,
                                               price:
                                                   originalPriceController.text,
                                               discountedPrice:
@@ -400,6 +402,9 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                                 } else if (procutDescripController
                                     .text.length.isNegative) {
                                   customSnackBar(context, "Price", false);
+                                } else if (_selectedCategory == null) {
+                                  customSnackBar(
+                                      context, "Select category", false);
                                 }
                               },
                             ),
@@ -415,4 +420,73 @@ class AddNewProdcutState extends State<AddNewProdcut> {
   }
 }
 
-enum Category { men, women, baby, cosmetic }
+class _CategoryDialog extends StatefulWidget {
+  final ValueChanged<Category> onChanged;
+  final Category? selectedCategory;
+  const _CategoryDialog(
+      {required this.onChanged, required this.selectedCategory});
+  @override
+  __CategoryDialogState createState() => __CategoryDialogState();
+}
+
+class __CategoryDialogState extends State<_CategoryDialog> {
+  late Category _selectedCat;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedCat = widget.selectedCategory ?? Category.fashion;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Select Order Status'),
+      content: SingleChildScrollView(
+        child: Column(
+          children: Category.values.map((category) {
+            return RadioListTile<Category>(
+              title: Text(
+                category.name.toUpperCase(),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(color: ColorsManager.blackColor),
+              ),
+              value: category,
+              groupValue: _selectedCat,
+              onChanged: (value) {
+                if (value != null) {
+                  setState(() {
+                    _selectedCat = value;
+                  });
+                }
+              },
+            );
+          }).toList(),
+        ),
+      ),
+      actions: <Widget>[
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: ColorsManager.lightRedColor,
+          ),
+          child: const Text('Cancel'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            widget.onChanged(_selectedCat);
+            Navigator.of(context).pop();
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: ColorsManager.accentColor,
+          ),
+          child: const Text('Select'),
+        ),
+      ],
+    );
+  }
+}

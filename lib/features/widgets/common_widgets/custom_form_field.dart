@@ -49,7 +49,7 @@ class CustomFormField extends StatelessWidget {
             helperText: " ",
             hintText: hintText,
             hintStyle:
-                TextStyle(fontSize: 15.sp, color: ColorsManager.greyColor),
+                TextStyle(fontSize: 12.sp, color: ColorsManager.greyColor),
             helperStyle: const TextStyle(
               color: Colors.red,
             ),

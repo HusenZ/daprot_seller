@@ -15,7 +15,7 @@ class ReturnLabel extends StatelessWidget {
       child: Text(
         " $label",
         style:
-            TextStyle(fontWeight: FontWeightManager.semiBold, fontSize: 14.sp),
+            TextStyle(fontWeight: FontWeightManager.semiBold, fontSize: 12.sp),
       ),
     );
   }

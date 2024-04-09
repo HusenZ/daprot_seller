@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daprot_seller/domain/model/product_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:uuid/uuid.dart';
 
 class ProductRepository {
@@ -19,15 +19,33 @@ class ProductRepository {
 
     try {
       List<String> imageUrls = [];
-
-      // Upload images to Firebase Storage
+      // Upload images to Firebase Storage after compression
       if (product.photos != null) {
         for (XFile image in product.photos!) {
-          Reference ref = FirebaseStorage.instance
-              .ref('product-images/$uid/${_uuid.v4()}.jpg');
-          await ref.putFile(File(image.path));
-          String url = await ref.getDownloadURL();
-          imageUrls.add(url);
+          // Compress image
+          List<int>? compressedImageData =
+              await FlutterImageCompress.compressWithFile(
+            image.path,
+            minHeight: 1920,
+            minWidth: 1080,
+            quality: 85,
+          );
+
+          if (compressedImageData != null) {
+            // Create a temporary file to store compressed image
+            File compressedImageFile = File(image.path);
+            await compressedImageFile.writeAsBytes(compressedImageData);
+
+            // Upload compressed image to Firebase Storage
+            Reference ref = FirebaseStorage.instance
+                .ref('product-images/$uid/${_uuid.v4()}.jpg');
+            await ref.putFile(compressedImageFile);
+            String url = await ref.getDownloadURL();
+            imageUrls.add(url);
+
+            // Delete temporary compressed image file
+            await compressedImageFile.delete();
+          }
         }
       }
 

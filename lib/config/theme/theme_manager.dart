@@ -15,7 +15,7 @@ ThemeData getApplicationTheme() {
     colorScheme: kColorScheme,
     primaryColor: ColorsManager.primaryColor,
     appBarTheme: const AppBarTheme().copyWith(
-      color: kColorScheme.onPrimaryContainer,
+      color: const Color.fromARGB(232, 3, 115, 244),
       foregroundColor: kColorScheme.onSecondary,
     ),
     textTheme: TextTheme(

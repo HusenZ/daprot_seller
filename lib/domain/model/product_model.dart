@@ -2,6 +2,23 @@ import 'dart:convert';
 
 import 'package:image_picker/image_picker.dart';
 
+enum Category {
+  fashion,
+  electronics,
+  homeAndGarden,
+  beautyAndHealth,
+  sportsAndOutdoors,
+  toysAndGames,
+  babyAndKids,
+  foodAndBeverages,
+  automotive,
+  pets,
+  booksAndStationery,
+  artsAndCrafts,
+  officeSupplies,
+  industrialAndScientific,
+}
+
 class Product {
   final String name;
   final String description;

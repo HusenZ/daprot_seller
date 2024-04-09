@@ -39,7 +39,7 @@ class _ProductScreenState extends State<ProductScreen> {
   XFile? _pImage2Pic;
   XFile? _pImage3Pic;
 
-  Category _selectedCategory = Category.men;
+  Category? _selectedCategory;
 
   bool isLoading = false;
 
@@ -484,7 +484,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                         name: nameController.text,
                                         description:
                                             procutDescripController.text,
-                                        category: _selectedCategory.name,
+                                        category: _selectedCategory!.name,
                                         price: originalPriceController.text,
                                         discountedPrice:
                                             discountedPriceController.text,

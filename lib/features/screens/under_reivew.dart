@@ -40,35 +40,23 @@ class _UnderReivewState extends State<UnderReivew> {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     print(userId);
     // Access the document in the 'Sellers' collection with the user's ID
-    final clientDoc = await FirebaseFirestore.instance
-        .collection('Sellers')
-        .doc(userId)
-        .get();
+    final clientDoc =
+        await FirebaseFirestore.instance.collection('Shops').doc(userId).get();
 
     if (!clientDoc.exists) {
       throw Exception('Client document not found');
     }
 
-    // Access the 'Applications' subcollection
-    final applicationSnapshot =
-        await clientDoc.reference.collection('Applications').limit(1).get();
-
-    if (applicationSnapshot.docs.isEmpty) {
-      throw Exception('No applications found for the client');
-    }
-
-    final applicationData = applicationSnapshot.docs.first.data();
-
-    print(applicationData);
+    print(clientDoc);
 
     // Extract the 'brandLogoImage' and 'name' fields
-    final String brandLogoImage = applicationData['shopLogo'];
+    final String brandLogoImage = clientDoc['shopLogo'];
     print("brandLogoImage");
 
     print(brandLogoImage);
 
-    final String name = applicationData['name'];
-    final String location = applicationData['location'];
+    final String name = clientDoc['name'];
+    final String location = clientDoc['location'];
 
     return {
       'brandLogoImage': brandLogoImage,
@@ -82,7 +70,7 @@ class _UnderReivewState extends State<UnderReivew> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(232, 247, 242, 255),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(114, 247, 242, 255),
+        backgroundColor: const Color.fromARGB(114, 247, 242, 255),
         leading: Padding(
           padding: const EdgeInsets.fromLTRB(20, 18, 0, 0),
           child: InkWell(
@@ -154,20 +142,26 @@ class _UnderReivewState extends State<UnderReivew> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           const Icon(
                             Icons.location_on,
                             color: Color.fromARGB(200, 198, 194, 194),
                           ),
-                          Text(
-                            map['location'],
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
+                          SizedBox(
+                            width: 90.w,
+                            child: Text(
+                              map['location'],
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
                                     color: ColorsManager.secondaryColor,
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeightManager.semiBold),
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeightManager.semiBold,
+                                  ),
+                            ),
                           ),
                         ],
                       ),
@@ -183,6 +177,7 @@ class _UnderReivewState extends State<UnderReivew> {
                       child: Text(
                         'We have received your \n verification request...',
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              fontSize: 10.sp,
                               color: ColorsManager.whiteColor,
                               fontWeight: FontWeightManager.semiBold,
                             ),
