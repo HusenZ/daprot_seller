@@ -187,21 +187,6 @@ class _FCScreen3State extends State<FCScreen3> {
                                         isAccepted: _accepted),
                                   );
 
-                              /// FC Registered SANCKBAR
-                              // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              //   shape: const RoundedRectangleBorder(
-                              //       borderRadius: BorderRadius.only(
-                              //           topLeft: Radius.circular(25),
-                              //           topRight: Radius.circular(25))),
-                              //   backgroundColor: ColorsManager.primaryColor,
-                              //   content: Text(
-                              //     "Successfully ENROLLED!!",
-                              //     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              //         color: ColorsManager.whiteColor,
-                              //         fontSize: FontSize.s15.sp),
-                              //   ),
-                              //   duration: const Duration(seconds: 2),
-                              // ));
                               if (_gstImage != null && _accept) {
                                 context.read<ShBloc>().add(
                                       ShForm3Event(

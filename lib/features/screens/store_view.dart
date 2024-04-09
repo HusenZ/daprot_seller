@@ -343,12 +343,14 @@ class BottomTitle extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                locaion,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(fontSize: 10.sp, color: ColorsManager.greyColor),
+              SizedBox(
+                width: 90.w,
+                child: Text(
+                  locaion,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontSize: 10.sp, color: ColorsManager.greyColor),
+                ),
               ),
               SizedBox(
                 width: 4.w,

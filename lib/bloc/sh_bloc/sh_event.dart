@@ -75,3 +75,13 @@ class ShForm3Event extends ShEvent {
         isAccepted,
       ];
 }
+
+class ShLocationEvent extends ShEvent {
+  final double latitude;
+  final double longitude;
+
+  ShLocationEvent({required this.latitude, required this.longitude});
+
+  @override
+  List<Object?> get props => [latitude, longitude];
+}

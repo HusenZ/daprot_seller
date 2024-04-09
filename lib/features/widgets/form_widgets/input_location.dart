@@ -1,30 +1,39 @@
 import 'package:daprot_seller/bloc/location_bloc/user_locaion_events.dart';
 import 'package:daprot_seller/bloc/location_bloc/user_location_bloc.dart';
 import 'package:daprot_seller/bloc/location_bloc/user_location_state.dart';
+import 'package:daprot_seller/bloc/sh_bloc/sh_bloc.dart';
+import 'package:daprot_seller/bloc/sh_bloc/sh_event.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/config/theme/fonts_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
-class InputLocation extends StatelessWidget {
-  const InputLocation({
+class InputLocation extends StatefulWidget {
+  InputLocation({
     super.key,
     required this.locationController,
   });
 
   final TextEditingController locationController;
+  @override
+  State<InputLocation> createState() => _InputLocationState();
+}
 
+class _InputLocationState extends State<InputLocation> {
   @override
   Widget build(BuildContext context) {
-    String? locationText = locationController.text;
+    String? locationText = widget.locationController.text;
     return BlocListener<LocationBloc, LocationState>(
       listener: (context, state) {
         if (state is LocationLoadingState) {
-          locationController.text = 'Loading...';
+          widget.locationController.text = 'Loading...';
         }
         if (state is LocationLoadedState) {
-          locationController.text = state.placeName;
+          widget.locationController.text = state.placeName;
+
+          BlocProvider.of<ShBloc>(context).add(ShLocationEvent(
+              latitude: state.latitude, longitude: state.longitude));
           debugPrint(locationText);
         }
       },
@@ -42,7 +51,7 @@ class InputLocation extends StatelessWidget {
                   child: TextFormField(
                     keyboardType: TextInputType.streetAddress,
                     readOnly: true,
-                    controller: locationController,
+                    controller: widget.locationController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Add the location!';

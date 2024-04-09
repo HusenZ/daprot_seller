@@ -20,6 +20,8 @@ class ShopFormRepo {
   static late String closetime;
   static late bool delivery;
   static late String shPhone;
+  static late double latitude1;
+  static late double longitude1;
 //step2 data
   static late String ownerName;
   static late String bannerImage;
@@ -29,6 +31,11 @@ class ShopFormRepo {
 //step3 data
   static late bool conditionaccept;
   static late String gstImage;
+
+  static location({required double latitude, required double longitude}) {
+    latitude1 = latitude;
+    longitude1 = longitude;
+  }
 
   static Future<void> addForm1({
     required String shNameIn,
@@ -161,6 +168,8 @@ class ShopFormRepo {
         'dilivery': delivery,
         'shopImage': bannerImage,
         'conditionAcceptstatus': conditionaccept,
+        'latitude': latitude1,
+        'longitude': longitude1,
         'applicationStatus': 'pending'
       });
       //create interest collection inside application collection

@@ -26,6 +26,11 @@ class ShBloc extends Bloc<ShEvent, ShState> {
           isAvailable: event.isParking!);
     });
 
+    on<ShLocationEvent>(
+      (event, emit) => ShopFormRepo.location(
+          latitude: event.latitude, longitude: event.longitude),
+    );
+
     on<ShForm2Event>(
       (event, emit) {
         // Push the data to the fire base
@@ -54,8 +59,9 @@ class ShBloc extends Bloc<ShEvent, ShState> {
       emit(ShopLoadingState());
 
       await ShopFormRepo.addForm3(
-              coditionacceptance: event.isAccepted!, gstImg: event.gstImage)
-          .then((value) {
+        coditionacceptance: event.isAccepted!,
+        gstImg: event.gstImage,
+      ).then((value) {
         if (value == true) {
           emit(ShopSuccessState());
         } else {

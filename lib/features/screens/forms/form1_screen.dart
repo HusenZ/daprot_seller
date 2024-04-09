@@ -39,7 +39,6 @@ class _FCScreen1State extends State<FCScreen1> {
   String? openTime;
   String? closeTime;
 
-  //
   XFile? _shopLogo;
 
   Future<void> _pickShopLogo(ImageSource source) async {
@@ -143,7 +142,9 @@ class _FCScreen1State extends State<FCScreen1> {
                       Column(
                         children: [
                           returnLabel("Location"),
-                          InputLocation(locationController: locationController),
+                          InputLocation(
+                            locationController: locationController,
+                          ),
                         ],
                       ),
 
