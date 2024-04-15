@@ -61,6 +61,7 @@ dependencies:
   intl: ^0.19.0
   flutter_image_compress: ^2.2.0
   fl_chart: ^0.67.0
+  google_sign_in: ^6.2.1
   
 dev_dependencies:
   flutter_test:
@@ -89,11 +90,6 @@ flutter:
     - assets/images/dp.png
     - assets/images/
     - assets/lottie/
-    - assets/images/dummy_image/shirt1.jpg
-    - assets/images/dummy_image/shoe1.jpg
-    - assets/images/dummy_image/wtop.jpg
-    - assets/images/dummy_image/baby.jpg
-    - assets/images/dummy_image/cosmetic.jpg
     - assets/lottie/splashLottei.json
     - assets/lottie/no_network.json
     - assets/lottie/product_uploading_lottie.json

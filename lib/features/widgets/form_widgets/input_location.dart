@@ -5,6 +5,7 @@ import 'package:daprot_seller/bloc/sh_bloc/sh_bloc.dart';
 import 'package:daprot_seller/bloc/sh_bloc/sh_event.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/config/theme/fonts_manager.dart';
+import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
@@ -35,6 +36,10 @@ class _InputLocationState extends State<InputLocation> {
           BlocProvider.of<ShBloc>(context).add(ShLocationEvent(
               latitude: state.latitude, longitude: state.longitude));
           debugPrint(locationText);
+        }
+        if (state is LocationErrorState) {
+          widget.locationController.text = '';
+          customSnackBar(context, 'Something Went Wrong', false);
         }
       },
       child: BlocBuilder<LocationBloc, LocationState>(

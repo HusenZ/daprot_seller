@@ -12,7 +12,20 @@
           "package_name": "com.example.daprot_seller"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "211804662370-r6ce9tupj3mvj2i3fhe9v0helsl887lb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.daprot_seller",
+            "certificate_hash": "8b692eb166dfbe3def6aa64cc69c1b611bdde800"
+          }
+        },
+        {
+          "client_id": "211804662370-7nq8mu12a0r28rit54bgrmdhif9i8bm6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAhySSQ72wsO5k_bXU4X5tmwriJtOoFuLo"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "211804662370-7nq8mu12a0r28rit54bgrmdhif9i8bm6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "211804662370-fqnv943kclbfqn3lloeu5iqmpj0tgaf0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.daprotV1"
+              }
+            }
+          ]
         }
       }
     },
@@ -31,7 +56,20 @@
           "package_name": "com.example.daprot_v1"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "211804662370-i15irr4igmenqt61qm64uln4f4tk3h0c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.daprot_v1",
+            "certificate_hash": "8b692eb166dfbe3def6aa64cc69c1b611bdde800"
+          }
+        },
+        {
+          "client_id": "211804662370-7nq8mu12a0r28rit54bgrmdhif9i8bm6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAhySSQ72wsO5k_bXU4X5tmwriJtOoFuLo"
@@ -39,7 +77,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "211804662370-7nq8mu12a0r28rit54bgrmdhif9i8bm6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "211804662370-fqnv943kclbfqn3lloeu5iqmpj0tgaf0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.daprotV1"
+              }
+            }
+          ]
         }
       }
     }

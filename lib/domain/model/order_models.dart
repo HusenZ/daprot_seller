@@ -71,7 +71,7 @@ class OrderItem {
   final String name;
   final String price;
   final String details;
-  final String imageUrl;
+  final List<dynamic> imageUrl;
   final String category;
   final String cpId;
   final String shopId;

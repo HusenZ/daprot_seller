@@ -18,6 +18,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await AppBlocProvider.initialize();
+  await AppBlocProvider.initializeGooglebloc();
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Color.fromARGB(0, 218, 40, 40),
@@ -40,6 +41,9 @@ void main() async {
         ),
         BlocProvider(
           create: (context) => OrderBloc(),
+        ),
+        BlocProvider(
+          create: (context) => AppBlocProvider.googlebloc,
         ),
       ],
       child: MyApp(),

@@ -3,6 +3,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class PhoneVerificationApi {
+  static Future<bool> emailExists(String email) async {
+    await Future.delayed(const Duration(seconds: 1));
+    debugPrint("email is $email");
+    final querySnapshot = await FirebaseFirestore.instance
+        .collection('Sellers')
+        .where('email', isEqualTo: email)
+        .get();
+
+    bool exists = querySnapshot.docs.isNotEmpty;
+    debugPrint("exists value is $exists");
+    debugPrint("email is $email");
+    return exists;
+  }
+
   static Future<bool> checkPhoneNumberExists(String phoneNumber) async {
     await Future.delayed(const Duration(seconds: 1));
     debugPrint("phone no is $phoneNumber");

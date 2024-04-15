@@ -3,7 +3,6 @@ import 'package:daprot_seller/features/screens/forms/form1_screen.dart';
 import 'package:daprot_seller/features/screens/forms/form2_screen.dart';
 import 'package:daprot_seller/features/screens/forms/form3_screen.dart';
 import 'package:daprot_seller/features/screens/auth_screen/login_screen.dart';
-import 'package:daprot_seller/features/screens/auth_screen/otp_screen.dart';
 import 'package:daprot_seller/features/screens/auth_screen/set_profile_screen.dart';
 import 'package:daprot_seller/features/screens/home_screen.dart';
 import 'package:daprot_seller/features/screens/shop_dashboard.dart';
@@ -33,7 +32,6 @@ Map<String, WidgetBuilder> get routes {
   return <String, WidgetBuilder>{
     Routes.authRoute: (context) => const LoginScreen(),
     Routes.splashRoute: (context) => const SplashScreen(),
-    Routes.otpRoute: (context) => const OtpScreen(),
     Routes.setProfileRoute: (context) => const SetProfileScreen(),
     Routes.homeRoute: (context) => const HomeScreen(),
     Routes.form1: (context) => const FCScreen1(),

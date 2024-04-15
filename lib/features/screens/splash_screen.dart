@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daprot_seller/config/constants/app_images.dart';
 import 'package:daprot_seller/config/constants/lottie_img.dart';
 import 'package:daprot_seller/config/routes/routes_manager.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
@@ -29,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future navigation() {
-    return Future.delayed(const Duration(seconds: 6), () async {
+    return Future.delayed(const Duration(seconds: 3), () async {
       final preferences = await SharedPreferences.getInstance();
       final bool isAuthenticated =
           preferences.getBool('isAuthenticated') ?? false;
@@ -100,7 +101,10 @@ class _SplashScreenState extends State<SplashScreen>
         height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [ColorsManager.whiteColor, ColorsManager.secondaryColor],
+            colors: [
+              ColorsManager.whiteColor,
+              Color.fromARGB(237, 75, 182, 232)
+            ],
             begin: Alignment(0.0, 0.0),
             end: Alignment(0.0, 1.0),
           ),
@@ -108,25 +112,14 @@ class _SplashScreenState extends State<SplashScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            const Flexible(
+            Flexible(
               flex: 3,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  // LottieBuilder.asset(
-                  //   LottieImages.logo,
-                  //   width: double.infinity,
-                  //   onLoaded: (composition) {
-                  //     // The animation has loaded
-                  //     setState(() {
-                  //       _isAnimationPlaying = false; // Stop the animation
-                  //     });
-                  //   },
-                  //   repeat: false,
-                  //   reverse: false,
-                  // ),
-                  CopyRights(),
+                  Image.asset(AppImages.daprotLogin),
+                  const CopyRights(),
                 ],
               ),
             ),

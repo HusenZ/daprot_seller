@@ -1,11 +1,15 @@
 import 'package:daprot_seller/bloc/auth_bloc/auth_bloc.dart';
-import 'package:daprot_seller/bloc/auth_bloc/auth_events.dart';
 import 'package:daprot_seller/bloc/auth_bloc/auth_state.dart';
+import 'package:daprot_seller/config/routes/routes_manager.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/custom_text_field.dart';
+import 'package:daprot_seller/domain/connectivity_helper.dart';
+import 'package:daprot_seller/domain/sign_up_repo.dart';
+import 'package:daprot_seller/features/screens/auth_screen/login_screen.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/delevated_button.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/loading_button.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/profile_photo_widget.dart';
+import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,7 +24,9 @@ class SetProfileScreen extends StatefulWidget {
 
 class SetProfileScreenState extends State<SetProfileScreen> {
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final User? user = FirebaseAuth.instance.currentUser;
+
   XFile? _profileImage;
   bool isLoading = false;
 
@@ -36,23 +42,19 @@ class SetProfileScreenState extends State<SetProfileScreen> {
   @override
   void dispose() {
     _nameController.dispose();
-    _emailController.dispose();
+    _phoneController.dispose();
 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    String phoneNumber;
 
     // final GlobalKey<FormState> _setProfileFormKey = GlobalKey<FormState>();
+    String userName = user!.displayName!;
+    String userEmail = user!.email!;
 
-    final inputTextSize = screenWidth * 0.04;
-    final arguments = (ModalRoute.of(context)?.settings.arguments ??
-        <String, String>{}) as Map;
-    phoneNumber = arguments['phoneNumber'];
     return BlocListener<AppBloc, AppState>(
       listener: (context, state) {
         if (state is AppStateLoading) {
@@ -100,34 +102,6 @@ class SetProfileScreenState extends State<SetProfileScreen> {
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.03),
-                CustomTextFormField(
-                  controller: _nameController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Enter the Name';
-                    }
-                    return null;
-                  },
-                  inputTextSize: inputTextSize,
-                  label: 'Name',
-                ),
-                SizedBox(height: screenHeight * 0.03),
-                CustomTextFormField(
-                    controller: _emailController,
-                    inputTextSize: inputTextSize,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Enter the Email address';
-                      }
-                      String emailRegex =
-                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
-                      if (!RegExp(emailRegex).hasMatch(value)) {
-                        return 'Enter a valid Email address';
-                      }
-                      return null;
-                    },
-                    label: 'Email'),
-                SizedBox(height: screenHeight * 0.03),
                 Container(
                   height: 8.h,
                   width: 98.w,
@@ -136,24 +110,79 @@ class SetProfileScreenState extends State<SetProfileScreen> {
                       border: Border.all()),
                   child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(phoneNumber)),
+                      child: Padding(
+                        padding: EdgeInsets.all(8.sp),
+                        child: Text(
+                          user!.displayName ?? "user name",
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      )),
                 ),
+                SizedBox(height: screenHeight * 0.03),
+                Container(
+                  height: 8.h,
+                  width: 98.w,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.sp),
+                      border: Border.all()),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: SizedBox(
+                      width: 97.w,
+                      child: Padding(
+                        padding: EdgeInsets.all(8.sp),
+                        child: Text(
+                          user!.email ?? "email",
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: screenHeight * 0.03),
+                InputTextField(contactEditingController: _phoneController),
                 SizedBox(height: screenHeight * 0.03),
                 isLoading
                     ? const LoadingButton()
                     : DelevatedButton(
                         text: 'Create Account',
                         onTap: () {
-                          setState(() {
-                            isLoading = true;
-                          });
-                          BlocProvider.of<AppBloc>(context).add(SignUpEvent(
-                            fullName: _nameController.text,
-                            email: _emailController.text,
-                            phoneNumber: phoneNumber,
-                            profile: _profileImage,
-                            context: context,
-                          ));
+                          if (_phoneController.text.isEmpty) {
+                            customSnackBar(
+                                context, "Please Enter Phone number", false);
+                          }
+                          if (_profileImage == null) {
+                            customSnackBar(
+                                context, "Please Upload Profile Image", false);
+                          }
+                          if (_phoneController.text.isNotEmpty &&
+                              _profileImage != null) {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            SignUpApi.addUser(
+                                    profile: _profileImage!,
+                                    name: userName,
+                                    email: userEmail,
+                                    phone: _phoneController.text)
+                                .then(
+                              (value) {
+                                if (value) {
+                                  ConnectivityHelper.replaceIfConnected(
+                                      context, Routes.homeRoute);
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                } else {
+                                  customSnackBar(
+                                      context, 'Something went wrong', false);
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                }
+                              },
+                            );
+                          }
                         },
                       ),
               ],
