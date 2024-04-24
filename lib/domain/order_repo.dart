@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daprot_seller/domain/model/order_models.dart';
+import 'package:daprot_seller/domain/model/shipping_address.dart';
 import 'package:daprot_seller/domain/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -70,6 +71,17 @@ class OrderRepository {
                 'https://th.bing.com/th/id/OIP.-MJ8HCqPBzqddQrWrY2dCQHaHa?w=512&h=512&rs=1&pid=ImgDetMain',
             uid: '0');
       }
+    });
+  }
+
+  Stream<Shipping> streamShippingAddress(String uid) {
+    return FirebaseFirestore.instance
+        .collection('Users')
+        .doc(uid)
+        .collection('ShippingAddress')
+        .snapshots()
+        .map((snapshot) {
+      return Shipping.fromMap(snapshot.docs.first.data());
     });
   }
 }

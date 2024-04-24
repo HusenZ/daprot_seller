@@ -1,125 +1,164 @@
+import 'package:daprot_seller/bloc/order_bloc/order_bloc.dart';
+import 'package:daprot_seller/bloc/order_bloc/order_events.dart';
+import 'package:daprot_seller/bloc/order_bloc/order_states.dart';
+import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/domain/model/order_models.dart';
-import 'package:daprot_seller/domain/model/user_model.dart';
-import 'package:daprot_seller/domain/order_repo.dart';
+import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
+import 'package:daprot_seller/features/widgets/order_widgets/product_details_card.dart';
+import 'package:daprot_seller/features/widgets/order_widgets/user_detail_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
 
-class OrderDetailsScreen extends StatelessWidget {
+class OrderDetailsScreen extends StatefulWidget {
   final OrderModel order;
   const OrderDetailsScreen({super.key, required this.order});
 
   @override
+  State<OrderDetailsScreen> createState() => _OrderDetailsScreenState();
+}
+
+class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
+  OrderStatus _selectedStatus = OrderStatus.pending;
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(order.orderStatus.toUpperCase()),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            // User details and shipping address card
-            UserDetailsCard(order: order),
-            const SizedBox(height: 16.0), // Add spacing between cards
-            // Product details card
-            ProductDetailsCard(order: order),
-          ],
+    return BlocListener<OrderBloc, OrderState>(
+      listener: (context, state) {
+        if (state is OrderUpdateSuccess) {
+          customSnackBar(context, 'Status Updated', true);
+        }
+        if (state is OrderUpdateFailure) {
+          customSnackBar(context, 'Status Updated Failed', false);
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.order.orderStatus.toUpperCase()),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              UserDetailsCard(order: widget.order),
+              const SizedBox(height: 16.0),
+              ProductDetailsCard(order: widget.order),
+              ElevatedButton(
+                onPressed: () async {
+                  OrderStatus? selectedStatus = await showDialog<OrderStatus>(
+                    context: context,
+                    builder: (context) => _OrderStatusDialog(
+                      orderBloc: BlocProvider.of<OrderBloc>(context),
+                      order: widget.order,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedStatus = value;
+                        });
+                      },
+                    ),
+                  );
+
+                  if (selectedStatus != null) {
+                    BlocProvider.of<OrderBloc>(context).add(
+                      UpdateOrderStatus(
+                        orderId: widget.order.orderId,
+                        newStatus: selectedStatus.name,
+                      ),
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorsManager.accentColor),
+                child: Text(
+                  widget.order.orderStatus.toUpperCase(),
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        fontSize: 9.5.sp,
+                        color: widget.order.orderStatus ==
+                                OrderStatus.cancelled.name
+                            ? Colors.red
+                            : Colors.white,
+                      ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class UserDetailsCard extends StatelessWidget {
+class _OrderStatusDialog extends StatefulWidget {
+  final OrderBloc orderBloc;
+  final ValueChanged<OrderStatus> onChanged;
   final OrderModel order;
-  final OrderRepository repo = OrderRepository();
 
-  UserDetailsCard({super.key, required this.order});
+  const _OrderStatusDialog({
+    required this.orderBloc,
+    required this.order,
+    required this.onChanged,
+  });
 
   @override
-  Widget build(BuildContext context) {
-    UserModel? user;
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: StreamBuilder<UserModel>(
-            stream: repo.streamUser(order.userId),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                user = snapshot.data;
-              }
-              if (!snapshot.hasData) {
-                debugPrint('!! Snapshot is not having data !!');
-                user = UserModel(
-                    name: 'name',
-                    email: 'email',
-                    phNo: 'phNo',
-                    imgUrl: 'profilePhoto',
-                    uid: '');
-              }
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'User Details',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const SizedBox(height: 8.0),
-                  Text('Name: ${user!.name}'),
-                  Text('Phone: ${user!.phNo}'),
-                  const Divider(thickness: 1.0),
-                  Text(
-                    'Shipping Address',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ],
-              );
-            }),
-      ),
-    );
-  }
+  __OrderStatusDialogState createState() => __OrderStatusDialogState();
 }
 
-class ProductDetailsCard extends StatelessWidget {
-  final OrderModel order;
+class __OrderStatusDialogState extends State<_OrderStatusDialog> {
+  late OrderStatus _selectedStatus;
 
-  const ProductDetailsCard({super.key, required this.order});
+  @override
+  void initState() {
+    super.initState();
+    _selectedStatus = OrderStatus.pending; // Set initial selected status
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            // Display product image
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Image.network(
-                order.orderItems.first.imageUrl.first,
-                width: 100.0,
-                height: 100.0,
-                fit: BoxFit.cover,
-              ),
-            ),
-            const SizedBox(width: 16.0),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    order.orderItems.first.name,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const SizedBox(height: 4.0),
-                  Text('Price: \$${order.orderItems.first.price}'),
-                  const SizedBox(height: 4.0),
-                  Text('Total: ${order.totalPrice}'),
-                ],
-              ),
-            ),
-          ],
-        ),
+    return AlertDialog(
+      title: const Text('Select Order Status'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: OrderStatus.values.map((status) {
+          return RadioListTile<OrderStatus>(
+            title: Text(status.name),
+            value: status,
+            groupValue: _selectedStatus,
+            onChanged: (value) {
+              if (value != null) {
+                setState(() {
+                  _selectedStatus = value;
+                });
+              }
+            },
+          );
+        }).toList(),
       ),
+      actions: <Widget>[
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: ColorsManager.lightRedColor,
+          ),
+          child: const Text('Cancel'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            widget.orderBloc.add(
+              UpdateOrderStatus(
+                orderId: widget.order.orderId,
+                newStatus: _selectedStatus.name,
+              ),
+            );
+            Navigator.of(context).pop();
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: ColorsManager.accentColor,
+          ),
+          child: const Text('Update'),
+        ),
+      ],
     );
   }
 }

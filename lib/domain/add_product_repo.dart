@@ -19,6 +19,10 @@ class ProductRepository {
 
     try {
       List<String> imageUrls = [];
+      DocumentSnapshot<Map<String, dynamic>> locationDoc =
+          await _firestore.collection('Shops').doc(uid).get();
+      String location = locationDoc['location'];
+      print("---> Prouduct Location --------> $location");
       // Upload images to Firebase Storage after compression
       if (product.photos != null) {
         for (XFile image in product.photos!) {
@@ -60,6 +64,7 @@ class ProductRepository {
         'discountedPrice': product.discountedPrice,
         'category': product.category,
         'selectedPhotos': imageUrls,
+        'location': location,
       });
 
       print('Product added successfully');

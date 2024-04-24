@@ -6,7 +6,10 @@ import 'package:daprot_seller/domain/shop_data_repo.dart';
 import 'package:daprot_seller/features/screens/add_new_product.dart';
 import 'package:daprot_seller/features/screens/product_details_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
@@ -49,106 +52,144 @@ class MyStore extends StatelessWidget {
               ),
             );
           }
-          return CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                flexibleSpace: FlexibleSpaceBar(
-                  background: CachedNetworkImage(
-                    imageUrl: snapshot.data!.docs.first["shopImage"],
-                    fit: BoxFit.cover,
+          return SafeArea(
+            child: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: Stack(
+                      children: [
+                        SizedBox(
+                          height: 22.h,
+                          width: 100.w,
+                          child: CachedNetworkImage(
+                            imageUrl: snapshot.data!.docs.first["shopImage"],
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.transparent,
+                                Colors.black.withOpacity(0.6),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 13.h,
+                          left: 85.w,
+                          child: IconButton.outlined(
+                            color: ColorsManager.whiteColor,
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.edit,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  floating: false,
+                  pinned: false,
+                  expandedHeight: 20.h,
+                  backgroundColor: Colors.white,
+                  bottom: PreferredSize(
+                    preferredSize: Size.fromHeight(2.h),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 27.sp,
+                      child: CircleAvatar(
+                        backgroundImage:
+                            NetworkImage(snapshot.data!.docs.first["shopLogo"]),
+                        radius: 25.sp,
+                      ),
+                    ),
                   ),
                 ),
-                floating: false,
-                pinned: false,
-                expandedHeight: 20.h,
-                backgroundColor: Colors.white,
-                bottom: PreferredSize(
-                  preferredSize: Size.fromHeight(2.h),
-                  child: CircleAvatar(
-                    backgroundImage:
-                        NetworkImage(snapshot.data!.docs.first["shopLogo"]),
-                    backgroundColor: Colors.white,
-                    radius: 25.sp,
-                  ),
-                ),
-              ),
-              BottomTitle(
-                  shopName: snapshot.data!.docs.first["name"],
-                  openTime: snapshot.data!.docs.first["openTime"],
-                  closeTime: snapshot.data!.docs.first["closeTime"],
-                  locaion: snapshot.data!.docs.first["location"]),
-              StreamBuilder(
-                  stream: repository.getProductStream(uid),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                      return SliverToBoxAdapter(
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: InkWell(
-                            onTap: () =>
-                                Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const AddNewProdcut(),
-                            )),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8.sp),
-                              child: Container(
-                                width: 22.h,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.rectangle,
-                                  color: ColorsManager.primaryColor,
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "Add Products",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .copyWith(
-                                            color: ColorsManager.offWhiteColor),
+                BottomTitle(
+                    shopName: snapshot.data!.docs.first["name"],
+                    openTime: snapshot.data!.docs.first["openTime"],
+                    closeTime: snapshot.data!.docs.first["closeTime"],
+                    locaion: snapshot.data!.docs.first["location"]),
+                StreamBuilder(
+                    stream: repository.getProductStream(uid),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                        return SliverToBoxAdapter(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: InkWell(
+                              onTap: () =>
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const AddNewProdcut(),
+                              )),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8.sp),
+                                child: Container(
+                                  width: 22.h,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    color: ColorsManager.primaryColor,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "Add Products",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
+                                          .copyWith(
+                                              color:
+                                                  ColorsManager.offWhiteColor),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
+                        );
+                      }
+                      return SliverGrid(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 8,
+                          childAspectRatio: 1,
+                        ),
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            DocumentSnapshot product =
+                                snapshot.data!.docs[index];
+                            return RowOfProductCard(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => ProductScreen(
+                                      product: ProductFromDB(
+                                    name: product['name'],
+                                    description: product['description'],
+                                    price: product['price'],
+                                    discountedPrice: product['discountedPrice'],
+                                    photos: product['selectedPhotos'],
+                                    productId: product['productId'],
+                                    category: product['category'],
+                                  )),
+                                ));
+                              },
+                              title: product['name'],
+                              price: product['price'],
+                              image: product['selectedPhotos'].first,
+                            );
+                          },
+                          childCount: snapshot.data!.docs.length,
                         ),
                       );
-                    }
-                    return SliverGrid(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 8,
-                        mainAxisSpacing: 8,
-                        childAspectRatio: 1,
-                      ),
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          DocumentSnapshot product = snapshot.data!.docs[index];
-                          return RowOfProductCard(
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => ProductScreen(
-                                    product: ProductFromDB(
-                                  name: product['name'],
-                                  description: product['description'],
-                                  price: product['price'],
-                                  discountedPrice: product['discountedPrice'],
-                                  photos: product['selectedPhotos'],
-                                  productId: product['productId'],
-                                  category: product['category'],
-                                )),
-                              ));
-                            },
-                            title: product['name'],
-                            price: product['price'],
-                            image: product['selectedPhotos'].first,
-                          );
-                        },
-                        childCount: snapshot.data!.docs.length,
-                      ),
-                    );
-                  })
-            ],
+                    })
+              ],
+            ),
           );
         },
       ),
