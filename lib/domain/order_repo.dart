@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class OrderRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final String sellerId = FirebaseAuth.instance.currentUser!.uid;
+
   Stream<List<OrderModel>> getUserOrdersStream(String userId) {
     return _firestore
         .collection('orders')
@@ -83,5 +84,25 @@ class OrderRepository {
         .map((snapshot) {
       return Shipping.fromMap(snapshot.docs.first.data());
     });
+  }
+
+  // Stream for counting orders with pending status
+  Stream<int> streamPendingOrdersCount() {
+    return _firestore
+        .collection('orders')
+        .where('shopId', isEqualTo: sellerId)
+        .where('orderStatus', isEqualTo: 'pending')
+        .snapshots()
+        .map((snapshot) => snapshot.docs.length);
+  }
+
+  // Stream for counting orders with delivered status
+  Stream<int> streamDeliveredOrdersCount() {
+    return _firestore
+        .collection('orders')
+        .where('shopId', isEqualTo: sellerId)
+        .where('orderStatus', isEqualTo: 'delivered')
+        .snapshots()
+        .map((snapshot) => snapshot.docs.length);
   }
 }

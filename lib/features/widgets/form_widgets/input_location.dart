@@ -65,15 +65,15 @@ class _InputLocationState extends State<InputLocation> {
                     },
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           fontSize: 9.sp,
-                          overflow: TextOverflow.clip,
+                          overflow: TextOverflow.ellipsis,
                         ),
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
+                        borderSide: BorderSide(
                           color: ColorsManager.primaryColor,
-                          width: 2.0,
+                          width: 1.w,
                         ),
-                        borderRadius: BorderRadius.circular(18.0),
+                        borderRadius: BorderRadius.circular(6.sp),
                       ),
                       helperText: " ",
                       hintText: "Press Button to select location",
@@ -86,9 +86,9 @@ class _InputLocationState extends State<InputLocation> {
                           Theme.of(context).textTheme.bodyMedium!.copyWith(
                                 color: Colors.red,
                               ),
-                      border: const OutlineInputBorder(
+                      border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
-                          Radius.circular(10.0),
+                          Radius.circular(10.sp),
                         ),
                       ),
                       prefixIcon: const Icon(Icons.search),

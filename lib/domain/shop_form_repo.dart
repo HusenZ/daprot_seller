@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,6 +20,7 @@ class ShopFormRepo {
   static late String shLoacation;
   static late String opentime;
   static late String closetime;
+  static late String description;
   static late bool delivery;
   static late String shPhone;
   static late double latitude1;
@@ -37,15 +40,15 @@ class ShopFormRepo {
     longitude1 = longitude;
   }
 
-  static Future<void> addForm1({
-    required String shNameIn,
-    required XFile? shopLogo,
-    required String location,
-    required String phoneNo,
-    required String openTime,
-    required String closeTime,
-    required bool isAvailable,
-  }) async {
+  static Future<void> addForm1(
+      {required String shNameIn,
+      required XFile? shopLogo,
+      required String location,
+      required String phoneNo,
+      required String openTime,
+      required String closeTime,
+      required bool isAvailable,
+      required String shopDescription}) async {
     try {
       final FirebaseAuth auth = FirebaseAuth.instance;
       if (auth.currentUser == null) {
@@ -75,6 +78,7 @@ class ShopFormRepo {
       opentime = openTime;
       closetime = closeTime;
       delivery = isAvailable;
+      description = shopDescription;
 
       debugPrint("step1 data added successfully ");
     } catch (e) {
@@ -170,6 +174,7 @@ class ShopFormRepo {
         'conditionAcceptstatus': conditionaccept,
         'latitude': latitude1,
         'longitude': longitude1,
+        'description': description,
         'applicationStatus': 'pending'
       });
       //create interest collection inside application collection
@@ -206,5 +211,57 @@ class ShopFormRepo {
       preferences.setBool('SetStore', true);
       // ignore: invalid_return_type_for_catch_error
     }).catchError((error) => debugPrint("Failed to delete Shop: $error"));
+  }
+
+  Future<void> updateShopData({
+    XFile? shopLogo,
+    XFile? shopImage,
+    String? shName,
+    String? phoneNumber,
+    String? openTime,
+    String? closeTime,
+    bool? isParking,
+    String? productDescrip,
+  }) async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    final sid = FirebaseAuth.instance.currentUser!.uid;
+
+    try {
+      String? logoUrl;
+      String? bannerUrl;
+      final shopRef = firestore.collection('Shops').doc(sid);
+
+      final updates = <String, dynamic>{};
+      if (shopImage != null) {
+        Reference ref = FirebaseStorage.instance.ref('shop-banners/$sid.jpg');
+        await ref.putFile(File(shopImage.path));
+        bannerUrl = await ref.getDownloadURL();
+      }
+
+      if (shopLogo != null) {
+        Reference ref =
+            FirebaseStorage.instance.ref('ShopLogos-images/$sid.jpg');
+        await ref.putFile(File(shopLogo.path));
+
+        logoUrl = await ref.getDownloadURL();
+      }
+
+      if (logoUrl != null) updates['shopLogo'] = logoUrl;
+      if (bannerUrl != null) updates['shopImage'] = bannerUrl;
+      if (shName != null) updates['name'] = shName;
+      if (phoneNumber != null) updates['phoneNo'] = phoneNumber;
+      if (openTime != null) updates['openTime'] = openTime;
+      if (closeTime != null) updates['closeTime'] = closeTime;
+      if (isParking != null) updates['isParking'] = isParking;
+      if (productDescrip != null) updates['description'] = productDescrip;
+
+      await shopRef.set(updates, SetOptions(merge: true));
+
+      print('Shop data updated successfully!');
+    } catch (e) {
+      print('Error updating shop data: $e');
+      rethrow; // Re-throw the exception to propagate it upwards
+    }
   }
 }

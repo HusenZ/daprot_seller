@@ -58,4 +58,18 @@ class LoadingDialog {
       },
     );
   }
+
+  static showLoaderDialog(BuildContext context) {
+    AlertDialog alert = const AlertDialog(
+      backgroundColor: Colors.transparent,
+      content: CircularProgressIndicator(),
+    );
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 }

@@ -5,11 +5,9 @@ import 'package:daprot_seller/domain/model/product_model.dart';
 import 'package:daprot_seller/domain/shop_data_repo.dart';
 import 'package:daprot_seller/features/screens/add_new_product.dart';
 import 'package:daprot_seller/features/screens/product_details_screen.dart';
+import 'package:daprot_seller/features/screens/update_shop_details.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
@@ -17,11 +15,10 @@ class MyStore extends StatelessWidget {
   final ProductStream repository = ProductStream();
 
   MyStore({super.key});
+  String uid = FirebaseAuth.instance.currentUser?.uid ?? '';
 
   @override
   Widget build(BuildContext context) {
-    String uid = FirebaseAuth.instance.currentUser?.uid ?? '';
-
     return Scaffold(
       body: StreamBuilder(
         stream: repository.getShopStream(uid),
@@ -84,7 +81,25 @@ class MyStore extends StatelessWidget {
                           left: 85.w,
                           child: IconButton.outlined(
                             color: ColorsManager.whiteColor,
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => UpdateShopData(
+                                    shName: snapshot.data!.docs.first['name'],
+                                    phone: snapshot.data!.docs.first["phoneNo"],
+                                    description: snapshot
+                                        .data!.docs.first["description"],
+                                    delivery:
+                                        snapshot.data!.docs.first["dilivery"],
+                                    openTime:
+                                        snapshot.data!.docs.first["openTime"],
+                                    closeTime:
+                                        snapshot.data!.docs.first["closeTime"],
+                                    shopbanner:
+                                        snapshot.data!.docs.first["shopImage"],
+                                    shopLogo:
+                                        snapshot.data!.docs.first["shopLogo"]),
+                              ));
+                            },
                             icon: const Icon(
                               Icons.edit,
                             ),
@@ -111,10 +126,12 @@ class MyStore extends StatelessWidget {
                   ),
                 ),
                 BottomTitle(
-                    shopName: snapshot.data!.docs.first["name"],
-                    openTime: snapshot.data!.docs.first["openTime"],
-                    closeTime: snapshot.data!.docs.first["closeTime"],
-                    locaion: snapshot.data!.docs.first["location"]),
+                  shopName: snapshot.data!.docs.first["name"],
+                  openTime: snapshot.data!.docs.first["openTime"],
+                  closeTime: snapshot.data!.docs.first["closeTime"],
+                  locaion: snapshot.data!.docs.first["location"],
+                  description: snapshot.data!.docs.first["description"],
+                ),
                 StreamBuilder(
                     stream: repository.getProductStream(uid),
                     builder: (context, snapshot) {
@@ -359,9 +376,11 @@ class BottomTitle extends StatelessWidget {
   final String openTime;
   final String closeTime;
   final String locaion;
+  final String description;
   const BottomTitle(
       {super.key,
       required this.shopName,
+      required this.description,
       required this.openTime,
       required this.closeTime,
       required this.locaion});
@@ -390,11 +409,12 @@ class BottomTitle extends StatelessWidget {
                   locaion,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      fontSize: 10.sp, color: ColorsManager.greyColor),
+                      fontSize: 10.sp,
+                      color: const Color.fromARGB(146, 120, 117, 117)),
                 ),
               ),
               SizedBox(
-                width: 4.w,
+                width: 0.2.w,
               ),
               Icon(
                 Icons.location_on,
@@ -405,6 +425,21 @@ class BottomTitle extends StatelessWidget {
           ),
           SizedBox(
             height: 3.h,
+          ),
+          SizedBox(
+            height: 3.h,
+            width: 90.w,
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                description,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontSize: 10.sp,
+                    color: const Color.fromARGB(146, 120, 117, 117)),
+              ),
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

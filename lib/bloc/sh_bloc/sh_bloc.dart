@@ -22,6 +22,7 @@ class ShBloc extends Bloc<ShEvent, ShState> {
           location: event.location!,
           phoneNo: event.phoneNumber!,
           openTime: event.openTime!,
+          shopDescription: event.procutDescrip!,
           closeTime: event.closeTime!,
           isAvailable: event.isParking!);
     });
@@ -43,11 +44,12 @@ class ShBloc extends Bloc<ShEvent, ShState> {
         ));
 
         ShopFormRepo.addForm2(
-            name: event.fullName!,
-            shopBanner: event.bannerImage,
-            ownerphoto: event.ownerPhoto,
-            phoneNo: event.panNumber!,
-            panNo: event.panNumber!);
+          name: event.fullName!,
+          shopBanner: event.bannerImage,
+          ownerphoto: event.ownerPhoto,
+          phoneNo: event.panNumber!,
+          panNo: event.panNumber!,
+        );
       },
     );
 

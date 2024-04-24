@@ -36,6 +36,8 @@ class _FCScreen1State extends State<FCScreen1> {
   TextEditingController shNameController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController phoneNoController = TextEditingController();
+  TextEditingController procutDescripController = TextEditingController();
+
   String? openTime;
   String? closeTime;
 
@@ -232,6 +234,22 @@ class _FCScreen1State extends State<FCScreen1> {
                         ],
                       ),
 
+                      /// Shop Description
+                      Padding(
+                        padding: EdgeInsets.only(top: 2.h),
+                        child: Column(
+                          children: [
+                            const ReturnLabel(label: "Shop Description"),
+                            DescriptionFormField(
+                              height: 20.h,
+                              width: 90.h,
+                              controller: procutDescripController,
+                              hintText: "Enter the shop description",
+                            )
+                          ],
+                        ),
+                      ),
+
                       /// Dilivery Availability
                       SizedBox(
                         width: 90.w,
@@ -267,7 +285,8 @@ class _FCScreen1State extends State<FCScreen1> {
                               phoneNoController.text.isNotEmpty &&
                               phoneNoController.text.length == 10 &&
                               openTime != null &&
-                              closeTime != null) {
+                              closeTime != null &&
+                              procutDescripController.text.isNotEmpty) {
                             context.read<ShBloc>().add(
                                   ShForm1Event(
                                     brandlogo: _shopLogo,
@@ -277,6 +296,7 @@ class _FCScreen1State extends State<FCScreen1> {
                                     openTime: openTime ?? '',
                                     closeTime: closeTime ?? '',
                                     isParking: _dilivery,
+                                    procutDescrip: procutDescripController.text,
                                   ),
                                 );
                             ConnectivityHelper.naviagte(context, Routes.form2);
@@ -290,6 +310,9 @@ class _FCScreen1State extends State<FCScreen1> {
                             customSnackBar(
                                 context, "Pick The Open time", false);
                           } else if (closeTime == null) {
+                            customSnackBar(
+                                context, "Pick The Close time", false);
+                          } else if (procutDescripController.text.isEmpty) {
                             customSnackBar(
                                 context, "Pick The Close time", false);
                           }

@@ -40,7 +40,10 @@ class AddNewProdcutState extends State<AddNewProdcut> {
   bool isLoading = false;
 
   Future<void> _pImage1(ImageSource source) async {
-    final pickedImage = await ImagePicker().pickImage(source: source);
+    final pickedImage = await ImagePicker().pickImage(
+      source: source,
+      imageQuality: 25,
+    );
     if (pickedImage != null) {
       setState(() {
         _pImage1Pic = pickedImage;
@@ -49,7 +52,10 @@ class AddNewProdcutState extends State<AddNewProdcut> {
   }
 
   Future<void> _pImage2(ImageSource source) async {
-    final pickedImage = await ImagePicker().pickImage(source: source);
+    final pickedImage = await ImagePicker().pickImage(
+      source: source,
+      imageQuality: 25,
+    );
     if (pickedImage != null) {
       setState(() {
         _pImage2Pic = pickedImage;
@@ -58,7 +64,10 @@ class AddNewProdcutState extends State<AddNewProdcut> {
   }
 
   Future<void> _pImage3(ImageSource source) async {
-    final pickedImage = await ImagePicker().pickImage(source: source);
+    final pickedImage = await ImagePicker().pickImage(
+      source: source,
+      imageQuality: 25,
+    );
     if (pickedImage != null) {
       setState(() {
         _pImage3Pic = pickedImage;

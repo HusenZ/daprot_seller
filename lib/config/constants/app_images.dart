@@ -8,4 +8,7 @@ class AppImages {
   static const myOrdersLogo = "assets/images/myOrdersLogo.png";
   static const myRewardsLogo = "assets/images/myRewardsLogo.png";
   static const daprotLogin = "assets/images/daprot_splash.png";
+  static const googleLogin = "assets/images/google.jpg";
+  static const vectorLogin = "assets/images/vector_login.jpg";
+  static const enrolljpg = "assets/images/enroll_jpg.jpg";
 }

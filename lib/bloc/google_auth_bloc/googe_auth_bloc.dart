@@ -24,7 +24,7 @@ class GoogleSignInBloc extends Bloc<GoogleSignInEvent, GoogleSignInState> {
           // Check for null user
           if (await PhoneVerificationApi.emailExists(user.email!) == true) {
             _preferences.setBool("isAuthenticated", true);
-            emit(NavigateToEnrollRoute());
+            emit(NavigateToHomeRoute());
           } else {
             emit(SetProfileState());
           }

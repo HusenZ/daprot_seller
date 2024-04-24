@@ -1,4 +1,4 @@
-import 'package:daprot_seller/bloc/auth_bloc/auth_state.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:daprot_seller/bloc/google_auth_bloc/googe_auth_bloc.dart';
 import 'package:daprot_seller/bloc/google_auth_bloc/google_auth_event.dart';
 import 'package:daprot_seller/bloc/google_auth_bloc/google_auth_state.dart';
@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(254, 233, 231, 235),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         reverse: true,
@@ -36,14 +36,44 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               height: 15.h,
             ),
-            Image.asset(AppImages.daprotLogin),
+            Stack(
+              children: [
+                Image.asset(AppImages.vectorLogin),
+                Image.asset(AppImages.daprotLogin),
+                Positioned(
+                  bottom: 0.5.h,
+                  child: Container(
+                    height: 2.5.h,
+                    width: 100.w,
+                    decoration: const BoxDecoration(color: Colors.white),
+                    child: const Text(''),
+                  ),
+                )
+              ],
+            ),
             SizedBox(
               height: 2.h,
+            ),
+            DefaultTextStyle(
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: ColorsManager.accentColor,
+                    fontSize: 14.sp,
+                  ),
+              child: AnimatedTextKit(
+                repeatForever: true,
+                animatedTexts: [
+                  WavyAnimatedText('Support local, enjoy fresh'),
+                  WavyAnimatedText(' DAPROT connects you '),
+                  WavyAnimatedText(' to your city\'s best'),
+                ],
+                isRepeatingAnimation: true,
+                onTap: () {},
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(left: 6.w, top: 4.h, right: 2.h),
               child: Text(
-                'Login',
+                'Login To Feel',
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
@@ -53,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (state is GoogleSignInLoading) {
                   _isLoading = true;
                 }
-                if (state is NavigateToEnrollRoute) {
+                if (state is NavigateToHomeRoute) {
                   ConnectivityHelper.naviagte(context, Routes.homeRoute);
                   _isLoading = false;
                 }
@@ -70,29 +100,42 @@ class _LoginScreenState extends State<LoginScreen> {
                 }
               },
               builder: (context, state) {
-                if (state is AppStateLoading) {
-                  _isLoading = true;
-                }
                 return _isLoading
                     ? const LoadingButton()
-                    : ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: ColorsManager.accentColor,
-                            foregroundColor: ColorsManager.whiteColor,
-                            textStyle: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .copyWith(fontSize: 20.sp)),
-                        child: const Text("Sign In With Google"),
-                        onPressed: () {
-                          BlocProvider.of<GoogleSignInBloc>(context)
-                              .add(GoogleSignInRequested());
-                        },
+                    : Padding(
+                        padding: EdgeInsets.all(8.sp),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 11, 112, 245),
+                              foregroundColor: ColorsManager.whiteColor,
+                              textStyle: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(fontSize: 15.sp)),
+                          child: Row(
+                            children: [
+                              const CircleAvatar(
+                                backgroundImage:
+                                    AssetImage(AppImages.googleLogin),
+                                backgroundColor: ColorsManager.lightGrey,
+                              ),
+                              SizedBox(
+                                width: 1.h,
+                              ),
+                              const Text("Continue With Google"),
+                            ],
+                          ),
+                          onPressed: () {
+                            BlocProvider.of<GoogleSignInBloc>(context)
+                                .add(GoogleSignInRequested());
+                          },
+                        ),
                       );
               },
             ),
             SizedBox(
-              height: 10.h,
+              height: 5.h,
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 3.h),

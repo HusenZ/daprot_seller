@@ -14,6 +14,7 @@ class ShForm1Event extends ShEvent {
   final String? closeTime;
   final bool? isParking;
   final XFile? brandlogo;
+  final String? procutDescrip;
 
   ShForm1Event(
       {required this.shName,
@@ -22,6 +23,7 @@ class ShForm1Event extends ShEvent {
       required this.openTime,
       required this.closeTime,
       required this.isParking,
+      required this.procutDescrip,
       required this.brandlogo});
 
   @override

@@ -25,6 +25,7 @@ class Routes {
   static const String noInternetRoute = '/noInternet';
   static const String underReview = '/underReview';
   static const String dashboard = '/dashboard';
+  static const String updateShop = '/updateShop';
   static const String addNewProduct = '/addNewProduct';
 }
 

@@ -63,6 +63,8 @@ dependencies:
   fl_chart: ^0.67.0
   google_sign_in: ^6.2.1
   url_launcher: ^6.2.6
+  flutter_rating_bar: ^4.0.1
+  text_scroll: ^0.2.0
   
 dev_dependencies:
   flutter_test:
@@ -90,6 +92,7 @@ flutter:
   assets:
     - assets/images/dp.png
     - assets/images/
+    - assets/icons/
     - assets/lottie/
     - assets/lottie/splashLottei.json
     - assets/lottie/no_network.json

@@ -13,7 +13,7 @@ class GoogleSignInLoading extends GoogleSignInState {}
 
 class GoogleSignInSuccess extends GoogleSignInState {}
 
-class NavigateToEnrollRoute extends GoogleSignInState {}
+class NavigateToHomeRoute extends GoogleSignInState {}
 
 class SetProfileState extends GoogleSignInState {}
 

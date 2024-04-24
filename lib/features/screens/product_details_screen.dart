@@ -4,7 +4,6 @@ import 'package:daprot_seller/bloc/add_product_bloc/add_prodcut_bloc.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/config/theme/fonts_manager.dart';
 import 'package:daprot_seller/domain/model/product_model.dart';
-import 'package:daprot_seller/features/screens/add_new_product.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/custom_form_field.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/delevated_button.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
@@ -58,7 +57,10 @@ class _ProductScreenState extends State<ProductScreen> {
   }
 
   Future<void> _pImage1(ImageSource source) async {
-    final pickedImage = await ImagePicker().pickImage(source: source);
+    final pickedImage = await ImagePicker().pickImage(
+      source: source,
+      imageQuality: 25,
+    );
     if (pickedImage != null) {
       setState(() {
         _pImage1Pic = pickedImage;
@@ -67,7 +69,10 @@ class _ProductScreenState extends State<ProductScreen> {
   }
 
   Future<void> _pImage2(ImageSource source) async {
-    final pickedImage = await ImagePicker().pickImage(source: source);
+    final pickedImage = await ImagePicker().pickImage(
+      source: source,
+      imageQuality: 25,
+    );
     if (pickedImage != null) {
       setState(() {
         _pImage2Pic = pickedImage;
@@ -76,7 +81,10 @@ class _ProductScreenState extends State<ProductScreen> {
   }
 
   Future<void> _pImage3(ImageSource source) async {
-    final pickedImage = await ImagePicker().pickImage(source: source);
+    final pickedImage = await ImagePicker().pickImage(
+      source: source,
+      imageQuality: 25,
+    );
     if (pickedImage != null) {
       setState(() {
         _pImage3Pic = pickedImage;
@@ -124,7 +132,6 @@ class _ProductScreenState extends State<ProductScreen> {
           setState(() {
             isLoading = true;
           });
-          showLoading();
         }
         if (state is DeleteLoadingState) {
           setState(() {
@@ -444,6 +451,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                   },
                                   onPressedNext: () async {
                                     List<String>? updatedPhotos;
+                                    showLoading();
                                     if (isUpdate) {
                                       if (_pImage1Pic != null ||
                                           _pImage2Pic != null ||
@@ -490,6 +498,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                             discountedPriceController.text,
                                         photos: [],
                                       );
+
                                       BlocProvider.of<ProductBloc>(context).add(
                                         UpdateProductEvent(
                                             updatedProduct,
