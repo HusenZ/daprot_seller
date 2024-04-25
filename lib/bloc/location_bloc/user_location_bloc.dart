@@ -14,7 +14,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       await requestLocationPermission();
       try {
         Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high,
+          desiredAccuracy: LocationAccuracy.low,
         );
         String? locality =
             await fetchPlaceName(position.latitude, position.longitude);

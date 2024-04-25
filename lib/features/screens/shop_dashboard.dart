@@ -213,6 +213,12 @@ class ProductReviewCard extends StatelessWidget {
           return const Text('Will Be Updated Later');
         }
 
+        if (snapshot.data == null) {
+          return const Center(
+            child: Text("No Data Available"),
+          );
+        }
+
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         }
@@ -225,7 +231,7 @@ class ProductReviewCard extends StatelessWidget {
             final productReviews = reviews[index].docs;
 
             if (productReviews.isEmpty) {
-              return const Text('No reviews yet');
+              return const Text('');
             }
 
             return Column(

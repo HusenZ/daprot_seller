@@ -197,22 +197,6 @@ class ShopFormRepo {
     }
   }
 
-  static Future<void> deleteShop() async {
-    final FirebaseFirestore firestore = FirebaseFirestore.instance;
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    return firestore
-        .collection('Clients')
-        .doc(_cid)
-        .collection('Applications')
-        .doc(_shId)
-        .delete()
-        .then((value) {
-      preferences.setBool('SetStore', true);
-      // ignore: invalid_return_type_for_catch_error
-    }).catchError((error) => debugPrint("Failed to delete Shop: $error"));
-  }
-
   Future<void> updateShopData({
     XFile? shopLogo,
     XFile? shopImage,

@@ -6,16 +6,35 @@ import 'package:daprot_seller/domain/shop_data_repo.dart';
 import 'package:daprot_seller/features/screens/add_new_product.dart';
 import 'package:daprot_seller/features/screens/product_details_screen.dart';
 import 'package:daprot_seller/features/screens/update_shop_details.dart';
+import 'package:daprot_seller/features/widgets/common_widgets/expandable_text.dart';
+import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
-class MyStore extends StatelessWidget {
-  final ProductStream repository = ProductStream();
+class MyStore extends StatefulWidget {
+  const MyStore({super.key});
 
-  MyStore({super.key});
+  @override
+  State<MyStore> createState() => _MyStoreState();
+}
+
+class _MyStoreState extends State<MyStore> {
+  @override
+  void initState() {
+    super.initState();
+
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Color.fromARGB(0, 218, 40, 40),
+      statusBarIconBrightness: Brightness.dark,
+    ));
+  }
+
   String uid = FirebaseAuth.instance.currentUser?.uid ?? '';
+
+  final ProductStream repository = ProductStream();
 
   @override
   Widget build(BuildContext context) {
@@ -403,6 +422,17 @@ class BottomTitle extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Padding(
+                padding: EdgeInsets.only(left: 2.sp),
+                child: Icon(
+                  Icons.location_on,
+                  size: 2.h,
+                  color: const Color.fromARGB(146, 82, 78, 78),
+                ),
+              ),
+              SizedBox(
+                width: 2.w,
+              ),
               SizedBox(
                 width: 90.w,
                 child: Text(
@@ -413,31 +443,32 @@ class BottomTitle extends StatelessWidget {
                       color: const Color.fromARGB(146, 120, 117, 117)),
                 ),
               ),
-              SizedBox(
-                width: 0.2.w,
-              ),
-              Icon(
-                Icons.location_on,
-                size: 2.h,
-                color: ColorsManager.greyColor,
-              ),
             ],
           ),
           SizedBox(
-            height: 3.h,
+            height: 1.h,
           ),
-          SizedBox(
-            height: 3.h,
-            width: 90.w,
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.8),
+              borderRadius: BorderRadius.circular(8.0),
+              border: Border.all(color: Colors.grey[400]!, width: 0.5),
+            ),
             child: Align(
               alignment: Alignment.topLeft,
-              child: Text(
-                description,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontSize: 10.sp,
-                    color: const Color.fromARGB(146, 120, 117, 117)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "About:",
+                    style: TextStyle(
+                      color: const Color.fromARGB(146, 120, 117, 117),
+                      fontSize: 12.sp,
+                    ),
+                  ),
+                  ExpandableText(description),
+                ],
               ),
             ),
           ),
@@ -472,9 +503,6 @@ class BottomTitle extends StatelessWidget {
                     .copyWith(fontSize: 10.sp, fontWeight: FontWeight.w400),
               ),
             ],
-          ),
-          SizedBox(
-            height: 1.h,
           ),
         ],
       )
