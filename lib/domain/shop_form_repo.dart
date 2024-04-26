@@ -1,9 +1,8 @@
 // ignore_for_file: unnecessary_null_comparison
-
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,6 +15,7 @@ class ShopFormRepo {
   static late String _shId;
 //step1 data;
   static late String shName;
+  static late String shAddress;
   static late String brandlogoImage;
   static late String shLoacation;
   static late String opentime;
@@ -47,6 +47,7 @@ class ShopFormRepo {
       required String phoneNo,
       required String openTime,
       required String closeTime,
+      required String address,
       required bool isAvailable,
       required String shopDescription}) async {
     try {
@@ -65,6 +66,8 @@ class ShopFormRepo {
       await ref.putFile(File(shopLogo.path));
 
       brandlogoImage = await ref.getDownloadURL();
+
+      shAddress = address;
 
       // Get current user ID
       _cid = auth.currentUser!.uid;
@@ -145,6 +148,15 @@ class ShopFormRepo {
       if (gstImg == null) {
         throw Exception("Shop logo not provided");
       }
+      //Get the FCM token
+      FirebaseMessaging fmessaging = FirebaseMessaging.instance;
+      String? fcmToke;
+
+      await fmessaging.requestPermission();
+      fmessaging.getToken().then((value) {
+        print('FCM---> Token---> $value');
+        fcmToke = value;
+      });
 
       // Upload leaseAgreement image to Firebase Storage
       Reference ref = FirebaseStorage.instance
@@ -171,11 +183,11 @@ class ShopFormRepo {
         'closeTime': closetime,
         'dilivery': delivery,
         'shopImage': bannerImage,
+        'address': shAddress,
         'conditionAcceptstatus': conditionaccept,
-        'latitude': latitude1,
-        'longitude': longitude1,
         'description': description,
-        'applicationStatus': 'pending'
+        'applicationStatus': 'pending',
+        'fcmToken': fcmToke,
       });
       //create interest collection inside application collection
 

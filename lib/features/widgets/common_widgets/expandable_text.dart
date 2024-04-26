@@ -1,4 +1,3 @@
-import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 

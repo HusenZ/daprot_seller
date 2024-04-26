@@ -2,29 +2,13 @@ import 'dart:convert';
 
 import 'package:image_picker/image_picker.dart';
 
-enum Category {
-  fashion,
-  electronics,
-  homeAndGarden,
-  beautyAndHealth,
-  sportsAndOutdoors,
-  toysAndGames,
-  babyAndKids,
-  foodAndBeverages,
-  automotive,
-  pets,
-  booksAndStationery,
-  artsAndCrafts,
-  officeSupplies,
-  industrialAndScientific,
-}
-
 class Product {
   final String name;
   final String description;
   final String price;
   final String discountedPrice;
   final String category;
+  final String subCategory;
   final List<XFile>? photos;
 
   Product({
@@ -32,6 +16,7 @@ class Product {
     required this.description,
     required this.price,
     required this.discountedPrice,
+    required this.subCategory,
     required this.photos,
     required this.category,
   });
@@ -42,6 +27,8 @@ class ProductFromDB {
   final String description;
   final String price;
   final String discountedPrice;
+  final String subCategory;
+
   final List<dynamic> photos;
   final String productId;
   final String category;
@@ -51,13 +38,14 @@ class ProductFromDB {
       required this.description,
       required this.price,
       required this.discountedPrice,
+      required this.subCategory,
       required this.productId,
       required this.category,
       required this.photos});
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-
+    result.addAll({'subCategory': subCategory});
     result.addAll({'name': name});
     result.addAll({'description': description});
     result.addAll({'price': price});
@@ -72,6 +60,7 @@ class ProductFromDB {
   factory ProductFromDB.fromMap(Map<String, dynamic> map) {
     return ProductFromDB(
       name: map['name'] ?? '',
+      subCategory: map['subCategory'] ?? '',
       description: map['description'] ?? '',
       price: map['price'] ?? '',
       discountedPrice: map['discountedPrice'] ?? '',

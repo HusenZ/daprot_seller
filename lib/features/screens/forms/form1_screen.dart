@@ -36,6 +36,7 @@ class _FCScreen1State extends State<FCScreen1> {
   TextEditingController shNameController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController phoneNoController = TextEditingController();
+  TextEditingController localityController = TextEditingController();
   TextEditingController procutDescripController = TextEditingController();
 
   String? openTime;
@@ -141,13 +142,9 @@ class _FCScreen1State extends State<FCScreen1> {
                       ),
 
                       /// LOCATION
-                      Column(
-                        children: [
-                          returnLabel("Location"),
-                          InputLocation(
-                            locationController: locationController,
-                          ),
-                        ],
+                      InputLocation(
+                        locality: localityController,
+                        locationController: locationController,
                       ),
 
                       /// MOBILE NUMBER
@@ -286,12 +283,14 @@ class _FCScreen1State extends State<FCScreen1> {
                               phoneNoController.text.length == 10 &&
                               openTime != null &&
                               closeTime != null &&
-                              procutDescripController.text.isNotEmpty) {
+                              procutDescripController.text.isNotEmpty &&
+                              localityController.text.isNotEmpty) {
                             context.read<ShBloc>().add(
                                   ShForm1Event(
                                     brandlogo: _shopLogo,
                                     shName: shNameController.text,
                                     location: locationController.text,
+                                    address: localityController.text,
                                     phoneNumber: phoneNoController.text,
                                     openTime: openTime ?? '',
                                     closeTime: closeTime ?? '',
@@ -315,6 +314,8 @@ class _FCScreen1State extends State<FCScreen1> {
                           } else if (procutDescripController.text.isEmpty) {
                             customSnackBar(
                                 context, "Pick The Close time", false);
+                          } else if (localityController.text.isEmpty) {
+                            customSnackBar(context, "Pick The Locality", false);
                           }
                         },
                       ),

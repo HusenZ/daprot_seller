@@ -205,6 +205,7 @@ class _MyStoreState extends State<MyStore> {
                                 Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => ProductScreen(
                                       product: ProductFromDB(
+                                    subCategory: product['subCategory'],
                                     name: product['name'],
                                     description: product['description'],
                                     price: product['price'],

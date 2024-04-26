@@ -8,6 +8,7 @@ abstract class ShEvent extends Equatable {
 
 class ShForm1Event extends ShEvent {
   final String? shName;
+  final String? address;
   final String? location;
   final String? phoneNumber;
   final String? openTime;
@@ -19,6 +20,7 @@ class ShForm1Event extends ShEvent {
   ShForm1Event(
       {required this.shName,
       required this.location,
+      required this.address,
       required this.phoneNumber,
       required this.openTime,
       required this.closeTime,

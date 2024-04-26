@@ -6,6 +6,7 @@ import 'package:daprot_seller/bloc/order_bloc/order_bloc.dart';
 import 'package:daprot_seller/bloc/sh_bloc/sh_bloc.dart';
 import 'package:daprot_seller/bloc/update_user_bloc/update_user_bloc.dart';
 import 'package:daprot_seller/config/app.dart';
+import 'package:daprot_seller/domain/fcm_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,6 +21,7 @@ void main() async {
   );
   await AppBlocProvider.initialize();
   await AppBlocProvider.initializeGooglebloc();
+  await NotificationApi.getFirebaseMessagingToken();
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Color.fromARGB(0, 218, 40, 40),

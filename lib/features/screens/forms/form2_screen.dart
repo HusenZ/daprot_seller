@@ -11,6 +11,7 @@ import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/d_phone_input_field.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/toggle_button.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/input_brand_logo.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -67,6 +68,9 @@ class FCScreen2State extends State<FCScreen2> {
 
   @override
   Widget build(BuildContext context) {
+    ownerNameController.text =
+        FirebaseAuth.instance.currentUser!.displayName ?? '';
+
     return BlocBuilder<ShBloc, ShState>(
       builder: (context, state) {
         return Scaffold(
@@ -233,7 +237,9 @@ class FCScreen2State extends State<FCScreen2> {
                           onPressedNext: () {
                             if (fcFormKey.currentState!.validate() &&
                                 ownerPhoneController.text.isNotEmpty &&
-                                ownerPhoneController.text.length == 10) {
+                                ownerPhoneController.text.length == 10 &&
+                                _bannerImage != null &&
+                                _ownerPic != null) {
                               context.read<ShBloc>().add(ShForm2Event(
                                     bannerImage: _bannerImage,
                                     ownerPhoto: _ownerPic,

@@ -174,38 +174,39 @@ class _FCScreen3State extends State<FCScreen3> {
                             const Center(
                               child: CircularProgressIndicator(),
                             ),
-                          ToggleButton(
-                            back: "Cancel",
-                            next: "Next",
-                            onPressedBack: () {
-                              Navigator.pop(context);
-                            },
-                            onPressedNext: () {
-                              context.read<ShBloc>().add(
-                                    ShForm3Event(
-                                        gstImage: _gstImage,
-                                        isAccepted: _accepted),
-                                  );
-
-                              if (_gstImage != null && _accept) {
+                          if (!isLoading)
+                            ToggleButton(
+                              back: "Cancel",
+                              next: "Next",
+                              onPressedBack: () {
+                                Navigator.pop(context);
+                              },
+                              onPressedNext: () {
                                 context.read<ShBloc>().add(
                                       ShForm3Event(
                                           gstImage: _gstImage,
-                                          isAccepted: _accept),
+                                          isAccepted: _accepted),
                                     );
-                              } else if (!_accept) {
-                                customSnackBar(
-                                    context,
-                                    "Please accept the TERMS and CONDITIONS!!",
-                                    false);
-                              } else if (_gstImage == null) {
-                                customSnackBar(
-                                    context,
-                                    "Please upload all the required documents!",
-                                    false);
-                              }
-                            },
-                          ),
+
+                                if (_gstImage != null && _accept) {
+                                  context.read<ShBloc>().add(
+                                        ShForm3Event(
+                                            gstImage: _gstImage,
+                                            isAccepted: _accept),
+                                      );
+                                } else if (!_accept) {
+                                  customSnackBar(
+                                      context,
+                                      "Please accept the TERMS and CONDITIONS!!",
+                                      false);
+                                } else if (_gstImage == null) {
+                                  customSnackBar(
+                                      context,
+                                      "Please upload all the required documents!",
+                                      false);
+                                }
+                              },
+                            ),
                         ]),
                   ),
                 ),

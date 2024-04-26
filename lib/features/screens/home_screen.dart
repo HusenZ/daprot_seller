@@ -45,45 +45,45 @@ class HomeScreen extends StatelessWidget {
             },
             text: "Become a Local Hero",
           ),
-          Padding(
-            padding: EdgeInsets.all(8.sp),
-            child: SizedBox(
-              width: 90.w,
-              height: 4.h,
-              child: DefaultTextStyle(
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  color: ColorsManager.primaryColor,
-                ),
-                child: AnimatedTextKit(
-                  isRepeatingAnimation: true,
-                  animatedTexts: [
-                    WavyAnimatedText(
-                        'Together, let\'s build a vibrant network of'),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(8.sp),
-            child: SizedBox(
-              width: 90.w,
-              height: 4.h,
-              child: DefaultTextStyle(
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  color: ColorsManager.primaryColor,
-                ),
-                child: AnimatedTextKit(
-                  isRepeatingAnimation: true,
-                  animatedTexts: [
-                    WavyAnimatedText('local businesses and happy customers. '),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.all(8.sp),
+          //   child: SizedBox(
+          //     width: 90.w,
+          //     height: 4.h,
+          //     child: DefaultTextStyle(
+          //       style: TextStyle(
+          //         fontSize: 16.sp,
+          //         color: ColorsManager.primaryColor,
+          //       ),
+          //       child: AnimatedTextKit(
+          //         isRepeatingAnimation: true,
+          //         animatedTexts: [
+          //           WavyAnimatedText(
+          //               'Together, let\'s build a vibrant network of'),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // Padding(
+          //   padding: EdgeInsets.all(8.sp),
+          //   child: SizedBox(
+          //     width: 90.w,
+          //     height: 4.h,
+          //     child: DefaultTextStyle(
+          //       style: TextStyle(
+          //         fontSize: 16.sp,
+          //         color: ColorsManager.primaryColor,
+          //       ),
+          //       child: AnimatedTextKit(
+          //         isRepeatingAnimation: true,
+          //         animatedTexts: [
+          //           WavyAnimatedText('local businesses and happy customers. '),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

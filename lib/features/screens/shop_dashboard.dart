@@ -106,6 +106,7 @@ class _ShopDashboardState extends State<ShopDashboard> {
       ),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(232, 3, 115, 244),
+        automaticallyImplyLeading: false,
         title: Text(
           "Dashboard",
           style: Theme.of(context)

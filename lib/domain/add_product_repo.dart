@@ -21,35 +21,18 @@ class ProductRepository {
       List<String> imageUrls = [];
       DocumentSnapshot<Map<String, dynamic>> locationDoc =
           await _firestore.collection('Shops').doc(uid).get();
-      String location = locationDoc['location'];
+      String location = locationDoc['address'];
       print("---> Prouduct Location --------> $location");
       // Upload images to Firebase Storage after compression
       if (product.photos != null) {
         for (XFile image in product.photos!) {
-          // Compress image
-          List<int>? compressedImageData =
-              await FlutterImageCompress.compressWithFile(
-            image.path,
-            minHeight: 1920,
-            minWidth: 1080,
-            quality: 85,
-          );
+          File compressedImageFile = File(image.path);
 
-          if (compressedImageData != null) {
-            // Create a temporary file to store compressed image
-            File compressedImageFile = File(image.path);
-            await compressedImageFile.writeAsBytes(compressedImageData);
-
-            // Upload compressed image to Firebase Storage
-            Reference ref = FirebaseStorage.instance
-                .ref('product-images/$uid/${_uuid.v4()}.jpg');
-            await ref.putFile(compressedImageFile);
-            String url = await ref.getDownloadURL();
-            imageUrls.add(url);
-
-            // Delete temporary compressed image file
-            await compressedImageFile.delete();
-          }
+          Reference ref = FirebaseStorage.instance
+              .ref('product-images/$uid/${_uuid.v4()}.jpg');
+          await ref.putFile(compressedImageFile);
+          String url = await ref.getDownloadURL();
+          imageUrls.add(url);
         }
       }
 
@@ -63,6 +46,7 @@ class ProductRepository {
         'price': product.price,
         'discountedPrice': product.discountedPrice,
         'category': product.category,
+        'subCategory': product.subCategory,
         'selectedPhotos': imageUrls,
         'location': location,
       });

@@ -3,6 +3,7 @@ import 'package:daprot_seller/bloc/add_product_bloc/add_prodcut_bloc.dart';
 
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/config/theme/fonts_manager.dart';
+import 'package:daprot_seller/domain/model/category.dart';
 import 'package:daprot_seller/domain/model/product_model.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/custom_form_field.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/delevated_button.dart';
@@ -36,13 +37,14 @@ class AddNewProdcutState extends State<AddNewProdcut> {
   XFile? _pImage3Pic;
 
   Category? _selectedCategory;
+  SubCategory? _selectedSubCategory;
 
   bool isLoading = false;
 
   Future<void> _pImage1(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(
       source: source,
-      imageQuality: 25,
+      imageQuality: 50,
     );
     if (pickedImage != null) {
       setState(() {
@@ -54,7 +56,7 @@ class AddNewProdcutState extends State<AddNewProdcut> {
   Future<void> _pImage2(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(
       source: source,
-      imageQuality: 25,
+      imageQuality: 50,
     );
     if (pickedImage != null) {
       setState(() {
@@ -66,7 +68,7 @@ class AddNewProdcutState extends State<AddNewProdcut> {
   Future<void> _pImage3(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(
       source: source,
-      imageQuality: 25,
+      imageQuality: 50,
     );
     if (pickedImage != null) {
       setState(() {
@@ -287,7 +289,6 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                         ],
                       ),
 
-                      /// MOBILE NUMBER
                       Padding(
                         padding: EdgeInsets.only(bottom: 2.h),
                         child: Column(
@@ -308,17 +309,20 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                         children: [
                           const ReturnLabel(label: 'Select the category'),
                           DelevatedButton(
-                            text: _selectedCategory == null
+                            text: _selectedCategory == null &&
+                                    _selectedSubCategory == null
                                 ? "Select A Category"
-                                : _selectedCategory!.name.toUpperCase(),
+                                : '${_selectedCategory!.name.toUpperCase()} - ${_selectedSubCategory!.name.toUpperCase()}',
                             onTap: () {
                               showDialog<Category>(
                                 context: context,
                                 builder: (context) => _CategoryDialog(
+                                  selectedSubCategory: _selectedSubCategory,
                                   selectedCategory: _selectedCategory,
-                                  onChanged: (cat) {
+                                  onChanged: (cat, subcat) {
                                     setState(() {
                                       _selectedCategory = cat;
+                                      _selectedSubCategory = subcat;
                                     });
                                   },
                                 ),
@@ -375,26 +379,28 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                               onPressedNext: () {
                                 if (fcFormKey.currentState!.validate() &&
                                     procutDescripController.text.isNotEmpty &&
+                                    _selectedCategory != null &&
                                     _pImage1Pic != null &&
                                     _pImage2Pic != null &&
                                     _pImage3Pic != null) {
                                   context.read<ProductBloc>().add(
                                         AddProductEvent(
                                           Product(
-                                              name: nameController.text,
-                                              description:
-                                                  procutDescripController.text,
-                                              category: _selectedCategory!.name,
-                                              price:
-                                                  originalPriceController.text,
-                                              discountedPrice:
-                                                  discountedPriceController
-                                                      .text,
-                                              photos: [
-                                                _pImage1Pic!,
-                                                _pImage2Pic!,
-                                                _pImage3Pic!,
-                                              ]),
+                                            name: nameController.text,
+                                            subCategory:
+                                                _selectedSubCategory!.name,
+                                            description:
+                                                procutDescripController.text,
+                                            category: _selectedCategory!.name,
+                                            price: originalPriceController.text,
+                                            discountedPrice:
+                                                discountedPriceController.text,
+                                            photos: [
+                                              _pImage1Pic!,
+                                              _pImage2Pic!,
+                                              _pImage3Pic!,
+                                            ],
+                                          ),
                                         ),
                                       );
                                 } else if (_pImage2Pic == null) {
@@ -430,49 +436,81 @@ class AddNewProdcutState extends State<AddNewProdcut> {
 }
 
 class _CategoryDialog extends StatefulWidget {
-  final ValueChanged<Category> onChanged;
+  final Function(Category, SubCategory) onChanged;
   final Category? selectedCategory;
+  final SubCategory? selectedSubCategory;
   const _CategoryDialog(
-      {required this.onChanged, required this.selectedCategory});
+      {required this.onChanged,
+      required this.selectedCategory,
+      required this.selectedSubCategory});
   @override
   __CategoryDialogState createState() => __CategoryDialogState();
 }
 
 class __CategoryDialogState extends State<_CategoryDialog> {
-  late Category _selectedCat;
-
+  late Category _selectedCategory;
+  late SubCategory _selectedSubCategory;
   @override
   void initState() {
     super.initState();
-    _selectedCat = widget.selectedCategory ?? Category.fashion;
+    _selectedCategory = widget.selectedCategory ?? Category.men;
+    _selectedSubCategory = widget.selectedSubCategory ?? SubCategory.shirts;
   }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Select Order Status'),
+      title: const Text('Select Category'),
+      backgroundColor: Color.fromARGB(255, 145, 202, 255),
       content: SingleChildScrollView(
         child: Column(
-          children: Category.values.map((category) {
-            return RadioListTile<Category>(
-              title: Text(
-                category.name.toUpperCase(),
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(color: ColorsManager.blackColor),
+          children: [
+            // Dropdown for Main Category
+            DropdownButton<Category>(
+              value: _selectedCategory,
+              dropdownColor: Colors.white,
+              icon: const Icon(
+                Icons.arrow_drop_down_circle_rounded,
+                color: Colors.white,
               ),
-              value: category,
-              groupValue: _selectedCat,
+              focusColor: Colors.white,
+              items: Category.values.map((category) {
+                return DropdownMenuItem<Category>(
+                  value: category,
+                  child: SizedBox(
+                      width: 50.w, child: Text(category.name.toUpperCase())),
+                );
+              }).toList(),
               onChanged: (value) {
-                if (value != null) {
-                  setState(() {
-                    _selectedCat = value;
-                  });
-                }
+                setState(() {
+                  _selectedCategory = value!;
+                });
               },
-            );
-          }).toList(),
+            ),
+
+            // Conditional rendering of RadioListTile for Subcategory
+            if (_selectedCategory
+                .subCategories.isNotEmpty) // Check for empty subcategories
+              Column(
+                children: _selectedCategory.subCategories.map((subCategory) {
+                  return RadioListTile<SubCategory>(
+                    title: Text(
+                      subCategory.name.toUpperCase(),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    value: subCategory,
+                    groupValue: _selectedSubCategory,
+                    onChanged: (value) {
+                      if (value != null) {
+                        setState(() {
+                          _selectedSubCategory = value;
+                        });
+                      }
+                    },
+                  );
+                }).toList(),
+              ),
+          ],
         ),
       ),
       actions: <Widget>[
@@ -483,15 +521,18 @@ class __CategoryDialogState extends State<_CategoryDialog> {
           style: ElevatedButton.styleFrom(
             backgroundColor: ColorsManager.lightRedColor,
           ),
-          child: const Text('Cancel'),
+          child: const Text(
+            'Cancel',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
         ElevatedButton(
           onPressed: () {
-            widget.onChanged(_selectedCat);
+            widget.onChanged(_selectedCategory, _selectedSubCategory);
             Navigator.of(context).pop();
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: ColorsManager.accentColor,
+            backgroundColor: const Color.fromARGB(255, 251, 251, 251),
           ),
           child: const Text('Select'),
         ),

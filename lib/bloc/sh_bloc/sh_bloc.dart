@@ -18,6 +18,7 @@ class ShBloc extends Bloc<ShEvent, ShState> {
 
       ShopFormRepo.addForm1(
           shNameIn: event.shName!,
+          address: event.address!,
           shopLogo: event.brandlogo,
           location: event.location!,
           phoneNo: event.phoneNumber!,

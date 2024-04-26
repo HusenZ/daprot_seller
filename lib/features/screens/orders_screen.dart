@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:daprot_seller/config/constants/lottie_img.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/domain/model/order_models.dart';
@@ -101,7 +102,6 @@ class _OrdersTabState extends State<OrdersTab>
             ),
           );
         }
-
         List<OrderModel> filteredOrders = snapshot.data!
             .where((order) => order.orderStatus == status.name)
             .toList();
@@ -111,6 +111,9 @@ class _OrdersTabState extends State<OrdersTab>
             child: Text("No orders with this status"),
           );
         }
+        if (status.name == OrderStatus.pending.name) {
+          filteredOrders.sort((a, b) => a.orderDate.compareTo(b.orderDate));
+        }
 
         return ListView.builder(
           itemCount: filteredOrders.length,
@@ -119,37 +122,8 @@ class _OrdersTabState extends State<OrdersTab>
             return Padding(
               padding: EdgeInsets.only(top: 1.h, bottom: 1.h),
               child: Material(
-                elevation: 2.h,
-                child: ListTile(
-                  title: Text('Product: ${order.orderItems.first.name}'),
-                  titleTextStyle: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(fontSize: 12.sp),
-                  subtitle: Text('Total Price: \$${order.totalPrice}'),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Card(
-                        child: Text(
-                          order.orderStatus,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge!
-                              .copyWith(
-                                color: order.orderStatus ==
-                                        OrderStatus.cancelled.name
-                                    ? Colors.red
-                                    : order.orderStatus ==
-                                            OrderStatus.delivered.name
-                                        ? const Color.fromARGB(255, 4, 242, 127)
-                                        : ColorsManager.accentColor,
-                                fontSize: 14.sp,
-                              ),
-                        ),
-                      ),
-                    ],
-                  ),
+                elevation: 2.sp,
+                child: InkWell(
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -157,6 +131,48 @@ class _OrdersTabState extends State<OrdersTab>
                       ),
                     );
                   },
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 10.h,
+                        width: 25.w,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey,
+                          ),
+                        ),
+                        child: CachedNetworkImage(
+                          imageUrl: order.orderItems.first.imageUrl.first,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 2.h,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Product: ${order.orderItems.first.name}'),
+                          Text('Total Price: \$${order.totalPrice}'),
+                          Text(
+                            order.orderStatus.toUpperCase(),
+                            style:
+                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                      color: order.orderStatus ==
+                                              OrderStatus.cancelled.name
+                                          ? Colors.red
+                                          : order.orderStatus ==
+                                                  OrderStatus.delivered.name
+                                              ? const Color.fromARGB(
+                                                  255, 4, 242, 127)
+                                              : ColorsManager.accentColor,
+                                      fontSize: 14.sp,
+                                    ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
