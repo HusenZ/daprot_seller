@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daprot_seller/config/routes/routes_manager.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/config/theme/fonts_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,10 +21,7 @@ class _UnderReivewState extends State<UnderReivew> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(
-      const Duration(seconds: 7),
-      () => Navigator.of(context).pushReplacementNamed(Routes.dashboard),
-    );
+
     fetchClientData().then((value) {
       setState(() {
         map = value;
