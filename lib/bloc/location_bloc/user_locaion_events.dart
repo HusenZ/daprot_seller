@@ -1,8 +1,8 @@
-import 'package:equatable/equatable.dart';
+// import 'package:equatable/equatable.dart';
 
-abstract class LocationEvent extends Equatable {
-  @override
-  List<Object?> get props => [];
-}
+// abstract class LocationEvent extends Equatable {
+//   @override
+//   List<Object?> get props => [];
+// }
 
-class GetLocationEvent extends LocationEvent {}
+// class GetLocationEvent extends LocationEvent {}

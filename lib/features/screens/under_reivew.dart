@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/config/theme/fonts_manager.dart';
+import 'package:daprot_seller/features/screens/no_network.dart';
+import 'package:daprot_seller/features/screens/shop_dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
@@ -17,6 +20,7 @@ class UnderReivew extends StatefulWidget {
 class _UnderReivewState extends State<UnderReivew> {
   Map<String, dynamic> map = {};
   bool isLoading = true;
+  bool isOnline = true;
 
   @override
   void initState() {
@@ -27,6 +31,46 @@ class _UnderReivewState extends State<UnderReivew> {
         map = value;
         isLoading = false;
       });
+    });
+    //Connectivity
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      setState(() {
+        isOnline = result != ConnectivityResult.none;
+      });
+    });
+    // Check for the application status from the backend
+    FirebaseFirestore.instance
+        .collection('Admin')
+        .where('clientId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .snapshots()
+        .listen((snapshot) {
+      // Check if the document exists and contains the 'applicationStatus' field
+      if (snapshot.docs.isNotEmpty &&
+          snapshot.docs.first['applicationStatus'] == 'verified') {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const ShopDashboard()),
+        );
+
+        // Show an alert dialog
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text(
+              'Shop Verified',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            content: const Text('Upload Your Products and Become LOCAL HERO.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
     });
   }
 
@@ -63,6 +107,9 @@ class _UnderReivewState extends State<UnderReivew> {
 
   @override
   Widget build(BuildContext context) {
+    if (!isOnline) {
+      return const NoNetwork();
+    }
     return Scaffold(
       backgroundColor: const Color.fromARGB(232, 247, 242, 255),
       appBar: AppBar(

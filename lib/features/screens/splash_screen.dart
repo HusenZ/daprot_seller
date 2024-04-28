@@ -25,7 +25,6 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-
     navigation();
   }
 
@@ -58,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen>
           }
         });
       } else {
-        Navigator.pushReplacementNamed(context, Routes.authRoute);
+        ConnectivityHelper.replaceIfConnected(context, Routes.authRoute);
       }
     });
   }

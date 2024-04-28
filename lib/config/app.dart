@@ -1,7 +1,5 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:daprot_seller/config/routes/routes_manager.dart';
 import 'package:daprot_seller/config/theme/theme_manager.dart';
-import 'package:daprot_seller/features/screens/orders_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -32,7 +30,6 @@ class _MyAppState extends State<MyApp> {
     print("Handling a background message: ${message.messageId}");
 
     // Use this method to automatically convert the push data, in case you gonna use our data standard
-    AwesomeNotifications().createNotificationFromJsonData(message.data);
   }
 
   @override

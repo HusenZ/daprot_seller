@@ -1,8 +1,6 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:daprot_seller/bloc/add_product_bloc/add_prodcut_bloc.dart';
 import 'package:daprot_seller/bloc/app_bloc_provider.dart';
 import 'package:daprot_seller/bloc/auth_bloc/auth_bloc.dart';
-import 'package:daprot_seller/bloc/location_bloc/user_location_bloc.dart';
 import 'package:daprot_seller/bloc/order_bloc/order_bloc.dart';
 import 'package:daprot_seller/bloc/sh_bloc/sh_bloc.dart';
 import 'package:daprot_seller/bloc/update_user_bloc/update_user_bloc.dart';
@@ -23,16 +21,6 @@ void main() async {
   await AppBlocProvider.initialize();
   await AppBlocProvider.initializeGooglebloc();
   await NotificationApi.getFirebaseMessagingToken();
-  AwesomeNotifications().initialize(
-    'resource://drawable/res_app_icon',
-    [
-      NotificationChannel(
-        channelKey: 'basic_channel',
-        channelName: 'Basic notifications',
-        channelDescription: 'Notification channel for basic notifications',
-      ),
-    ],
-  );
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Color.fromARGB(0, 218, 40, 40),
@@ -49,9 +37,6 @@ void main() async {
         ),
         BlocProvider(
           create: (context) => ProductBloc(),
-        ),
-        BlocProvider(
-          create: (context) => LocationBloc(),
         ),
         BlocProvider(
           create: (context) => OrderBloc(),
