@@ -65,17 +65,14 @@ class ShForm2Event extends ShEvent {
 }
 
 class ShForm3Event extends ShEvent {
-  final XFile? gstImage;
   final bool? isAccepted;
 
   ShForm3Event({
-    required this.gstImage,
     required this.isAccepted,
   });
 
   @override
   List<Object?> get props => [
-        gstImage,
         isAccepted,
       ];
 }

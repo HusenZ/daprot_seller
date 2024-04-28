@@ -22,7 +22,6 @@ class Routes {
   static const String form1 = '/form1';
   static const String form2 = '/form2';
   static const String form3 = '/form3';
-  static const String noInternetRoute = '/noInternet';
   static const String underReview = '/underReview';
   static const String dashboard = '/dashboard';
   static const String updateShop = '/updateShop';

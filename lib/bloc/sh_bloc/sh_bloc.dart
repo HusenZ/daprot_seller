@@ -56,14 +56,12 @@ class ShBloc extends Bloc<ShEvent, ShState> {
 
     on<ShForm3Event>((event, emit) async {
       emit(ShForm3State(
-        gstCeritificate: event.gstImage,
         isAccepted: event.isAccepted,
       ));
       emit(ShopLoadingState());
 
       await ShopFormRepo.addForm3(
         coditionacceptance: event.isAccepted!,
-        gstImg: event.gstImage,
       ).then((value) {
         if (value == true) {
           emit(ShopSuccessState());

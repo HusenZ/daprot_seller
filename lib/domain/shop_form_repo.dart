@@ -33,7 +33,7 @@ class ShopFormRepo {
   static late String ownerPanNo;
 //step3 data
   static late bool conditionaccept;
-  static late String gstImage;
+  // static late String gstImage;
 
   static location({required double latitude, required double longitude}) {
     latitude1 = latitude;
@@ -136,7 +136,6 @@ class ShopFormRepo {
 
   static Future<bool> addForm3({
     required bool coditionacceptance,
-    required XFile? gstImg,
   }) async {
     try {
       final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -145,9 +144,9 @@ class ShopFormRepo {
         throw Exception("User not authenticated");
       }
 
-      if (gstImg == null) {
-        throw Exception("Shop logo not provided");
-      }
+      // if (gstImg == null) {
+      //   throw Exception("Shop logo not provided");
+      // }
       //Get the FCM token
       FirebaseMessaging fmessaging = FirebaseMessaging.instance;
       String? fcmToke;
@@ -159,11 +158,11 @@ class ShopFormRepo {
       });
 
       // Upload leaseAgreement image to Firebase Storage
-      Reference ref = FirebaseStorage.instance
-          .ref('gst-images/${auth.currentUser!.uid}.jpg');
-      await ref.putFile(File(gstImg.path));
+      // Reference ref = FirebaseStorage.instance
+      //     .ref('gst-images/${auth.currentUser!.uid}.jpg');
+      // await ref.putFile(File(gstImg.path));
 
-      gstImage = await ref.getDownloadURL();
+      // gstImage = await ref.getDownloadURL();
 
       // Get current user ID
       _cid = auth.currentUser!.uid;

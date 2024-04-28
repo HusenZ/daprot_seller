@@ -205,28 +205,28 @@ class FCScreen2State extends State<FCScreen2> {
                           ),
                         ),
 
-                        /// PAN NO.
-                        Column(
-                          children: [
-                            const ReturnLabel(label: "Pan Number"),
-                            CustomFormField(
-                              controller: ownerPanController,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Enter the PAN number';
-                                }
-                                String panCardRegex =
-                                    r'^[A-Z]{5}[0-9]{4}[A-Z]$';
+                        // /// PAN NO.
+                        // Column(
+                        //   children: [
+                        //     const ReturnLabel(label: "Pan Number"),
+                        //     CustomFormField(
+                        //       controller: ownerPanController,
+                        //       validator: (value) {
+                        //         if (value == null || value.isEmpty) {
+                        //           return 'Enter the PAN number';
+                        //         }
+                        //         String panCardRegex =
+                        //             r'^[A-Z]{5}[0-9]{4}[A-Z]$';
 
-                                if (!RegExp(panCardRegex).hasMatch(value)) {
-                                  return 'Enter a valid PAN Card number';
-                                }
-                                return null;
-                              },
-                              hintText: 'Type here',
-                            ),
-                          ],
-                        ),
+                        //         if (!RegExp(panCardRegex).hasMatch(value)) {
+                        //           return 'Enter a valid PAN Card number';
+                        //         }
+                        //         return null;
+                        //       },
+                        //       hintText: 'Type here',
+                        //     ),
+                        //   ],
+                        // ),
 
                         ToggleButton(
                           back: "Cancel",

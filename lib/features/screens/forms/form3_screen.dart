@@ -1,18 +1,14 @@
-import 'dart:io';
 import 'package:daprot_seller/bloc/sh_bloc/sh_bloc.dart';
 import 'package:daprot_seller/bloc/sh_bloc/sh_event.dart';
 import 'package:daprot_seller/bloc/sh_bloc/sh_state.dart';
 import 'package:daprot_seller/config/routes/routes_manager.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/config/theme/fonts_manager.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/toggle_button.dart';
-import 'package:daprot_seller/features/widgets/form_widgets/input_brand_logo.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/terms_cond_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 
 class FCScreen3 extends StatefulWidget {
@@ -23,19 +19,18 @@ class FCScreen3 extends StatefulWidget {
 }
 
 class _FCScreen3State extends State<FCScreen3> {
-  bool _accepted = false;
   GlobalKey<FormState> fcFormKey = GlobalKey<FormState>();
 
-  XFile? _gstImage;
+  // XFile? _gstImage;
 
-  Future<void> _pickBannerImage(ImageSource source) async {
-    final pickedImage = await ImagePicker().pickImage(source: source);
-    if (pickedImage != null) {
-      setState(() {
-        _gstImage = pickedImage;
-      });
-    }
-  }
+  // Future<void> _pickBannerImage(ImageSource source) async {
+  //   final pickedImage = await ImagePicker().pickImage(source: source);
+  //   if (pickedImage != null) {
+  //     setState(() {
+  //       _gstImage = pickedImage;
+  //     });
+  //   }
+  // }
 
   returnLabel(String label) {
     return Container(
@@ -102,46 +97,46 @@ class _FCScreen3State extends State<FCScreen3> {
                             ),
                           ),
 
-                          /// Banner Image
-                          Column(
-                            children: [
-                              const ReturnLabel(label: 'Gst Image'),
-                              SizedBox(
-                                height: 1.w,
-                              ),
-                              _gstImage != null
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Center(
-                                        child: InkWell(
-                                          onTap: () {
-                                            _pickBannerImage(
-                                                ImageSource.gallery);
-                                          },
-                                          child: SizedBox(
-                                            width: 70.w,
-                                            height: 20.h,
-                                            child: Image.file(
-                                              File(_gstImage!.path),
-                                              fit: BoxFit.contain,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  : Center(
-                                      child: InkWell(
-                                        onTap: () {
-                                          _pickBannerImage(ImageSource.gallery);
-                                        },
-                                        child: const InputBrandLogoUi(),
-                                      ),
-                                    )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 5.h,
-                          ),
+                          // /// Banner Image
+                          // Column(
+                          //   children: [
+                          //     const ReturnLabel(label: 'Gst Image'),
+                          //     SizedBox(
+                          //       height: 1.w,
+                          //     ),
+                          //     _gstImage != null
+                          //         ? Padding(
+                          //             padding: const EdgeInsets.all(8.0),
+                          //             child: Center(
+                          //               child: InkWell(
+                          //                 onTap: () {
+                          //                   _pickBannerImage(
+                          //                       ImageSource.gallery);
+                          //                 },
+                          //                 child: SizedBox(
+                          //                   width: 70.w,
+                          //                   height: 20.h,
+                          //                   child: Image.file(
+                          //                     File(_gstImage!.path),
+                          //                     fit: BoxFit.contain,
+                          //                   ),
+                          //                 ),
+                          //               ),
+                          //             ),
+                          //           )
+                          //         : Center(
+                          //             child: InkWell(
+                          //               onTap: () {
+                          //                 _pickBannerImage(ImageSource.gallery);
+                          //               },
+                          //               child: const InputBrandLogoUi(),
+                          //             ),
+                          //           )
+                          //   ],
+                          // ),
+                          // SizedBox(
+                          //   height: 5.h,
+                          // ),
 
                           /// AGREED TEXT
                           Container(
@@ -182,27 +177,14 @@ class _FCScreen3State extends State<FCScreen3> {
                                 Navigator.pop(context);
                               },
                               onPressedNext: () {
-                                context.read<ShBloc>().add(
-                                      ShForm3Event(
-                                          gstImage: _gstImage,
-                                          isAccepted: _accepted),
-                                    );
-
-                                if (_gstImage != null && _accept) {
+                                if (_accept) {
                                   context.read<ShBloc>().add(
-                                        ShForm3Event(
-                                            gstImage: _gstImage,
-                                            isAccepted: _accept),
+                                        ShForm3Event(isAccepted: _accept),
                                       );
                                 } else if (!_accept) {
                                   customSnackBar(
                                       context,
                                       "Please accept the TERMS and CONDITIONS!!",
-                                      false);
-                                } else if (_gstImage == null) {
-                                  customSnackBar(
-                                      context,
-                                      "Please upload all the required documents!",
                                       false);
                                 }
                               },

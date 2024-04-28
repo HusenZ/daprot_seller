@@ -62,17 +62,14 @@ class ShForm2State extends ShState {
 }
 
 class ShForm3State extends ShState {
-  final XFile? gstCeritificate;
   final bool? isAccepted;
 
   ShForm3State({
-    required this.gstCeritificate,
     required this.isAccepted,
   });
 
   @override
   List<Object?> get props => [
-        gstCeritificate,
         isAccepted,
       ];
 }

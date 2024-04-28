@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:daprot_seller/config/routes/routes_manager.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/config/theme/fonts_manager.dart';
 import 'package:daprot_seller/features/screens/no_network.dart';
@@ -108,7 +109,9 @@ class _UnderReivewState extends State<UnderReivew> {
   @override
   Widget build(BuildContext context) {
     if (!isOnline) {
-      return const NoNetwork();
+      return const NoNetwork(
+        route: Routes.underReview,
+      );
     }
     return Scaffold(
       backgroundColor: const Color.fromARGB(232, 247, 242, 255),
