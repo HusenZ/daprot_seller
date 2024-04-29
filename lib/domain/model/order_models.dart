@@ -10,6 +10,7 @@ enum OrderStatus {
 class OrderModel {
   String orderId;
   String userId;
+  String quantity;
   List<OrderItem> orderItems;
   String totalPrice;
   String orderStatus;
@@ -21,6 +22,7 @@ class OrderModel {
     required this.orderItems,
     required this.totalPrice,
     required this.orderStatus,
+    required this.quantity,
     required this.orderDate,
   });
 
@@ -46,6 +48,7 @@ class OrderModel {
       totalPrice: map['totalPrice'] ?? '',
       orderStatus: map['orderStatus'] ?? '',
       orderDate: map['orderDate'] ?? '',
+      quantity: map['quantity'] ?? '',
     );
   }
 
@@ -60,6 +63,7 @@ class OrderModel {
         orderItems = _convertToProductList(snapshot['orderItems']),
         totalPrice = snapshot['totalPrice'],
         orderStatus = snapshot['orderStatus'],
+        quantity = snapshot['quantity'],
         orderDate = snapshot['orderDate'];
 
   static List<OrderItem> _convertToProductList(List<dynamic> products) {

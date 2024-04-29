@@ -152,8 +152,34 @@ class _OrdersTabState extends State<OrdersTab>
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Product: ${order.orderItems.first.name}'),
-                          Text('Total Price: \$${order.totalPrice}'),
+                          SizedBox(
+                              width: 66.w,
+                              child: Text(
+                                'Product: ${order.orderItems.first.name}',
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(fontSize: 13.sp),
+                              )),
+                          Text(
+                            'Quantity: ${order.quantity}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(
+                                    fontSize: 12.sp,
+                                    color: const Color.fromARGB(
+                                        146, 107, 101, 101)),
+                          ),
+                          Text(
+                            'Total Price: ₹ ${order.totalPrice}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(
+                                    fontSize: 12.sp, color: Colors.black87),
+                          ),
                           Text(
                             order.orderStatus.toUpperCase(),
                             style:

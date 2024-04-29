@@ -38,49 +38,51 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              UserDetailsCard(order: widget.order),
-              const SizedBox(height: 16.0),
-              ProductDetailsCard(order: widget.order),
-              ElevatedButton(
-                onPressed: () async {
-                  OrderStatus? selectedStatus = await showDialog<OrderStatus>(
-                    context: context,
-                    builder: (context) => _OrderStatusDialog(
-                      orderBloc: BlocProvider.of<OrderBloc>(context),
-                      order: widget.order,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedStatus = value;
-                        });
-                      },
-                    ),
-                  );
-
-                  if (selectedStatus != null) {
-                    BlocProvider.of<OrderBloc>(context).add(
-                      UpdateOrderStatus(
-                        orderId: widget.order.orderId,
-                        newStatus: selectedStatus.name,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                UserDetailsCard(order: widget.order),
+                const SizedBox(height: 16.0),
+                ProductDetailsCard(order: widget.order),
+                ElevatedButton(
+                  onPressed: () async {
+                    OrderStatus? selectedStatus = await showDialog<OrderStatus>(
+                      context: context,
+                      builder: (context) => _OrderStatusDialog(
+                        orderBloc: BlocProvider.of<OrderBloc>(context),
+                        order: widget.order,
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedStatus = value;
+                          });
+                        },
                       ),
                     );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorsManager.accentColor),
-                child: Text(
-                  widget.order.orderStatus.toUpperCase(),
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        fontSize: 9.5.sp,
-                        color: widget.order.orderStatus ==
-                                OrderStatus.cancelled.name
-                            ? Colors.red
-                            : Colors.white,
-                      ),
+
+                    if (selectedStatus != null) {
+                      BlocProvider.of<OrderBloc>(context).add(
+                        UpdateOrderStatus(
+                          orderId: widget.order.orderId,
+                          newStatus: selectedStatus.name,
+                        ),
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: ColorsManager.accentColor),
+                  child: Text(
+                    widget.order.orderStatus.toUpperCase(),
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontSize: 9.5.sp,
+                          color: widget.order.orderStatus ==
+                                  OrderStatus.cancelled.name
+                              ? Colors.red
+                              : Colors.white,
+                        ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

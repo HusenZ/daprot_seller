@@ -1,5 +1,7 @@
+import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/domain/model/order_models.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class ProductDetailsCard extends StatelessWidget {
   final OrderModel order;
@@ -18,8 +20,8 @@ class ProductDetailsCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(8.0),
               child: Image.network(
                 order.orderItems.first.imageUrl.first,
-                width: 100.0,
-                height: 100.0,
+                width: 30.w,
+                height: 15.h,
                 fit: BoxFit.cover,
               ),
             ),
@@ -28,13 +30,24 @@ class ProductDetailsCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    order.orderItems.first.name,
-                    style: Theme.of(context).textTheme.titleLarge,
+                  RichText(
+                    maxLines: 3,
+                    textDirection: TextDirection.ltr,
+                    softWrap: true,
+                    text: TextSpan(
+                      text: order.orderItems.first.name,
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontSize: 12.sp,
+                            color: ColorsManager.blackColor,
+                          ),
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4.0),
+                  SizedBox(height: 1.h),
                   Text('Price: \$${order.orderItems.first.price}'),
-                  const SizedBox(height: 4.0),
+                  SizedBox(height: 1.h),
+                  Text('Quantity: \$${order.quantity}'),
+                  SizedBox(height: 1.h),
                   Text('Total: ${order.totalPrice}'),
                 ],
               ),
@@ -45,3 +58,4 @@ class ProductDetailsCard extends StatelessWidget {
     );
   }
 }
+//order.orderItems.first.name,

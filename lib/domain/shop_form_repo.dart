@@ -149,12 +149,12 @@ class ShopFormRepo {
       // }
       //Get the FCM token
       FirebaseMessaging fmessaging = FirebaseMessaging.instance;
-      String? fcmToke;
+      late String fcmToke;
 
       await fmessaging.requestPermission();
-      fmessaging.getToken().then((value) {
+      await fmessaging.getToken().then((value) {
         print('FCM---> Token---> $value');
-        fcmToke = value;
+        fcmToke = value!;
       });
 
       // Upload leaseAgreement image to Firebase Storage

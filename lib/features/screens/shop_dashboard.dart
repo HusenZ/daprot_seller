@@ -25,7 +25,7 @@ class _ShopDashboardState extends State<ShopDashboard> {
   final List _tabs = [
     const ShopDashboard(),
     const OrdersTab(),
-    MyStore(),
+    const MyStore(),
     const ProfileScreen(),
   ];
   void _onItemTapped(int index) {
@@ -157,7 +157,8 @@ class _ShopDashboardState extends State<ShopDashboard> {
                       }),
                 ],
               ),
-              SizedBox(height: 5.h),
+              SizedBox(height: 4.h),
+              const Divider(),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -167,7 +168,10 @@ class _ShopDashboardState extends State<ShopDashboard> {
                       ),
                 ),
               ),
-              ProductReviewCard(),
+              SizedBox(
+                height: 55.h,
+                child: ProductReviewCard(),
+              ),
               SizedBox(height: 10.h),
             ],
           ),
@@ -235,89 +239,94 @@ class ProductReviewCard extends StatelessWidget {
               return const Text('');
             }
 
-            return Column(
-              // Wrap reviews in a Column
-              children: productReviews.map((reviewDoc) {
-                final reviewText = reviewDoc.get('review');
-                return Card(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      StreamBuilder<UserModel>(
-                        stream: OrderRepository()
-                            .streamUser(reviewDoc.get('userID')),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasError) {
-                            return const Text('Will Be Updated Later');
-                          }
+            return SingleChildScrollView(
+              child: Column(
+                // Wrap reviews in a Column
+                children: productReviews.map((reviewDoc) {
+                  final reviewText = reviewDoc.get('review');
+                  return Card(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        StreamBuilder<UserModel>(
+                          stream: OrderRepository()
+                              .streamUser(reviewDoc.get('userID')),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return const Text('Will Be Updated Later');
+                            }
 
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Shimmer(
-                              gradient: LinearGradient(
-                                colors: [Colors.grey[300]!, Colors.grey[100]!],
-                                stops: const [0.1, 0.9],
-                              ),
-                              child: Container(
-                                width: 90.w,
-                                height: 70.h,
-                                color: Colors.grey[200],
-                                child: const Card(),
-                              ),
-                            );
-                          }
-                          return Row(
-                            children: [
-                              const CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child: Icon(Icons.person),
-                              ),
-                              SizedBox(
-                                width: 2.w,
-                              ),
-                              SizedBox(
-                                width: 70.w,
-                                child: Text(
-                                  snapshot.data!.name,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                          overflow: TextOverflow.ellipsis,
-                                          fontWeight: FontWeight.w600),
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Shimmer(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Colors.grey[300]!,
+                                    Colors.grey[100]!
+                                  ],
+                                  stops: const [0.1, 0.9],
                                 ),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.all(8.sp),
-                            child: Text(
-                                '${(reviewDoc.get('rating')).toString()}/5.0'),
-                          ),
-                          RatingBarIndicator(
-                            rating: reviewDoc.get('rating'),
-                            direction: Axis.horizontal,
-                            itemCount: 5,
-                            itemSize: 24,
-                            itemBuilder: (context, _) => const Icon(
-                              Icons.star,
-                              color: Colors.amber,
+                                child: Container(
+                                  width: 90.w,
+                                  height: 70.h,
+                                  color: Colors.grey[200],
+                                  child: const Card(),
+                                ),
+                              );
+                            }
+                            return Row(
+                              children: [
+                                const CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  child: Icon(Icons.person),
+                                ),
+                                SizedBox(
+                                  width: 2.w,
+                                ),
+                                SizedBox(
+                                  width: 70.w,
+                                  child: Text(
+                                    snapshot.data!.name,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                            overflow: TextOverflow.ellipsis,
+                                            fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(8.sp),
+                              child: Text(
+                                  '${(reviewDoc.get('rating')).toString()}/5.0'),
                             ),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.sp),
-                        child: Text(reviewText),
-                      ),
-                    ],
-                  ),
-                );
-              }).toList(),
+                            RatingBarIndicator(
+                              rating: reviewDoc.get('rating'),
+                              direction: Axis.horizontal,
+                              itemCount: 5,
+                              itemSize: 24,
+                              itemBuilder: (context, _) => const Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.sp),
+                          child: Text(reviewText),
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
+              ),
             );
           },
         );
