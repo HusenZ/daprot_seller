@@ -38,7 +38,8 @@ class FCScreen2State extends State<FCScreen2> {
   XFile? _bannerImage;
 
   Future<void> _ownerImage(ImageSource source) async {
-    final pickedImage = await ImagePicker().pickImage(source: source);
+    final pickedImage =
+        await ImagePicker().pickImage(source: source, imageQuality: 50);
     if (pickedImage != null) {
       setState(() {
         _ownerPic = pickedImage;
@@ -47,7 +48,8 @@ class FCScreen2State extends State<FCScreen2> {
   }
 
   Future<void> _shopBannerImage(ImageSource source) async {
-    final pickedImage = await ImagePicker().pickImage(source: source);
+    final pickedImage =
+        await ImagePicker().pickImage(source: source, imageQuality: 50);
     if (pickedImage != null) {
       setState(() {
         _bannerImage = pickedImage;

@@ -57,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen>
           }
         });
       } else {
-        ConnectivityHelper.replaceIfConnected(context, Routes.authRoute);
+        ConnectivityHelper.replaceIfConnected(context, Routes.onboardingRoute);
       }
     });
   }

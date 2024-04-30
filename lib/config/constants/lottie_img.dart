@@ -5,15 +5,7 @@ class AppLottie {
   static const splashScreenBottom = "${lottiePath}splashLottei.json";
   static const productUploading = "${lottiePath}product_uploading_lottie.json";
   static const onOrders = "${lottiePath}no_products.json";
+  static const onBoard1 = "${lottiePath}v1_on1.json";
+  static const onBoard2 = "${lottiePath}v1_on2.json";
+  static const onBoard3 = "${lottiePath}v1_on3.json";
 }
-
-/*
- - assets/images/dp.png
-    - assets/images/dummy_image/shirt1.jpg
-    - assets/images/dummy_image/shoe1.jpg
-    - assets/images/dummy_image/wtop.jpg
-    - assets/images/dummy_image/baby.jpg
-    - assets/images/dummy_image/cosmetic.jpg
-    - assets/lottie/splashScreenBottom.json
-    - assets/lottie/no_network.json
-*/

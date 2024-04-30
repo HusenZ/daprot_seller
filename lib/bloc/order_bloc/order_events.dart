@@ -8,7 +8,12 @@ class FetchOrders extends OrderEvent {
 
 class UpdateOrderStatus extends OrderEvent {
   final String orderId;
+  final String userId;
   final String newStatus;
 
-  const UpdateOrderStatus({required this.orderId, required this.newStatus});
+  const UpdateOrderStatus({
+    required this.orderId,
+    required this.newStatus,
+    required this.userId,
+  });
 }

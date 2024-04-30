@@ -74,6 +74,7 @@ class OrderModel {
 class OrderItem {
   final String name;
   final String price;
+  final String discountedPrice;
   final String details;
   final List<dynamic> imageUrl;
   final String category;
@@ -85,6 +86,7 @@ class OrderItem {
       required this.price,
       required this.details,
       required this.imageUrl,
+      required this.discountedPrice,
       required this.category,
       required this.cpId,
       required this.shopId});
@@ -99,6 +101,7 @@ class OrderItem {
     result.addAll({'category': category});
     result.addAll({'cpId': cpId});
     result.addAll({'shopId': shopId});
+    result.addAll({'discountedPrice': discountedPrice});
 
     return result;
   }
@@ -112,6 +115,7 @@ class OrderItem {
       category: map['category'],
       cpId: map['cpId'] ?? '',
       shopId: map['shopId'] ?? '',
+      discountedPrice: map['discountedPrice'] ?? '',
     );
   }
 

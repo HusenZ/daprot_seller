@@ -5,6 +5,7 @@ import 'package:daprot_seller/features/screens/forms/form3_screen.dart';
 import 'package:daprot_seller/features/screens/auth_screen/login_screen.dart';
 import 'package:daprot_seller/features/screens/auth_screen/set_profile_screen.dart';
 import 'package:daprot_seller/features/screens/home_screen.dart';
+import 'package:daprot_seller/features/screens/onboarding_screen.dart';
 import 'package:daprot_seller/features/screens/shop_dashboard.dart';
 import 'package:daprot_seller/features/screens/splash_screen.dart';
 import 'package:daprot_seller/features/screens/under_reivew.dart';
@@ -40,5 +41,6 @@ Map<String, WidgetBuilder> get routes {
     Routes.underReview: (context) => const UnderReivew(),
     Routes.dashboard: (context) => const ShopDashboard(),
     Routes.addNewProduct: (context) => const AddNewProdcut(),
+    Routes.onboardingRoute: (context) => const OnboardingScreen(),
   };
 }

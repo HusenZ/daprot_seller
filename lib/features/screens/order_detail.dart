@@ -63,6 +63,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       BlocProvider.of<OrderBloc>(context).add(
                         UpdateOrderStatus(
                           orderId: widget.order.orderId,
+                          userId: widget.order.userId,
                           newStatus: selectedStatus.name,
                         ),
                       );
@@ -151,6 +152,7 @@ class __OrderStatusDialogState extends State<_OrderStatusDialog> {
               UpdateOrderStatus(
                 orderId: widget.order.orderId,
                 newStatus: _selectedStatus.name,
+                userId: widget.order.userId,
               ),
             );
             Navigator.of(context).pop();

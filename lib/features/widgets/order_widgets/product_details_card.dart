@@ -20,12 +20,12 @@ class ProductDetailsCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(8.0),
               child: Image.network(
                 order.orderItems.first.imageUrl.first,
-                width: 30.w,
+                width: 26.w,
                 height: 15.h,
                 fit: BoxFit.cover,
               ),
             ),
-            const SizedBox(width: 16.0),
+            SizedBox(width: 2.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,11 +44,14 @@ class ProductDetailsCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 1.h),
-                  Text('Price: \$${order.orderItems.first.price}'),
+                  Text('Price: ₹${order.orderItems.first.price}'),
                   SizedBox(height: 1.h),
-                  Text('Quantity: \$${order.quantity}'),
+                  Text(
+                      'After discount: ₹${order.orderItems.first.discountedPrice}'),
                   SizedBox(height: 1.h),
-                  Text('Total: ${order.totalPrice}'),
+                  Text('Quantity: ${order.quantity}'),
+                  SizedBox(height: 1.h),
+                  Text('Total: ₹${order.totalPrice}'),
                 ],
               ),
             ),

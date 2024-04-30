@@ -14,7 +14,10 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       UpdateOrderStatus event, Emitter<OrderState> emit) async {
     try {
       await orderRepository.updateOrderStatus(
-          orderId: event.orderId, newStatus: event.newStatus);
+        orderId: event.orderId,
+        newStatus: event.newStatus,
+        userId: event.userId,
+      );
       emit(OrderUpdateSuccess(event.orderId));
     } catch (error) {
       emit(OrderUpdateFailure(error.toString()));
