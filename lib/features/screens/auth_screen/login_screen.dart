@@ -8,6 +8,7 @@ import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/domain/connectivity_helper.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/loading_button.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -150,7 +151,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: <TextSpan>[
                     TextSpan(
                       text: 'Terms and Conditions',
-                      // recognizer: TapGestureRecognizer()..onTap = () {},
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.of(context).pushNamed(Routes.termsRoute);
+                        },
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w500,
@@ -163,7 +167,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     TextSpan(
                       text: 'Privacy Policy',
-                      // recognizer: TapGestureRecognizer()..onTap = () {},
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigator.of(context).pushNamed(Routes.privacyRoute);
+                        },
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w500,

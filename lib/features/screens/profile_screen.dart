@@ -1,10 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daprot_seller/bloc/update_user_bloc/update_user_bloc.dart';
 import 'package:daprot_seller/bloc/update_user_bloc/update_user_state.dart';
 import 'package:daprot_seller/config/constants/app_icons.dart';
+import 'package:daprot_seller/config/routes/routes_manager.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
-import 'package:daprot_seller/domain/fcm_flutter.dart';
 import 'package:daprot_seller/domain/model/user_model.dart';
 import 'package:daprot_seller/domain/order_repo.dart';
 import 'package:daprot_seller/domain/user_data_repo.dart';
@@ -299,6 +298,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         SizedBox(
                           height: 1.h,
+                        ),
+                        InkWell(
+                          onTap: () => Navigator.of(context)
+                              .pushNamed(Routes.privacyRoute),
+                          child: const DsingleChildCard(
+                            title: "Privacy & Policy",
+                            image: AppIcons.privacyIcon,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        InkWell(
+                          onTap: () => Navigator.of(context)
+                              .pushNamed(Routes.termsRoute),
+                          child: const DsingleChildCard(
+                            title: "Terms & Conditions",
+                            image: AppIcons.termsIcon,
+                          ),
                         ),
                         SizedBox(
                           height: 1.h,

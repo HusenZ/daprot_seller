@@ -6,8 +6,10 @@ import 'package:daprot_seller/features/screens/auth_screen/login_screen.dart';
 import 'package:daprot_seller/features/screens/auth_screen/set_profile_screen.dart';
 import 'package:daprot_seller/features/screens/home_screen.dart';
 import 'package:daprot_seller/features/screens/onboarding_screen.dart';
+import 'package:daprot_seller/features/screens/privacy_policy.dart';
 import 'package:daprot_seller/features/screens/shop_dashboard.dart';
 import 'package:daprot_seller/features/screens/splash_screen.dart';
+import 'package:daprot_seller/features/screens/terms_condi.dart';
 import 'package:daprot_seller/features/screens/under_reivew.dart';
 import 'package:flutter/material.dart';
 
@@ -27,6 +29,8 @@ class Routes {
   static const String dashboard = '/dashboard';
   static const String updateShop = '/updateShop';
   static const String addNewProduct = '/addNewProduct';
+  static const String privacyRoute = '/privacy';
+  static const String termsRoute = '/terms';
 }
 
 Map<String, WidgetBuilder> get routes {
@@ -42,5 +46,7 @@ Map<String, WidgetBuilder> get routes {
     Routes.dashboard: (context) => const ShopDashboard(),
     Routes.addNewProduct: (context) => const AddNewProdcut(),
     Routes.onboardingRoute: (context) => const OnboardingScreen(),
+    Routes.privacyRoute: (context) => const PrivacyPolicy(),
+    Routes.termsRoute: (context) => const TermsAndConditoins(),
   };
 }

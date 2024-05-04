@@ -7,4 +7,6 @@ class AppIcons {
   static const logoutIcon = "assets/icons/logout_icon.png";
   static const ordersIcon = "assets/icons/orders_icon.png";
   static const profileIcon = "assets/icons/profile_icon.png";
+  static const privacyIcon = "assets/icons/privacy.png";
+  static const termsIcon = "assets/icons/terms.png";
 }
