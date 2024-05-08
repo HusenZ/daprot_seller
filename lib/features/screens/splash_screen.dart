@@ -28,38 +28,36 @@ class _SplashScreenState extends State<SplashScreen>
     navigation();
   }
 
-  Future navigation() {
-    return Future.delayed(const Duration(seconds: 3), () async {
-      final preferences = await SharedPreferences.getInstance();
-      final bool isAuthenticated =
-          preferences.getBool('isAuthenticated') ?? false;
-      print(
-          "------------------preferences = ${preferences.getBool("isAuthenticated")}");
-      if (isAuthenticated) {
-        createAdminFuture().then((value) {
-          if (value == ApplicationStatus.unverified) {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const UnderReivew()),
-              (Route<dynamic> route) => false,
-            );
-          } else if (value == ApplicationStatus.verified) {
-            ConnectivityHelper.replaceIfConnected(
-              context,
-              Routes.dashboard,
-            );
-          } else {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-              (Route<dynamic> route) => false,
-            );
-          }
-        });
-      } else {
-        ConnectivityHelper.replaceIfConnected(context, Routes.onboardingRoute);
-      }
-    });
+  Future<void> navigation() async {
+    final preferences = await SharedPreferences.getInstance();
+    final bool isAuthenticated =
+        preferences.getBool('isAuthenticated') ?? false;
+    print(
+        "------------------preferences = ${preferences.getBool("isAuthenticated")}");
+    if (isAuthenticated) {
+      createAdminFuture().then((value) {
+        if (value == ApplicationStatus.unverified) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const UnderReivew()),
+            (Route<dynamic> route) => false,
+          );
+        } else if (value == ApplicationStatus.verified) {
+          ConnectivityHelper.replaceIfConnected(
+            context,
+            Routes.dashboard,
+          );
+        } else {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const HomeScreen()),
+            (Route<dynamic> route) => false,
+          );
+        }
+      });
+    } else {
+      ConnectivityHelper.replaceIfConnected(context, Routes.onboardingRoute);
+    }
   }
 
   Future<ApplicationStatus> createAdminFuture() async {

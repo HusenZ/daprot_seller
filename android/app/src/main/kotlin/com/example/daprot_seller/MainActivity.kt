@@ -1,4 +1,4 @@
-package com.example.daprot_seller
+package com.zharehusen.daprot_seller
 
 import io.flutter.embedding.android.FlutterActivity
 

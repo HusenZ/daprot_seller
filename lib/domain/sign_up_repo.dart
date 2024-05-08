@@ -69,4 +69,61 @@ class SignUpApi {
       return false;
     }
   }
+
+  static Future<bool> addUserEmailPass({
+    required XFile profile,
+    required String name,
+    required String email,
+    required String phone,
+  }) async {
+    try {
+      await _auth.createUserWithEmailAndPassword(
+          email: email, password: '1er3t4y5u67');
+      if (_auth.currentUser == null) {
+        print("Uesr is null");
+        return false;
+      } else {
+        try {
+          final FirebaseAuth auth = FirebaseAuth.instance;
+          final SharedPreferences preferences =
+              await SharedPreferences.getInstance();
+          final uid = auth.currentUser!.uid;
+
+          Reference ref =
+              FirebaseStorage.instance.ref('seller_profile/$uid.jpg');
+          await ref.putFile(File(profile.path));
+          String imgUrl = await ref.getDownloadURL();
+
+          await _firestore.collection('Sellers').doc(uid).set({
+            'userId': uid,
+            'name': name,
+            'email': email,
+            'phone': phone,
+            'imgUrl': imgUrl,
+          });
+          print("User added to Firebase");
+
+          // Return true to indicate success
+          preferences.setBool('isAuthenticated', true);
+          return true;
+        } catch (e) {
+          if (kDebugMode) {
+            print('Error adding user: $e');
+          }
+
+          return false;
+        }
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('---------The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('-------The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+      return false;
+    }
+    return true;
+  }
 }

@@ -168,7 +168,7 @@ class SetProfileScreenState extends State<SetProfileScreen> {
                                 .then(
                               (value) {
                                 if (value) {
-                                  ConnectivityHelper.replaceIfConnected(
+                                  ConnectivityHelper.clareStackPush(
                                       context, Routes.homeRoute);
                                   setState(() {
                                     isLoading = false;

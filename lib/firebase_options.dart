@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAhySSQ72wsO5k_bXU4X5tmwriJtOoFuLo',
-    appId: '1:211804662370:android:3cdc9f82e807ae5f213f3b',
+    appId: '1:211804662370:android:3ad4e5b7dbc78865213f3b',
     messagingSenderId: '211804662370',
     projectId: 'daprot-bdd89',
     storageBucket: 'daprot-bdd89.appspot.com',
@@ -63,6 +63,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '211804662370',
     projectId: 'daprot-bdd89',
     storageBucket: 'daprot-bdd89.appspot.com',
+    androidClientId: '211804662370-5a6dvri361b3f171uois4rp58bt0c59r.apps.googleusercontent.com',
+    iosClientId: '211804662370-m0hjk6movtspos2a8249he7fu4no3upj.apps.googleusercontent.com',
     iosBundleId: 'com.example.daprotSeller',
   );
+
 }

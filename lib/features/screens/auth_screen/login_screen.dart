@@ -5,9 +5,15 @@ import 'package:daprot_seller/bloc/google_auth_bloc/google_auth_state.dart';
 import 'package:daprot_seller/config/constants/app_images.dart';
 import 'package:daprot_seller/config/routes/routes_manager.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
+import 'package:daprot_seller/config/theme/fonts_manager.dart';
+import 'package:daprot_seller/domain/connectivity_connection.dart';
 import 'package:daprot_seller/domain/connectivity_helper.dart';
+import 'package:daprot_seller/domain/phone_verfi_repo.dart';
+import 'package:daprot_seller/features/screens/auth_screen/email_set_profile.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/loading_button.dart';
+import 'package:daprot_seller/features/widgets/common_widgets/loading_dailog.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,6 +29,10 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false;
+  final TextEditingController _emailContoller = TextEditingController();
+  void showLoading() {
+    LoadingDialog.showLoaderDialog(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,13 +89,121 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             SizedBox(height: 2.h),
+            Padding(
+              padding: EdgeInsets.all(8.sp),
+              child: Transform.scale(
+                scaleY: 0.23.w,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(2.w),
+                    color: ColorsManager.whiteColor,
+                    boxShadow: const [
+                      BoxShadow(),
+                    ],
+                  ),
+                  child: TextFormField(
+                    textCapitalization: TextCapitalization.sentences,
+                    textAlignVertical: TextAlignVertical.center,
+                    textAlign: TextAlign.start,
+                    cursorColor: ColorsManager.primaryColor,
+                    obscureText: false,
+                    controller: _emailContoller,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Enter the Email address';
+                      }
+                      String emailRegex =
+                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+                      if (!RegExp(emailRegex).hasMatch(value)) {
+                        return 'Enter a valid Email address';
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.emailAddress,
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          fontSize: 12.sp,
+                        ),
+                    decoration: InputDecoration(
+                      labelStyle: TextStyle(
+                          fontSize: 13.sp,
+                          fontFamily: 'AppFonts',
+                          fontWeight: FontWeightManager.semiBold),
+                      labelText: 'Email',
+                      hintText: 'Type here...',
+                      disabledBorder: InputBorder.none,
+                      border: OutlineInputBorder(
+                          borderSide: const BorderSide(),
+                          borderRadius: BorderRadius.all(Radius.circular(3.w))),
+                      floatingLabelStyle: const TextStyle(
+                        color: ColorsManager.primaryColor,
+                        fontFamily: 'AppFonts',
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: ColorsManager.primaryColor,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(3.w)),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 1.h),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromARGB(255, 11, 187, 245),
+                  foregroundColor: Color.fromARGB(255, 247, 241, 241),
+                  textStyle: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(fontSize: 15.sp)),
+              child: const Text("Continue"),
+              onPressed: () {
+                isConnected().then((value) {
+                  if (value) {
+                    showLoading();
+                    PhoneVerificationApi.emailExists(
+                            _emailContoller.text.trim())
+                        .then((value) {
+                      if (value) {
+                        FirebaseAuth.instance
+                            .signInWithEmailAndPassword(
+                                email: _emailContoller.text.trim(),
+                                password: '1er3t4y5u67')
+                            .then((value) {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              Routes.homeRoute, (route) => false);
+                        });
+                      } else {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => EmailSetProfile(
+                              email: _emailContoller.text.trim()),
+                        ));
+                      }
+                    });
+                  } else {
+                    customSnackBar(context, 'Check Your Connection', false);
+                  }
+                });
+              },
+            ),
+            SizedBox(height: 1.h),
+            Text(
+              "------OR------",
+              style: TextStyle(
+                  fontWeight: FontWeightManager.semiBold, fontSize: 12.sp),
+            ),
+            SizedBox(height: 2.h),
             BlocConsumer<GoogleSignInBloc, GoogleSignInState>(
               listener: (context, state) {
                 if (state is GoogleSignInLoading) {
                   _isLoading = true;
+                  showLoading();
                 }
                 if (state is NavigateToHomeRoute) {
-                  ConnectivityHelper.naviagte(context, Routes.homeRoute);
+                  ConnectivityHelper.replaceIfConnected(
+                      context, Routes.homeRoute);
                   _isLoading = false;
                 }
                 if (state is SetProfileState) {
@@ -94,10 +212,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 }
                 if (state is GoogleSignInFailure) {
                   _isLoading = false;
+                  Navigator.pop(context);
                   customSnackBar(context, 'Error in signin', false);
                 }
                 if (state is GoogleSignInSuccess) {
                   _isLoading = false;
+                  Navigator.pop(context);
                 }
               },
               builder: (context, state) {
