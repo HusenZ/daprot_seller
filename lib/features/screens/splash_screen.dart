@@ -8,7 +8,6 @@ import 'package:daprot_seller/features/screens/home_screen.dart';
 import 'package:daprot_seller/features/screens/under_reivew.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
@@ -81,13 +80,6 @@ class _SplashScreenState extends State<SplashScreen>
     }
 
     return ApplicationStatus.noMatch;
-  }
-
-  @override
-  void dispose() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
-    super.dispose();
   }
 
   @override

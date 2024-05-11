@@ -28,7 +28,10 @@ class SignUpApi {
       return true;
     } on FirebaseAuthException catch (e) {
       print("Error in google sign is :----- ${e.message}");
-      throw e;
+      return false;
+    } catch (e) {
+      print('Error in google sign in ------> $e');
+      return false;
     }
   }
 

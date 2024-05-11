@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daprot_seller/bloc/google_auth_bloc/googe_auth_bloc.dart';
 import 'package:daprot_seller/bloc/google_auth_bloc/google_auth_event.dart';
 import 'package:daprot_seller/bloc/google_auth_bloc/google_auth_state.dart';
@@ -10,6 +11,9 @@ import 'package:daprot_seller/domain/connectivity_connection.dart';
 import 'package:daprot_seller/domain/connectivity_helper.dart';
 import 'package:daprot_seller/domain/phone_verfi_repo.dart';
 import 'package:daprot_seller/features/screens/auth_screen/email_set_profile.dart';
+import 'package:daprot_seller/features/screens/home_screen.dart';
+import 'package:daprot_seller/features/screens/splash_screen.dart';
+import 'package:daprot_seller/features/screens/under_reivew.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/loading_button.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/loading_dailog.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
@@ -18,6 +22,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -32,6 +37,29 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailContoller = TextEditingController();
   void showLoading() {
     LoadingDialog.showLoaderDialog(context);
+  }
+
+  Future<ApplicationStatus> createAdminFuture() async {
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+
+    if (userId == null) {
+      return ApplicationStatus.noMatch;
+    }
+
+    final snapshot = await FirebaseFirestore.instance.collection('Admin').get();
+
+    for (var doc in snapshot.docs) {
+      if (doc.data()['clientId'] == userId) {
+        final status = doc.data()['applicationStatus'];
+        if (status == 'verified') {
+          return ApplicationStatus.verified;
+        } else {
+          return ApplicationStatus.unverified;
+        }
+      }
+    }
+
+    return ApplicationStatus.noMatch;
   }
 
   @override
@@ -152,14 +180,16 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(height: 1.h),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 11, 187, 245),
-                  foregroundColor: Color.fromARGB(255, 247, 241, 241),
+                  backgroundColor: const Color.fromARGB(255, 11, 187, 245),
+                  foregroundColor: const Color.fromARGB(255, 247, 241, 241),
                   textStyle: Theme.of(context)
                       .textTheme
                       .bodyLarge!
                       .copyWith(fontSize: 15.sp)),
               child: const Text("Continue"),
-              onPressed: () {
+              onPressed: () async {
+                SharedPreferences preferences =
+                    await SharedPreferences.getInstance();
                 isConnected().then((value) {
                   if (value) {
                     showLoading();
@@ -172,8 +202,34 @@ class _LoginScreenState extends State<LoginScreen> {
                                 email: _emailContoller.text.trim(),
                                 password: '1er3t4y5u67')
                             .then((value) {
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              Routes.homeRoute, (route) => false);
+                          if (value.user != null) {
+                            createAdminFuture().then((value) {
+                              if (value == ApplicationStatus.unverified) {
+                                preferences.setBool('isAuthenticated', true);
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const UnderReivew()),
+                                  (Route<dynamic> route) => false,
+                                );
+                              } else if (value == ApplicationStatus.verified) {
+                                preferences.setBool('isAuthenticated', true);
+                                ConnectivityHelper.replaceIfConnected(
+                                  context,
+                                  Routes.dashboard,
+                                );
+                              } else {
+                                preferences.setBool('isAuthenticated', true);
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const HomeScreen()),
+                                  (Route<dynamic> route) => false,
+                                );
+                              }
+                            });
+                          }
                         });
                       } else {
                         Navigator.of(context).push(MaterialPageRoute(
