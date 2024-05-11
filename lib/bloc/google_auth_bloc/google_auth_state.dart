@@ -15,6 +15,10 @@ class GoogleSignInSuccess extends GoogleSignInState {}
 
 class NavigateToHomeRoute extends GoogleSignInState {}
 
+class NavigateToDashboard extends GoogleSignInState {}
+
+class NavigateToUderrivew extends GoogleSignInState {}
+
 class SetProfileState extends GoogleSignInState {}
 
 class GoogleSignInFailure extends GoogleSignInState {

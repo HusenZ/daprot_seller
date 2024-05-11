@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daprot_seller/bloc/google_auth_bloc/google_auth_event.dart';
 import 'package:daprot_seller/bloc/google_auth_bloc/google_auth_state.dart';
 import 'package:daprot_seller/domain/phone_verfi_repo.dart';
 import 'package:daprot_seller/domain/sign_up_repo.dart';
+import 'package:daprot_seller/features/screens/splash_screen.dart'
+    show ApplicationStatus;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,6 +41,30 @@ class GoogleSignInBloc extends Bloc<GoogleSignInEvent, GoogleSignInState> {
       }
     } catch (error) {
       emit(GoogleSignInFailure(error.toString()));
+    }
+
+    Future<ApplicationStatus> createAdminFuture() async {
+      final userId = FirebaseAuth.instance.currentUser?.uid;
+
+      if (userId == null) {
+        return ApplicationStatus.noMatch;
+      }
+
+      final snapshot =
+          await FirebaseFirestore.instance.collection('Admin').get();
+
+      for (var doc in snapshot.docs) {
+        if (doc.data()['clientId'] == userId) {
+          final status = doc.data()['applicationStatus'];
+          if (status == 'verified') {
+            return ApplicationStatus.verified;
+          } else {
+            return ApplicationStatus.unverified;
+          }
+        }
+      }
+
+      return ApplicationStatus.noMatch;
     }
   }
 }

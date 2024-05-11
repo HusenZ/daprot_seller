@@ -72,9 +72,6 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 15.h,
-            ),
             Stack(
               children: [
                 Image.asset(AppImages.vectorLogin),
@@ -258,10 +255,31 @@ class _LoginScreenState extends State<LoginScreen> {
                   showLoading();
                 }
                 if (state is NavigateToHomeRoute) {
-                  ConnectivityHelper.replaceIfConnected(
-                      context, Routes.homeRoute);
+                  createAdminFuture().then((value) {
+                    if (value == ApplicationStatus.unverified) {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const UnderReivew()),
+                        (Route<dynamic> route) => false,
+                      );
+                    } else if (value == ApplicationStatus.verified) {
+                      ConnectivityHelper.replaceIfConnected(
+                        context,
+                        Routes.dashboard,
+                      );
+                    } else {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreen()),
+                        (Route<dynamic> route) => false,
+                      );
+                    }
+                  });
                   _isLoading = false;
                 }
+
                 if (state is SetProfileState) {
                   ConnectivityHelper.naviagte(context, Routes.setProfileRoute);
                   _isLoading = false;
@@ -269,7 +287,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (state is GoogleSignInFailure) {
                   _isLoading = false;
                   Navigator.pop(context);
-                  customSnackBar(context, 'Error in signin', false);
+                  customSnackBar(context, state.message, false);
                 }
                 if (state is GoogleSignInSuccess) {
                   _isLoading = false;
