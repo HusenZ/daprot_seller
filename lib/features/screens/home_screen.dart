@@ -1,9 +1,6 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:daprot_seller/config/constants/app_images.dart';
 import 'package:daprot_seller/config/routes/routes_manager.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/domain/connectivity_helper.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/delevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -13,77 +10,78 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color.fromARGB(255, 234, 235, 235),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(
-            padding: EdgeInsets.all(8.sp),
-            child: SizedBox(
-              width: 90.w,
-              child: DefaultTextStyle(
-                style: const TextStyle(
-                    fontSize: 30.0,
-                    fontFamily: 'Agne',
-                    color: ColorsManager.primaryColor),
-                child: AnimatedTextKit(
-                  animatedTexts: [
-                    TypewriterAnimatedText(
-                        'Join the thriving world of intra-city e-commerce.'),
-                  ],
-                ),
-              ),
-            ),
+          SizedBox(
+            height: 15.h,
           ),
-          Image.asset(
-            AppImages.enrolljpg,
+          Text(
+            'Take Your Business Online',
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(color: ColorsManager.primaryColor),
           ),
-          DelevatedButton(
+          SizedBox(
+            height: 20.h,
+          ),
+          InkWell(
             onTap: () {
               ConnectivityHelper.replaceIfConnected(context, Routes.form1);
             },
-            text: "Become a Local Hero",
+            child: Stack(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(8.sp),
+                  child: Container(
+                    height: 25.h,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: ColorsManager.primaryColor,
+                      borderRadius: BorderRadius.circular(8.sp),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 2.h,
+                  left: 7.w,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.sp),
+                    child: Container(
+                      height: 15.h,
+                      width: 80.w,
+                      decoration: BoxDecoration(
+                        color: ColorsManager.whiteColor,
+                        borderRadius: BorderRadius.circular(8.sp),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 7.h,
+                  left: 42.w,
+                  child: Icon(
+                    Icons.add,
+                    color: ColorsManager.primaryColor,
+                    size: 50.sp,
+                  ),
+                ),
+                Positioned(
+                  top: 20.h,
+                  left: 23.w,
+                  right: 20.w,
+                  child: Text(
+                    "Create Your Shop",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(color: ColorsManager.whiteColor),
+                  ),
+                ),
+              ],
+            ),
           ),
-          // Padding(
-          //   padding: EdgeInsets.all(8.sp),
-          //   child: SizedBox(
-          //     width: 90.w,
-          //     height: 4.h,
-          //     child: DefaultTextStyle(
-          //       style: TextStyle(
-          //         fontSize: 16.sp,
-          //         color: ColorsManager.primaryColor,
-          //       ),
-          //       child: AnimatedTextKit(
-          //         isRepeatingAnimation: true,
-          //         animatedTexts: [
-          //           WavyAnimatedText(
-          //               'Together, let\'s build a vibrant network of'),
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          // Padding(
-          //   padding: EdgeInsets.all(8.sp),
-          //   child: SizedBox(
-          //     width: 90.w,
-          //     height: 4.h,
-          //     child: DefaultTextStyle(
-          //       style: TextStyle(
-          //         fontSize: 16.sp,
-          //         color: ColorsManager.primaryColor,
-          //       ),
-          //       child: AnimatedTextKit(
-          //         isRepeatingAnimation: true,
-          //         animatedTexts: [
-          //           WavyAnimatedText('local businesses and happy customers. '),
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

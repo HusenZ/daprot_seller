@@ -29,25 +29,28 @@ class _InputLocationState extends State<InputLocation> {
       child: Column(
         children: [
           const ReturnLabel(label: 'Select Locality'),
-          Row(
-            children: [
-              Card(
-                child: Text(
-                  selectedLocality.isEmpty
-                      ? "Select Your Locality"
-                      : selectedLocality,
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+          InkWell(
+            onTap: () => _showLocalityBottomSheet(context),
+            child: Row(
+              children: [
+                Card(
+                  child: Text(
+                    selectedLocality.isEmpty
+                        ? "Select Your Locality"
+                        : selectedLocality,
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                  ),
                 ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.arrow_drop_down_circle),
-                onPressed: () => _showLocalityBottomSheet(context),
-              ),
-            ],
+                IconButton(
+                  icon: const Icon(Icons.arrow_drop_down_circle),
+                  onPressed: () => _showLocalityBottomSheet(context),
+                ),
+              ],
+            ),
           ),
           SizedBox(
             height: 1.h,

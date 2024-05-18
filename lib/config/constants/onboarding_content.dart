@@ -36,7 +36,7 @@ class StringManager {
   static const String onboardingTitle3 = "FREE";
 
   static const String onboardingDesc1 =
-      "Want to take yoru business online for free ?";
+      "Want to take your business online for free ?";
   static const String onboardingDesc2 =
       "Helps you sell your products to the people in your city.";
   static const String onboardingDesc3 =

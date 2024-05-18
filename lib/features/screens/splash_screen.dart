@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daprot_seller/config/constants/app_images.dart';
-import 'package:daprot_seller/config/constants/lottie_img.dart';
 import 'package:daprot_seller/config/routes/routes_manager.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/domain/connectivity_helper.dart';
@@ -8,7 +6,6 @@ import 'package:daprot_seller/features/screens/home_screen.dart';
 import 'package:daprot_seller/features/screens/under_reivew.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
@@ -85,69 +82,15 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              ColorsManager.whiteColor,
-              Color.fromARGB(237, 75, 182, 232)
-            ],
-            begin: Alignment(0.0, 0.0),
-            end: Alignment(0.0, 1.0),
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Flexible(
-              flex: 3,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Image.asset(AppImages.daprotLogin),
-                  const CopyRights(),
-                ],
-              ),
-            ),
-            Flexible(
-              flex: 1,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: SizedBox(
-                  child: Lottie.asset(
-                    AppLottie.splashScreenBottom,
-                    width: double.infinity,
-                  ),
-                ),
-              ),
-            ),
-          ],
+      body: Center(
+        child: Image.asset(
+          'assets/logo.png',
+          fit: BoxFit.fill,
+          height: 40.w,
+          width: 40.w,
         ),
       ),
     );
-  }
-}
-
-class CopyRights extends StatelessWidget {
-  const CopyRights({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(right: 4.5.sp),
-        child: const Text(
-          '© 2024 DAPROT, Inc.',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
-        ));
   }
 }
 

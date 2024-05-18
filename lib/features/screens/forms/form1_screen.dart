@@ -1,19 +1,18 @@
-import 'package:daprot_seller/bloc/sh_bloc/sh_bloc.dart';
-import 'package:daprot_seller/bloc/sh_bloc/sh_event.dart';
-import 'package:daprot_seller/bloc/sh_bloc/sh_state.dart';
 import 'package:daprot_seller/config/routes/routes_manager.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/config/theme/fonts_manager.dart';
 import 'package:daprot_seller/domain/connectivity_helper.dart';
+import 'package:daprot_seller/domain/shop_form_repo.dart';
 import 'package:daprot_seller/domain/time_picker.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/custom_form_field.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
+import 'package:daprot_seller/features/widgets/common_widgets/loading_dailog.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/profile_photo_widget.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/d_phone_input_field.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/toggle_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 
@@ -69,8 +68,53 @@ class _FCScreen1State extends State<FCScreen1> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ShBloc, ShState>(builder: (context, state) {
-      return Scaffold(
+    return PopScope(
+      onPopInvoked: (didPop) async {
+        final shouldExit = await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(
+              'Exit App',
+              style: TextStyle(
+                  fontWeight: FontWeightManager.semiBold,
+                  fontFamily: 'AppFonts',
+                  fontSize: 18.sp,
+                  color: ColorsManager.blackColor),
+            ),
+            content: Text(
+              'Are you sure you want to exit?',
+              style: TextStyle(
+                  fontSize: 11.sp,
+                  fontFamily: 'AppFonts',
+                  color: ColorsManager.blackColor),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false), // Cancel
+                child: Text(
+                  'Cancel',
+                  style: TextStyle(
+                      fontSize: 13.sp,
+                      fontFamily: 'AppFonts',
+                      color: ColorsManager.blackColor),
+                ),
+              ),
+              TextButton(
+                onPressed: () => SystemNavigator.pop(), // Exit
+                child: Text(
+                  'Exit',
+                  style: TextStyle(
+                      fontSize: 13.sp,
+                      fontFamily: 'AppFonts',
+                      color: ColorsManager.primaryColor),
+                ),
+              ),
+            ],
+          ),
+        );
+        return shouldExit ?? false; // Handle null case
+      },
+      child: Scaffold(
         backgroundColor: ColorsManager.offWhiteColor,
         body: Form(
           key: fcFormKey,
@@ -285,20 +329,22 @@ class _FCScreen1State extends State<FCScreen1> {
                               closeTime != null &&
                               procutDescripController.text.isNotEmpty &&
                               localityController.text.isNotEmpty) {
-                            context.read<ShBloc>().add(
-                                  ShForm1Event(
-                                    brandlogo: _shopLogo,
-                                    shName: shNameController.text,
-                                    location: locationController.text,
-                                    address: localityController.text,
-                                    phoneNumber: phoneNoController.text,
-                                    openTime: openTime ?? '',
-                                    closeTime: closeTime ?? '',
-                                    isParking: _dilivery,
-                                    procutDescrip: procutDescripController.text,
-                                  ),
-                                );
-                            ConnectivityHelper.naviagte(context, Routes.form2);
+                            LoadingDialog.showLoaderDialog(context);
+                            ShopFormRepo.addForm1(
+                              shopLogo: _shopLogo,
+                              shNameIn: shNameController.text,
+                              location: locationController.text,
+                              address: localityController.text,
+                              phoneNo: phoneNoController.text,
+                              openTime: openTime ?? '',
+                              closeTime: closeTime ?? '',
+                              isAvailable: _dilivery,
+                              shopDescription: procutDescripController.text,
+                            ).then((value) {
+                              Navigator.pop(context);
+                              ConnectivityHelper.naviagte(
+                                  context, Routes.form2);
+                            });
                           } else if (phoneNoController.text.isEmpty) {
                             customSnackBar(context,
                                 "Please enter your Mobile Number", false);
@@ -326,7 +372,7 @@ class _FCScreen1State extends State<FCScreen1> {
             ),
           ),
         ),
-      );
-    });
+      ),
+    );
   }
 }
