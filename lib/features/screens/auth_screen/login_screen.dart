@@ -109,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: EdgeInsets.only(left: 6.w, top: 4.h, right: 2.h),
               child: Text(
-                'Login To Feel',
+                'LOGIN',
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
@@ -301,13 +301,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: EdgeInsets.all(8.sp),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 11, 112, 245),
-                              foregroundColor: ColorsManager.whiteColor,
-                              textStyle: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(fontSize: 15.sp)),
+                            backgroundColor:
+                                const Color.fromARGB(255, 11, 112, 245),
+                            foregroundColor: ColorsManager.whiteColor,
+                            textStyle: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(fontSize: 15.sp),
+                          ),
                           child: Row(
                             children: [
                               const CircleAvatar(

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daprot_seller/config/routes/routes_manager.dart';
-import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/domain/connectivity_helper.dart';
 import 'package:daprot_seller/features/screens/home_screen.dart';
 import 'package:daprot_seller/features/screens/under_reivew.dart';
@@ -84,7 +83,7 @@ class _SplashScreenState extends State<SplashScreen>
     return Scaffold(
       body: Center(
         child: Image.asset(
-          'assets/logo.png',
+          'assets/images/applogo.png',
           fit: BoxFit.fill,
           height: 40.w,
           width: 40.w,
