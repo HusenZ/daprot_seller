@@ -40,6 +40,7 @@ class ProductRepository {
 
       await _firestore.collection('Products').add({
         'productId': productId,
+        'clicks': 0,
         'shopId': uid,
         'name': product.name,
         'description': product.description,
@@ -51,10 +52,8 @@ class ProductRepository {
         'location': location,
       });
 
-      print('Product added successfully');
       return 'Product added successfully';
     } catch (e) {
-      print('Error adding product: $e');
       return 'Error adding product: $e';
     }
   }
