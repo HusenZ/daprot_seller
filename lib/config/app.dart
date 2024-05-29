@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:daprot_seller/config/routes/routes_manager.dart';
 import 'package:daprot_seller/config/theme/theme_manager.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp._internal(); //private named constructor
@@ -20,38 +23,71 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int notificationCount = 0;
+  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
-  // String _appBadgeSupported = 'Unknown';
-  Future<void> _firebaseMessagingBackgroundHandler(
-      RemoteMessage message) async {
-    // If you're going to use other Firebase services in the background, such as Firestore,
-    // make sure you call `initializeApp` before using other Firebase services.
-
-    print("Handling a background message: ${message.messageId}");
-
-    // Use this method to automatically convert the push data, in case you gonna use our data standard
+  void initLocalNotification(RemoteMessage message) async {
+    var androidInitialization =
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializationSetting =
+        InitializationSettings(android: androidInitialization);
+    await _flutterLocalNotificationsPlugin.initialize(
+      initializationSetting,
+      onDidReceiveNotificationResponse: (payload) {},
+    );
   }
+
+  Future<void> showNotification(RemoteMessage message) async {
+    AndroidNotificationChannel channel = AndroidNotificationChannel(
+      Random.secure().nextInt(1000).toString(),
+      'High Importance Notification',
+      importance: Importance.max,
+    );
+
+    AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
+      channel.id.toString(),
+      channel.name.toString(),
+      importance: Importance.max,
+      priority: Priority.high,
+      icon: '@mipmap/ic_launcher',
+      ticker: 'ticker',
+    );
+    NotificationDetails notificationDetails =
+        NotificationDetails(android: androidNotificationDetails);
+    Future.delayed(
+      Duration.zero,
+      () => _flutterLocalNotificationsPlugin.show(
+        1,
+        message.notification!.title.toString(),
+        message.notification!.body.toString(),
+        notificationDetails,
+      ),
+    );
+  }
+  // String _appBadgeSupported = 'Unknown';
 
   @override
   void initState() {
     super.initState();
     initPlatformState();
+
+    FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
     FirebaseMessaging.instance.getToken().then((token) {
-      print('FCM Token: $token');
+      print('FCM Token:-->... $token');
     });
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      initLocalNotification(message);
       setState(() {
         notificationCount++;
       });
+      showNotification(message);
       updateBadgeCount(1);
-
-      FirebaseMessaging.onBackgroundMessage(
-          _firebaseMessagingBackgroundHandler);
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('A new onMessageOpenedApp event was published!');
     });
   }
 
