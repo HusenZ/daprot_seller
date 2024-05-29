@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:daprot_seller/config/routes/routes_manager.dart';
 import 'package:daprot_seller/config/theme/theme_manager.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -52,6 +51,7 @@ class _MyAppState extends State<MyApp> {
       priority: Priority.high,
       icon: '@mipmap/ic_launcher',
       ticker: 'ticker',
+      // sound: RawResourceAndroidNotificationSound(),
     );
     NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);

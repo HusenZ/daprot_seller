@@ -5,7 +5,7 @@ import 'package:daprot_seller/bloc/order_bloc/order_bloc.dart';
 import 'package:daprot_seller/bloc/sh_bloc/sh_bloc.dart';
 import 'package:daprot_seller/bloc/update_user_bloc/update_user_bloc.dart';
 import 'package:daprot_seller/config/app.dart';
-import 'package:daprot_seller/domain/fcm_flutter.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,16 +14,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  // String? title = message.notification!.title;
-  // String? body = message.notification!.body;
-  // print("$title, $body");
+  String? title = message.notification!.title;
+  String? body = message.notification!.body;
+  print("--------------------->>>$title, $body");
   AwesomeNotifications().createNotification(
     content: NotificationContent(
-      id: 123,
+      id: 12,
       channelKey: message.collapseKey!,
       color: Colors.white,
       category: NotificationCategory.Event,
@@ -34,13 +33,15 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('A bg message just showed up :  ${message.messageId}');
 }
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
+  await FirebaseAppCheck.instance.activate();
   AwesomeNotifications().initialize(null, [
     NotificationChannel(
       channelKey: 'channelKey',
@@ -57,7 +58,6 @@ void main() async {
   ]);
   await AppBlocProvider.initialize();
   await AppBlocProvider.initializeGooglebloc();
-  await NotificationApi.getFirebaseMessagingToken();
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Color.fromARGB(0, 218, 40, 40),

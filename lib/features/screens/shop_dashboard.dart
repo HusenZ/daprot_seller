@@ -8,6 +8,8 @@ import 'package:daprot_seller/domain/shop_data_repo.dart';
 import 'package:daprot_seller/features/screens/orders_screen.dart';
 import 'package:daprot_seller/features/screens/profile_screen.dart';
 import 'package:daprot_seller/features/screens/store_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:shimmer/shimmer.dart';
@@ -22,6 +24,24 @@ class ShopDashboard extends StatefulWidget {
 
 class _ShopDashboardState extends State<ShopDashboard> {
   int _selectedIndex = 0;
+
+  void notificationService()async{
+    FirebaseMessaging fmessaging = FirebaseMessaging.instance;
+    await fmessaging.requestPermission();
+    await fmessaging.getToken().then((value) {
+      String userId =  FirebaseAuth.instance.currentUser!.uid;
+      print(userId);
+      FirebaseFirestore.instance.collection('Shops').doc(userId).update({
+        'fcmToken': value,
+      });
+    },);
+  }
+
+  @override
+  void initState() {
+   notificationService();
+    super.initState();
+  }
   final List _tabs = [
     const ShopDashboard(),
     const OrdersTab(),

@@ -18,6 +18,7 @@ import 'package:daprot_seller/features/widgets/common_widgets/loading_button.dar
 import 'package:daprot_seller/features/widgets/common_widgets/loading_dailog.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -60,6 +61,13 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     return ApplicationStatus.noMatch;
+  }
+
+
+
+  @override
+  void initState()  {
+    super.initState();
   }
 
   @override

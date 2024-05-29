@@ -7,6 +7,7 @@ import 'package:daprot_seller/config/theme/fonts_manager.dart';
 import 'package:daprot_seller/features/screens/no_network.dart';
 import 'package:daprot_seller/features/screens/shop_dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shimmer/shimmer.dart';
@@ -24,10 +25,22 @@ class _UnderReivewState extends State<UnderReivew> {
   bool isLoading = true;
   bool isOnline = true;
 
+  void notificationService()async{
+    FirebaseMessaging fmessaging = FirebaseMessaging.instance;
+    await fmessaging.requestPermission();
+    await fmessaging.getToken().then((value) {
+      String userId =  FirebaseAuth.instance.currentUser!.uid;
+      print(userId);
+      FirebaseFirestore.instance.collection('Shops').doc(userId).update({
+        'fcmToken': value,
+      });
+    },);
+  }
+
   @override
   void initState() {
     super.initState();
-
+    notificationService();
     fetchClientData().then((value) {
       setState(() {
         map = value;
