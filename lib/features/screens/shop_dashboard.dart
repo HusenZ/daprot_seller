@@ -2,17 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daprot_seller/config/routes/routes_manager.dart';
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/domain/connectivity_helper.dart';
-import 'package:daprot_seller/domain/model/user_model.dart';
 import 'package:daprot_seller/domain/order_repo.dart';
-import 'package:daprot_seller/domain/shop_data_repo.dart';
 import 'package:daprot_seller/features/screens/orders_screen.dart';
 import 'package:daprot_seller/features/screens/profile_screen.dart';
 import 'package:daprot_seller/features/screens/store_view.dart';
+import 'package:daprot_seller/features/widgets/products_review_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
 class ShopDashboard extends StatefulWidget {
@@ -25,23 +22,26 @@ class ShopDashboard extends StatefulWidget {
 class _ShopDashboardState extends State<ShopDashboard> {
   int _selectedIndex = 0;
 
-  void notificationService()async{
+  void notificationService() async {
     FirebaseMessaging fmessaging = FirebaseMessaging.instance;
     await fmessaging.requestPermission();
-    await fmessaging.getToken().then((value) {
-      String userId =  FirebaseAuth.instance.currentUser!.uid;
-      print(userId);
-      FirebaseFirestore.instance.collection('Shops').doc(userId).update({
-        'fcmToken': value,
-      });
-    },);
+    await fmessaging.getToken().then(
+      (value) {
+        String userId = FirebaseAuth.instance.currentUser!.uid;
+        print(userId);
+        FirebaseFirestore.instance.collection('Shops').doc(userId).update({
+          'fcmToken': value,
+        });
+      },
+    );
   }
 
   @override
   void initState() {
-   notificationService();
+    notificationService();
     super.initState();
   }
+
   final List _tabs = [
     const ShopDashboard(),
     const OrdersTab(),
@@ -190,9 +190,8 @@ class _ShopDashboardState extends State<ShopDashboard> {
               ),
               SizedBox(
                 height: 55.h,
-                child: ProductReviewCard(),
+                child: const ProductReviewCard(),
               ),
-              SizedBox(height: 10.h),
             ],
           ),
         ),
@@ -226,131 +225,131 @@ class _ShopDashboardState extends State<ShopDashboard> {
   }
 }
 
-class ProductReviewCard extends StatelessWidget {
-  ProductReviewCard({super.key});
-  ProductStream productStream = ProductStream();
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<List<QuerySnapshot<Map<String, dynamic>>>>(
-      stream: productStream.getProductReviewsStream(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return const Text('Will Be Updated Later');
-        }
+// class ProductReviewCard extends StatelessWidget {
+//   ProductReviewCard({super.key});
+//   ProductStream productStream = ProductStream();
+//   @override
+//   Widget build(BuildContext context) {
+//     return StreamBuilder<List<QuerySnapshot<Map<String, dynamic>>>>(
+//       stream: productStream.getProductReviewsStream(),
+//       builder: (context, snapshot) {
+//         if (snapshot.hasError) {
+//           return const Text('Will Be Updated Later');
+//         }
 
-        if (snapshot.data == null) {
-          return const Center(
-            child: Text("No Data Available"),
-          );
-        }
+//         if (snapshot.data == null) {
+//           return const Center(
+//             child: Text("No Data Available"),
+//           );
+//         }
 
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
+//         if (snapshot.connectionState == ConnectionState.waiting) {
+//           return const Center(child: CircularProgressIndicator());
+//         }
 
-        final reviews = snapshot.data!;
-        return ListView.builder(
-          shrinkWrap: true, // Prevent excessive scrolling
-          itemCount: reviews.length,
-          itemBuilder: (context, index) {
-            final productReviews = reviews[index].docs;
+//         final reviews = snapshot.data!;
+//         return ListView.builder(
+//           shrinkWrap: true, // Prevent excessive scrolling
+//           itemCount: reviews.length,
+//           itemBuilder: (context, index) {
+//             final productReviews = reviews[index].docs;
 
-            if (productReviews.isEmpty) {
-              return const Text('');
-            }
+//             if (productReviews.isEmpty) {
+//               return const Text('');
+//             }
 
-            return SingleChildScrollView(
-              child: Column(
-                // Wrap reviews in a Column
-                children: productReviews.map((reviewDoc) {
-                  final reviewText = reviewDoc.get('review');
-                  return Card(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        StreamBuilder<UserModel>(
-                          stream: OrderRepository()
-                              .streamUser(reviewDoc.get('userID')),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasError) {
-                              return const Text('Will Be Updated Later');
-                            }
+//             return SingleChildScrollView(
+//               child: Column(
+//                 // Wrap reviews in a Column
+//                 children: productReviews.map((reviewDoc) {
+//                   final reviewText = reviewDoc.get('review');
+//                   return Card(
+//                     child: Column(
+//                       crossAxisAlignment: CrossAxisAlignment.start,
+//                       children: [
+//                         StreamBuilder<UserModel>(
+//                           stream: OrderRepository()
+//                               .streamUser(reviewDoc.get('userID')),
+//                           builder: (context, snapshot) {
+//                             if (snapshot.hasError) {
+//                               return const Text('Will Be Updated Later');
+//                             }
 
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return Shimmer(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Colors.grey[300]!,
-                                    Colors.grey[100]!
-                                  ],
-                                  stops: const [0.1, 0.9],
-                                ),
-                                child: Container(
-                                  width: 90.w,
-                                  height: 70.h,
-                                  color: Colors.grey[200],
-                                  child: const Card(),
-                                ),
-                              );
-                            }
-                            return Row(
-                              children: [
-                                const CircleAvatar(
-                                  backgroundColor: Colors.white,
-                                  child: Icon(Icons.person),
-                                ),
-                                SizedBox(
-                                  width: 2.w,
-                                ),
-                                SizedBox(
-                                  width: 70.w,
-                                  child: Text(
-                                    snapshot.data!.name,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .copyWith(
-                                            overflow: TextOverflow.ellipsis,
-                                            fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                        Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(8.sp),
-                              child: Text(
-                                  '${(reviewDoc.get('rating')).toString()}/5.0'),
-                            ),
-                            RatingBarIndicator(
-                              rating: reviewDoc.get('rating'),
-                              direction: Axis.horizontal,
-                              itemCount: 5,
-                              itemSize: 24,
-                              itemBuilder: (context, _) => const Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(8.sp),
-                          child: Text(reviewText),
-                        ),
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-}
+//                             if (snapshot.connectionState ==
+//                                 ConnectionState.waiting) {
+//                               return Shimmer(
+//                                 gradient: LinearGradient(
+//                                   colors: [
+//                                     Colors.grey[300]!,
+//                                     Colors.grey[100]!
+//                                   ],
+//                                   stops: const [0.1, 0.9],
+//                                 ),
+//                                 child: Container(
+//                                   width: 90.w,
+//                                   height: 70.h,
+//                                   color: Colors.grey[200],
+//                                   child: const Card(),
+//                                 ),
+//                               );
+//                             }
+//                             return Row(
+//                               children: [
+//                                 const CircleAvatar(
+//                                   backgroundColor: Colors.white,
+//                                   child: Icon(Icons.person),
+//                                 ),
+//                                 SizedBox(
+//                                   width: 2.w,
+//                                 ),
+//                                 SizedBox(
+//                                   width: 70.w,
+//                                   child: Text(
+//                                     snapshot.data!.name,
+//                                     style: Theme.of(context)
+//                                         .textTheme
+//                                         .bodyMedium!
+//                                         .copyWith(
+//                                             overflow: TextOverflow.ellipsis,
+//                                             fontWeight: FontWeight.w600),
+//                                   ),
+//                                 ),
+//                               ],
+//                             );
+//                           },
+//                         ),
+//                         Row(
+//                           children: [
+//                             Padding(
+//                               padding: EdgeInsets.all(8.sp),
+//                               child: Text(
+//                                   '${(reviewDoc.get('rating')).toString()}/5.0'),
+//                             ),
+//                             RatingBarIndicator(
+//                               rating: reviewDoc.get('rating'),
+//                               direction: Axis.horizontal,
+//                               itemCount: 5,
+//                               itemSize: 24,
+//                               itemBuilder: (context, _) => const Icon(
+//                                 Icons.star,
+//                                 color: Colors.amber,
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                         Padding(
+//                           padding: EdgeInsets.all(8.sp),
+//                           child: Text(reviewText),
+//                         ),
+//                       ],
+//                     ),
+//                   );
+//                 }).toList(),
+//               ),
+//             );
+//           },
+//         );
+//       },
+//     );
+//   }
+// }

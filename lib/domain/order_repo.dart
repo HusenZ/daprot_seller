@@ -14,6 +14,7 @@ class OrderRepository {
   Stream<List<OrderModel>> getUserOrdersStream(String userId) {
     return _firestore
         .collection('orders')
+        .orderBy('orderDate', descending: false)
         .where('shopId', isEqualTo: userId)
         .snapshots()
         .map((snapshot) =>

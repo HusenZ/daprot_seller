@@ -26,6 +26,10 @@ class ProductStream {
             .collection('Products')
             .doc(productId)
             .collection('Reviews')
+            .orderBy(
+              'timestamp',
+              descending: true,
+            )
             .get();
       }));
     }).asBroadcastStream();

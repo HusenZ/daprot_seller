@@ -112,7 +112,9 @@ class _OrdersTabState extends State<OrdersTab>
           );
         }
         if (status.name == OrderStatus.pending.name) {
-          filteredOrders.sort((a, b) => a.orderDate.compareTo(b.orderDate));
+          filteredOrders.sort((a, b) {
+            return a.orderDate.compareTo(b.orderDate);
+          });
         }
 
         return ListView.builder(
