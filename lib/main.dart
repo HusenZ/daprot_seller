@@ -22,8 +22,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("--------------------->>>$title, $body");
   AwesomeNotifications().createNotification(
     content: NotificationContent(
-      id: 12,
-      channelKey: message.collapseKey!,
+      id: 123,
+      channelKey: 'high_importance_channel',
       color: Colors.white,
       category: NotificationCategory.Event,
       wakeUpScreen: true,
@@ -33,18 +33,18 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('A bg message just showed up :  ${message.messageId}');
 }
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onBackgroundMessage(
+    (message) => _firebaseMessagingBackgroundHandler(message),
+  );
   await FirebaseAppCheck.instance.activate();
   AwesomeNotifications().initialize(null, [
     NotificationChannel(
-      channelKey: 'channelKey',
+      channelKey: 'high_importance_channel',
       channelName: 'channelName',
       channelDescription: 'channelDescription',
       importance: NotificationImportance.Max,

@@ -51,7 +51,6 @@ class _MyAppState extends State<MyApp> {
       priority: Priority.high,
       icon: '@mipmap/ic_launcher',
       ticker: 'ticker',
-      // sound: RawResourceAndroidNotificationSound(),
     );
     NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
