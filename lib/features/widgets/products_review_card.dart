@@ -4,7 +4,6 @@ import 'package:daprot_seller/domain/order_repo.dart';
 import 'package:daprot_seller/domain/shop_data_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
@@ -157,7 +156,7 @@ class _ProductReviewCardState extends State<ProductReviewCard> {
             ),
             SizedBox(height: 4.sp),
             Text(
-              'Posted on ${DateFormat.yMMMd().add_jm().format(timestamp.toDate())}',
+              'Posted on ${timestamp.toString().split('.').first}',
               style: Theme.of(context)
                   .textTheme
                   .bodySmall!

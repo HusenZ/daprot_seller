@@ -72,8 +72,9 @@ class OrderRepository {
           .collection('Users')
           .doc(userId)
           .collection('fcmToken')
+          .doc('fcmdoc')
           .get();
-      String? userToken = tokendoc.docs.first['token'];
+      String? userToken = tokendoc['token'];
       await sendFcmMessage(
           'Status Update - $newStatus', "Delivery Status Updated", userToken);
       print("fcm of user -----> $userToken");

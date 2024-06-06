@@ -18,7 +18,6 @@ import 'package:daprot_seller/features/widgets/common_widgets/loading_button.dar
 import 'package:daprot_seller/features/widgets/common_widgets/loading_dailog.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -63,10 +62,8 @@ class _LoginScreenState extends State<LoginScreen> {
     return ApplicationStatus.noMatch;
   }
 
-
-
   @override
-  void initState()  {
+  void initState() {
     super.initState();
   }
 
@@ -122,140 +119,140 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             SizedBox(height: 2.h),
-            Padding(
-              padding: EdgeInsets.all(8.sp),
-              child: Transform.scale(
-                scaleY: 0.23.w,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(2.w),
-                    color: ColorsManager.whiteColor,
-                    boxShadow: const [
-                      BoxShadow(),
-                    ],
-                  ),
-                  child: TextFormField(
-                    textCapitalization: TextCapitalization.sentences,
-                    textAlignVertical: TextAlignVertical.center,
-                    textAlign: TextAlign.start,
-                    cursorColor: ColorsManager.primaryColor,
-                    obscureText: false,
-                    controller: _emailContoller,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Enter the Email address';
-                      }
-                      String emailRegex =
-                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
-                      if (!RegExp(emailRegex).hasMatch(value)) {
-                        return 'Enter a valid Email address';
-                      }
-                      return null;
-                    },
-                    keyboardType: TextInputType.emailAddress,
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          fontSize: 12.sp,
-                        ),
-                    decoration: InputDecoration(
-                      labelStyle: TextStyle(
-                          fontSize: 13.sp,
-                          fontFamily: 'AppFonts',
-                          fontWeight: FontWeightManager.semiBold),
-                      labelText: 'Email',
-                      hintText: 'Type here...',
-                      disabledBorder: InputBorder.none,
-                      border: OutlineInputBorder(
-                          borderSide: const BorderSide(),
-                          borderRadius: BorderRadius.all(Radius.circular(3.w))),
-                      floatingLabelStyle: const TextStyle(
-                        color: ColorsManager.primaryColor,
-                        fontFamily: 'AppFonts',
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: ColorsManager.primaryColor,
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(3.w)),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 1.h),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 11, 187, 245),
-                  foregroundColor: const Color.fromARGB(255, 247, 241, 241),
-                  textStyle: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(fontSize: 15.sp)),
-              child: const Text("Continue"),
-              onPressed: () async {
-                SharedPreferences preferences =
-                    await SharedPreferences.getInstance();
-                isConnected().then((value) {
-                  if (value) {
-                    showLoading();
-                    PhoneVerificationApi.emailExists(
-                            _emailContoller.text.trim())
-                        .then((value) {
-                      if (value) {
-                        FirebaseAuth.instance
-                            .signInWithEmailAndPassword(
-                                email: _emailContoller.text.trim(),
-                                password: '1er3t4y5u67')
-                            .then((value) {
-                          if (value.user != null) {
-                            createAdminFuture().then((value) {
-                              if (value == ApplicationStatus.unverified) {
-                                preferences.setBool('isAuthenticated', true);
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const UnderReivew()),
-                                  (Route<dynamic> route) => false,
-                                );
-                              } else if (value == ApplicationStatus.verified) {
-                                preferences.setBool('isAuthenticated', true);
-                                ConnectivityHelper.replaceIfConnected(
-                                  context,
-                                  Routes.dashboard,
-                                );
-                              } else {
-                                preferences.setBool('isAuthenticated', true);
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const HomeScreen()),
-                                  (Route<dynamic> route) => false,
-                                );
-                              }
-                            });
-                          }
-                        });
-                      } else {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => EmailSetProfile(
-                              email: _emailContoller.text.trim()),
-                        ));
-                      }
-                    });
-                  } else {
-                    customSnackBar(context, 'Check Your Connection', false);
-                  }
-                });
-              },
-            ),
-            SizedBox(height: 1.h),
-            Text(
-              "------OR------",
-              style: TextStyle(
-                  fontWeight: FontWeightManager.semiBold, fontSize: 12.sp),
-            ),
-            SizedBox(height: 2.h),
+            // Padding(
+            //   padding: EdgeInsets.all(8.sp),
+            //   child: Transform.scale(
+            //     scaleY: 0.23.w,
+            //     child: Container(
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(2.w),
+            //         color: ColorsManager.whiteColor,
+            //         boxShadow: const [
+            //           BoxShadow(),
+            //         ],
+            //       ),
+            //       child: TextFormField(
+            //         textCapitalization: TextCapitalization.sentences,
+            //         textAlignVertical: TextAlignVertical.center,
+            //         textAlign: TextAlign.start,
+            //         cursorColor: ColorsManager.primaryColor,
+            //         obscureText: false,
+            //         controller: _emailContoller,
+            //         validator: (value) {
+            //           if (value == null || value.isEmpty) {
+            //             return 'Enter the Email address';
+            //           }
+            //           String emailRegex =
+            //               r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+            //           if (!RegExp(emailRegex).hasMatch(value)) {
+            //             return 'Enter a valid Email address';
+            //           }
+            //           return null;
+            //         },
+            //         keyboardType: TextInputType.emailAddress,
+            //         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+            //               fontSize: 12.sp,
+            //             ),
+            //         decoration: InputDecoration(
+            //           labelStyle: TextStyle(
+            //               fontSize: 13.sp,
+            //               fontFamily: 'AppFonts',
+            //               fontWeight: FontWeightManager.semiBold),
+            //           labelText: 'Email',
+            //           hintText: 'Type here...',
+            //           disabledBorder: InputBorder.none,
+            //           border: OutlineInputBorder(
+            //               borderSide: const BorderSide(),
+            //               borderRadius: BorderRadius.all(Radius.circular(3.w))),
+            //           floatingLabelStyle: const TextStyle(
+            //             color: ColorsManager.primaryColor,
+            //             fontFamily: 'AppFonts',
+            //           ),
+            //           focusedBorder: OutlineInputBorder(
+            //             borderSide: const BorderSide(
+            //               color: ColorsManager.primaryColor,
+            //             ),
+            //             borderRadius: BorderRadius.all(Radius.circular(3.w)),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(height: 1.h),
+            // ElevatedButton(
+            //   style: ElevatedButton.styleFrom(
+            //       backgroundColor: const Color.fromARGB(255, 11, 187, 245),
+            //       foregroundColor: const Color.fromARGB(255, 247, 241, 241),
+            //       textStyle: Theme.of(context)
+            //           .textTheme
+            //           .bodyLarge!
+            //           .copyWith(fontSize: 15.sp)),
+            //   child: const Text("Continue"),
+            //   onPressed: () async {
+            //     SharedPreferences preferences =
+            //         await SharedPreferences.getInstance();
+            //     isConnected().then((value) {
+            //       if (value) {
+            //         showLoading();
+            //         PhoneVerificationApi.emailExists(
+            //                 _emailContoller.text.trim())
+            //             .then((value) {
+            //           if (value) {
+            //             FirebaseAuth.instance
+            //                 .signInWithEmailAndPassword(
+            //                     email: _emailContoller.text.trim(),
+            //                     password: '1er3t4y5u67')
+            //                 .then((value) {
+            //               if (value.user != null) {
+            //                 createAdminFuture().then((value) {
+            //                   if (value == ApplicationStatus.unverified) {
+            //                     preferences.setBool('isAuthenticated', true);
+            //                     Navigator.pushAndRemoveUntil(
+            //                       context,
+            //                       MaterialPageRoute(
+            //                           builder: (context) =>
+            //                               const UnderReivew()),
+            //                       (Route<dynamic> route) => false,
+            //                     );
+            //                   } else if (value == ApplicationStatus.verified) {
+            //                     preferences.setBool('isAuthenticated', true);
+            //                     ConnectivityHelper.replaceIfConnected(
+            //                       context,
+            //                       Routes.dashboard,
+            //                     );
+            //                   } else {
+            //                     preferences.setBool('isAuthenticated', true);
+            //                     Navigator.pushAndRemoveUntil(
+            //                       context,
+            //                       MaterialPageRoute(
+            //                           builder: (context) => const HomeScreen()),
+            //                       (Route<dynamic> route) => false,
+            //                     );
+            //                   }
+            //                 });
+            //               }
+            //             });
+            //           } else {
+            //             Navigator.of(context).push(MaterialPageRoute(
+            //               builder: (context) => EmailSetProfile(
+            //                   email: _emailContoller.text.trim()),
+            //             ));
+            //           }
+            //         });
+            //       } else {
+            //         customSnackBar(context, 'Check Your Connection', false);
+            //       }
+            //     });
+            //   },
+            // ),
+            // SizedBox(height: 1.h),
+            // Text(
+            //   "------OR------",
+            //   style: TextStyle(
+            //       fontWeight: FontWeightManager.semiBold, fontSize: 12.sp),
+            // ),
+            // SizedBox(height: 2.h),
             BlocConsumer<GoogleSignInBloc, GoogleSignInState>(
               listener: (context, state) {
                 if (state is GoogleSignInLoading) {

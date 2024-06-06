@@ -7,7 +7,6 @@ import 'package:daprot_seller/features/screens/add_new_product.dart';
 import 'package:daprot_seller/features/screens/product_details_screen.dart';
 import 'package:daprot_seller/features/screens/update_shop_details.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/expandable_text.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -59,10 +58,24 @@ class _MyStoreState extends State<MyStore> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.sp),
                   child: Container(
+                    height: 4.h,
+                    width: 45.w,
                     decoration: const BoxDecoration(
                       shape: BoxShape.rectangle,
+                      color: ColorsManager.primaryColor,
                     ),
-                    child: const Text("Add Products"),
+                    child: Padding(
+                      padding: EdgeInsets.all(2.sp),
+                      child: Center(
+                        child: Text(
+                          "Add Products",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.sp),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -156,37 +169,9 @@ class _MyStoreState extends State<MyStore> {
                     builder: (context, snapshot) {
                       if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                         return SliverToBoxAdapter(
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: InkWell(
-                              onTap: () =>
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const AddNewProdcut(),
-                              )),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8.sp),
-                                child: Container(
-                                  width: 22.h,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.rectangle,
-                                    color: ColorsManager.primaryColor,
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      "Add Products",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .copyWith(
-                                              color:
-                                                  ColorsManager.offWhiteColor),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
+                            child: SizedBox(
+                          height: 5.h,
+                        ));
                       }
                       return SliverGrid(
                         gridDelegate:
@@ -224,7 +209,39 @@ class _MyStoreState extends State<MyStore> {
                           childCount: snapshot.data!.docs.length,
                         ),
                       );
-                    })
+                    }),
+                SliverToBoxAdapter(
+                  child: Center(
+                    child: InkWell(
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const AddNewProdcut(),
+                      )),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.sp),
+                        child: Container(
+                          height: 4.h,
+                          width: 45.w,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            color: ColorsManager.primaryColor,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(2.sp),
+                            child: Center(
+                              child: Text(
+                                "Add Products",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.sp),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           );

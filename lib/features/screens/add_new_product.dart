@@ -360,6 +360,10 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                               if (value == null || value.isEmpty) {
                                 return 'Enter the Discounted Price';
                               }
+                              if (int.parse(value) >
+                                  int.parse(originalPriceController.text)) {
+                                return "Invalid Discounted Price";
+                              }
 
                               return null;
                             },
@@ -382,7 +386,10 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                                     _selectedCategory != null &&
                                     _pImage1Pic != null &&
                                     _pImage2Pic != null &&
-                                    _pImage3Pic != null) {
+                                    _pImage3Pic != null &&
+                                    int.parse(discountedPriceController.text) <
+                                        int.parse(
+                                            originalPriceController.text)) {
                                   context.read<ProductBloc>().add(
                                         AddProductEvent(
                                           Product(
@@ -420,6 +427,11 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                                 } else if (_selectedCategory == null) {
                                   customSnackBar(
                                       context, "Select category", false);
+                                } else if (int.parse(
+                                        discountedPriceController.text) >
+                                    int.parse(originalPriceController.text)) {
+                                  customSnackBar(context,
+                                      "Invalid Discounted Price", false);
                                 }
                               },
                             ),
