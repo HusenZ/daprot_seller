@@ -36,7 +36,6 @@ class SignUpApi {
   }
 
   static Future<bool> addUser({
-    required XFile profile,
     required String name,
     required String email,
     required String phone,
@@ -47,16 +46,11 @@ class SignUpApi {
           await SharedPreferences.getInstance();
       final uid = auth.currentUser!.uid;
 
-      Reference ref = FirebaseStorage.instance.ref('user_profile/$uid.jpg');
-      await ref.putFile(File(profile.path));
-      String imgUrl = await ref.getDownloadURL();
-
       await _firestore.collection('Sellers').doc(uid).set({
         'userId': uid,
         'name': name,
         'email': email,
         'phone': phone,
-        'imgUrl': imgUrl,
       });
       print("User added to Firebase");
 

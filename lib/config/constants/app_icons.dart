@@ -9,4 +9,5 @@ class AppIcons {
   static const profileIcon = "assets/icons/profile_icon.png";
   static const privacyIcon = "assets/icons/privacy.png";
   static const termsIcon = "assets/icons/terms.png";
+  static const customerSupport = "assets/icons/customerSupport.png";
 }

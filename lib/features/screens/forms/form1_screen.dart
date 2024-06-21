@@ -44,7 +44,10 @@ class _FCScreen1State extends State<FCScreen1> {
   XFile? _shopLogo;
 
   Future<void> _pickShopLogo(ImageSource source) async {
-    final pickedImage = await ImagePicker().pickImage(source: source);
+    final pickedImage = await ImagePicker().pickImage(
+      source: source,
+      imageQuality: 25,
+    );
     if (pickedImage != null) {
       setState(() {
         _shopLogo = pickedImage;

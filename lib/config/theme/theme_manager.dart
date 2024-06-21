@@ -7,7 +7,7 @@ ColorScheme kColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.light,
   seedColor: ColorsManager.primaryColor,
   secondary: ColorsManager.secondaryColor,
-  background: ColorsManager.offWhiteColor,
+  surface: ColorsManager.offWhiteColor,
 );
 ThemeData getApplicationTheme() {
   return ThemeData(
@@ -15,7 +15,7 @@ ThemeData getApplicationTheme() {
     colorScheme: kColorScheme,
     primaryColor: ColorsManager.primaryColor,
     appBarTheme: const AppBarTheme().copyWith(
-      color: const Color.fromARGB(232, 3, 115, 244),
+      color: kColorScheme.secondary,
       foregroundColor: kColorScheme.onSecondary,
     ),
     textTheme: TextTheme(
@@ -29,5 +29,19 @@ ThemeData getApplicationTheme() {
         color: ColorsManager.greyColor,
       ),
     ),
+    timePickerTheme: const TimePickerThemeData(
+        backgroundColor: ColorsManager.whiteColor,
+        hourMinuteColor: ColorsManager.secondaryColor,
+        hourMinuteTextColor: ColorsManager.whiteColor,
+        dayPeriodColor: ColorsManager.secondaryColor,
+        dayPeriodTextColor: ColorsManager.greyColor,
+        dialHandColor: ColorsManager.secondaryColor,
+        confirmButtonStyle: ButtonStyle(
+          backgroundColor: WidgetStatePropertyAll(ColorsManager.secondaryColor),
+          foregroundColor: WidgetStatePropertyAll(ColorsManager.whiteColor),
+        ),
+        timeSelectorSeparatorColor: WidgetStatePropertyAll(
+          ColorsManager.offWhiteColor,
+        )),
   );
 }

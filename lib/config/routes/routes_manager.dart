@@ -1,4 +1,5 @@
 import 'package:daprot_seller/features/screens/add_new_product.dart';
+import 'package:daprot_seller/features/screens/customer_support.dart';
 import 'package:daprot_seller/features/screens/forms/form1_screen.dart';
 import 'package:daprot_seller/features/screens/forms/form2_screen.dart';
 import 'package:daprot_seller/features/screens/forms/form3_screen.dart';
@@ -31,6 +32,7 @@ class Routes {
   static const String addNewProduct = '/addNewProduct';
   static const String privacyRoute = '/privacy';
   static const String termsRoute = '/terms';
+  static const String support = '/support';
 }
 
 Map<String, WidgetBuilder> get routes {
@@ -48,5 +50,6 @@ Map<String, WidgetBuilder> get routes {
     Routes.onboardingRoute: (context) => const OnboardingScreen(),
     Routes.privacyRoute: (context) => const PrivacyPolicy(),
     Routes.termsRoute: (context) => const TermsAndConditoins(),
+    Routes.support: (context) => const CustomerSupport(),
   };
 }

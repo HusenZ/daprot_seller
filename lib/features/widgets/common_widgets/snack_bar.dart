@@ -7,7 +7,7 @@ void customSnackBar(BuildContext context, String message, bool success) {
     behavior: SnackBarBehavior.floating,
     shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(20))),
-    backgroundColor: success ? ColorsManager.accentColor : Colors.red,
+    backgroundColor: success ? ColorsManager.secondaryColor : Colors.red,
     content: Row(
       children: [
         SizedBox(

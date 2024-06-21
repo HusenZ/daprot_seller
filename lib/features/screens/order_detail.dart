@@ -142,9 +142,12 @@ class __OrderStatusDialogState extends State<_OrderStatusDialog> {
             Navigator.of(context).pop();
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: ColorsManager.lightRedColor,
+            backgroundColor: ColorsManager.accentColor.withOpacity(0.75),
           ),
-          child: const Text('Cancel'),
+          child: const Text(
+            'Cancel',
+            style: TextStyle(color: ColorsManager.whiteColor),
+          ),
         ),
         ElevatedButton(
           onPressed: () {
@@ -156,11 +159,15 @@ class __OrderStatusDialogState extends State<_OrderStatusDialog> {
               ),
             );
             Navigator.of(context).pop();
+            Navigator.of(context).pop();
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: ColorsManager.accentColor,
+            backgroundColor: ColorsManager.secondaryColor,
           ),
-          child: const Text('Update'),
+          child: const Text(
+            'Update',
+            style: TextStyle(color: ColorsManager.whiteColor),
+          ),
         ),
       ],
     );

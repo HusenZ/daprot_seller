@@ -10,7 +10,8 @@ class InputBrandLogoUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 13.h,
+        width: 80.w,
+        height: 20.h,
         padding: EdgeInsets.symmetric(horizontal: 3.w),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(3.w),

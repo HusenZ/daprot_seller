@@ -109,23 +109,8 @@ class _ShopDashboardState extends State<ShopDashboard> {
 
   Scaffold dashboardView(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          ConnectivityHelper.naviagte(context, Routes.addNewProduct);
-        },
-        backgroundColor: const Color.fromARGB(232, 3, 115, 244),
-        splashColor: ColorsManager.accentColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25.sp),
-        ),
-        child: const Icon(
-          Icons.add_circle,
-          color: ColorsManager.whiteColor,
-          size: 50,
-        ),
-      ),
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(232, 3, 115, 244),
+        backgroundColor: ColorsManager.secondaryColor,
         automaticallyImplyLeading: false,
         title: Text(
           "Dashboard",
@@ -133,6 +118,21 @@ class _ShopDashboardState extends State<ShopDashboard> {
               .textTheme
               .bodyLarge!
               .copyWith(color: ColorsManager.whiteColor),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          ConnectivityHelper.naviagte(context, Routes.addNewProduct);
+        },
+        backgroundColor: ColorsManager.secondaryColor,
+        splashColor: ColorsManager.offWhiteColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25.sp),
+        ),
+        child: const Icon(
+          Icons.add_circle,
+          color: ColorsManager.whiteColor,
+          size: 50,
         ),
       ),
       body: SingleChildScrollView(

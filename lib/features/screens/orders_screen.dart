@@ -38,10 +38,10 @@ class _OrdersTabState extends State<OrdersTab>
     return Scaffold(
       appBar: AppBar(
         title: const Text('Orders'),
-        backgroundColor: const Color.fromARGB(232, 3, 115, 244),
+        backgroundColor: ColorsManager.secondaryColor,
         bottom: TabBar(
           unselectedLabelColor: ColorsManager.whiteColor,
-          labelColor: ColorsManager.accentColor,
+          labelColor: const Color.fromRGBO(206, 182, 236, 1),
           labelStyle:
               Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 12.sp),
           controller: _tabController,

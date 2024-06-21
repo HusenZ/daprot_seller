@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class InputLocation extends StatefulWidget {
-  InputLocation({
+  const InputLocation({
     super.key,
     required this.locationController,
     required this.locality,
@@ -20,6 +20,7 @@ class InputLocation extends StatefulWidget {
 
 class _InputLocationState extends State<InputLocation> {
   String selectedLocality = '';
+  final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,31 @@ class _InputLocationState extends State<InputLocation> {
       height: 25.8.h,
       child: Column(
         children: [
-          const ReturnLabel(label: 'Select Locality'),
+          Row(
+            children: [
+              const ReturnLabel(label: 'Select Locality'),
+              SizedBox(
+                width: 5.w,
+              ),
+              GestureDetector(
+                onTap: () {
+                  final dynamic tooltip = tooltipkey.currentState;
+                  tooltip.ensureTooltipVisible();
+                },
+                child: Tooltip(
+                  message:
+                      "This address will be used to place your shop on our Daprot Shopping and will be shared with users.",
+                  showDuration: const Duration(seconds: 3),
+                  padding: EdgeInsets.all(8.sp),
+                  triggerMode: TooltipTriggerMode.manual,
+                  preferBelow: true,
+                  key: tooltipkey,
+                  verticalOffset: 48,
+                  child: const Icon(Icons.info),
+                ),
+              ),
+            ],
+          ),
           InkWell(
             onTap: () => _showLocalityBottomSheet(context),
             child: Row(
@@ -74,7 +99,9 @@ class _InputLocationState extends State<InputLocation> {
 
   Widget _buildLocalityList() {
     // Replace with your actual list of localities
-    List<String> localities = ["Belagavi", "M K Hubballi", "Bagewadi"];
+    List<String> localities = [
+      "Belagavi",
+    ];
 
     return SizedBox(
       height:
@@ -82,20 +109,37 @@ class _InputLocationState extends State<InputLocation> {
       child: ListView.builder(
         itemCount: localities.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(
-              localities[index],
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: ColorsManager.primaryColor,
-                  fontWeight: FontWeight.w600),
-            ),
-            onTap: () {
-              setState(() {
-                selectedLocality = localities[index];
-                widget.locality.text = localities[index];
-              });
-              Navigator.pop(context); // Close the bottom sheet
-            },
+          return Column(
+            children: [
+              ListTile(
+                title: Text(
+                  localities[index],
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: ColorsManager.primaryColor,
+                      fontWeight: FontWeight.w600),
+                ),
+                onTap: () {
+                  setState(() {
+                    selectedLocality = localities[index];
+                    widget.locality.text = localities[index];
+                  });
+                  Navigator.pop(context); // Close the bottom sheet
+                },
+                style: ListTileStyle.list,
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.sp),
+                child: Center(
+                  child: RichText(
+                    text: const TextSpan(
+                      text:
+                          "Heads Up! Daprot Shopping is currently live in Belagavi only.",
+                      style: TextStyle(color: ColorsManager.accentColor),
+                    ),
+                  ),
+                ),
+              )
+            ],
           );
         },
       ),

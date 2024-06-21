@@ -43,16 +43,14 @@ class CustomFormField extends StatelessWidget {
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(
-                  color: ColorsManager.accentColor, width: 2.0),
+                  color: ColorsManager.primaryColor, width: 2.0),
               borderRadius: BorderRadius.circular(3.w),
             ),
             helperText: " ",
             hintText: hintText,
             hintStyle:
                 TextStyle(fontSize: 12.sp, color: ColorsManager.greyColor),
-            helperStyle: const TextStyle(
-              color: Colors.red,
-            ),
+            helperStyle: const TextStyle(color: ColorsManager.primaryColor),
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(10.0),
@@ -99,7 +97,7 @@ class DescriptionFormField extends StatelessWidget {
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
               borderSide: const BorderSide(
-                color: ColorsManager.accentColor,
+                color: ColorsManager.primaryColor,
                 width: 4.0,
               ),
               borderRadius: BorderRadius.circular(3.w),
@@ -111,7 +109,7 @@ class DescriptionFormField extends StatelessWidget {
               color: ColorsManager.greyColor,
             ),
             helperStyle: const TextStyle(
-              color: Colors.red,
+              color: ColorsManager.primaryColor,
             ),
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(

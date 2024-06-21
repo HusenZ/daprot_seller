@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:daprot_seller/bloc/update_user_bloc/update_user_bloc.dart';
 import 'package:daprot_seller/bloc/update_user_bloc/update_user_state.dart';
 import 'package:daprot_seller/config/constants/app_icons.dart';
@@ -14,7 +13,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:sizer/sizer.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -53,23 +51,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                ClipOval(
-                  child: CachedNetworkImage(
-                    imageUrl: imageUrl,
-                    width: 100,
-                    height: 100,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => Shimmer.fromColors(
-                      baseColor: Colors.grey[300]!,
-                      highlightColor: Colors.grey[100]!,
-                      child: Container(
-                        width: 100,
-                        height: 100,
-                        color: Colors.white,
-                      ),
+                SizedBox(
+                  width: 22.w,
+                  height: 22.w,
+                  child: ClipOval(
+                    child: Icon(
+                      Icons.person_pin,
+                      size: 66.sp,
+                      color: ColorsManager.primaryColor,
                     ),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
                   ),
                 ),
                 SizedBox(height: 2.h),
@@ -182,31 +172,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      width: 22.w,
-                                      height: 22.w,
-                                      child: ClipOval(
-                                        child: CachedNetworkImage(
-                                          imageUrl: user!.imgUrl,
-                                          fit: BoxFit.cover,
-                                          placeholder: (context, url) =>
-                                              Shimmer.fromColors(
-                                            baseColor: Colors.grey[300]!,
-                                            highlightColor: Colors.grey[100]!,
-                                            child: Container(
-                                              width: 17.w,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                          errorWidget: (context, url, error) =>
-                                              const Icon(Icons.error),
-                                        ),
-                                      ),
+                                SizedBox(
+                                  width: 22.w,
+                                  height: 22.w,
+                                  child: ClipOval(
+                                    child: Icon(
+                                      Icons.person_pin,
+                                      size: 66.sp,
+                                      color: ColorsManager.primaryColor,
                                     ),
-                                  ],
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 20.h,
@@ -317,6 +292,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             title: "Terms & Conditions",
                             image: AppIcons.termsIcon,
                           ),
+                        ),
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        InkWell(
+                          onTap: () =>
+                              Navigator.of(context).pushNamed(Routes.support),
+                          child: const DsingleChildCard(
+                              title: "Customer support",
+                              image: AppIcons.customerSupport),
                         ),
                         SizedBox(
                           height: 1.h,

@@ -5,9 +5,9 @@ class ColorsManager {
   static const Color backgroundColor = Color.fromARGB(216, 247, 242, 255);
   static Color? lightGreyColor = Colors.grey[400];
   static const Color transparentColor = Colors.transparent;
-  static const Color primaryColor = Color.fromARGB(232, 3, 115, 244);
-  static const Color secondaryColor = Color.fromRGBO(75, 109, 232, 0.937);
-  static const Color accentColor = Color.fromARGB(255, 3, 224, 244);
+  static const Color primaryColor = Color(0xFF50006A);
+  static const Color secondaryColor = Color.fromRGBO(146, 75, 232, 0.933);
+  static const Color accentColor = Color(0xFFD90429);
   static const Color greyColor = Color.fromRGBO(198, 194, 194, 0.578);
   static const Color textColor = Color(0xFF333333);
   static const Color whiteColor = Color(0xFFFFFFFF);

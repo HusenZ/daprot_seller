@@ -18,7 +18,7 @@ class DsingleChildCard extends StatelessWidget {
       height: 7.h,
       width: 90.w,
       decoration: BoxDecoration(
-          color: ColorsManager.lightGrey,
+          color: Color.fromARGB(34, 146, 75, 232),
           borderRadius: BorderRadius.circular(15)),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),

@@ -1,18 +1,17 @@
 import 'package:daprot_seller/bloc/auth_bloc/auth_bloc.dart';
 import 'package:daprot_seller/bloc/auth_bloc/auth_state.dart';
+import 'package:daprot_seller/config/constants/lottie_img.dart';
 import 'package:daprot_seller/config/routes/routes_manager.dart';
-import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/domain/connectivity_helper.dart';
 import 'package:daprot_seller/domain/sign_up_repo.dart';
 import 'package:daprot_seller/features/screens/auth_screen/login_screen.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/delevated_button.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/loading_button.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/profile_photo_widget.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';
 
 class SetProfileScreen extends StatefulWidget {
@@ -27,17 +26,7 @@ class SetProfileScreenState extends State<SetProfileScreen> {
   final TextEditingController _phoneController = TextEditingController();
   final User? user = FirebaseAuth.instance.currentUser;
 
-  XFile? _profileImage;
   bool isLoading = false;
-
-  Future<void> _pickImage(ImageSource source) async {
-    final pickedImage = await ImagePicker().pickImage(source: source);
-    if (pickedImage != null) {
-      setState(() {
-        _profileImage = pickedImage;
-      });
-    }
-  }
 
   @override
   void dispose() {
@@ -75,32 +64,33 @@ class SetProfileScreenState extends State<SetProfileScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                InkWell(
-                  onTap: () {
-                    _pickImage(ImageSource.gallery);
-                  },
-                  child: Stack(
-                    children: [
-                      ProfilePhoto(profileImage: _profileImage),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                          ),
-                          child: const Icon(
-                            Icons.edit,
-                            size: 24,
-                            color: ColorsManager.primaryColor,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // InkWell(
+                //   onTap: () {
+                //     _pickImage(ImageSource.gallery);
+                //   },
+                //   child: Stack(
+                //     children: [
+                //       ProfilePhoto(profileImage: _profileImage),
+                //       Positioned(
+                //         bottom: 0,
+                //         right: 0,
+                //         child: Container(
+                //           padding: const EdgeInsets.all(4),
+                //           decoration: const BoxDecoration(
+                //             shape: BoxShape.circle,
+                //             color: Colors.white,
+                //           ),
+                //           child: const Icon(
+                //             Icons.edit,
+                //             size: 24,
+                //             color: ColorsManager.primaryColor,
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                Lottie.asset(AppLottie.onBoard1),
                 SizedBox(height: screenHeight * 0.03),
                 Container(
                   height: 8.h,
@@ -151,17 +141,11 @@ class SetProfileScreenState extends State<SetProfileScreen> {
                             customSnackBar(
                                 context, "Please Enter Phone number", false);
                           }
-                          if (_profileImage == null) {
-                            customSnackBar(
-                                context, "Please Upload Profile Image", false);
-                          }
-                          if (_phoneController.text.isNotEmpty &&
-                              _profileImage != null) {
+                          if (_phoneController.text.isNotEmpty) {
                             setState(() {
                               isLoading = true;
                             });
                             SignUpApi.addUser(
-                                    profile: _profileImage!,
                                     name: userName,
                                     email: userEmail,
                                     phone: _phoneController.text)

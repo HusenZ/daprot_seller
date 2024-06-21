@@ -3,7 +3,6 @@ import 'package:daprot_seller/bloc/auth_bloc/auth_events.dart';
 import 'package:daprot_seller/bloc/auth_bloc/auth_state.dart';
 import 'package:daprot_seller/config/routes/routes_manager.dart';
 import 'package:daprot_seller/domain/connectivity_helper.dart';
-import 'package:daprot_seller/domain/phone_verfi_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,15 +17,15 @@ class AppBloc extends Bloc<AppEvents, AppState> {
 
   AppBloc(this._preferences) : super(InitialState()) {
     on<CheckPhoneEvent>((event, emit) async {
-      emit(AppStateLoading());
-      isExists =
-          await PhoneVerificationApi.checkPhoneNumberExists(event.phoneNumber);
-      print("isExists Value ------ $isExists ------");
-      emit(
-        PhoneNumberExistsState(
-            phoneNumber: event.phoneNumber, isExists: isExists),
-      );
-      emit(AppStateSuccess());
+      // emit(AppStateLoading());
+      // isExists =
+      //     await EmailVerificationRepo.checkPhoneNumberExists(event.phoneNumber);
+      // print("isExists Value ------ $isExists ------");
+      // emit(
+      //   PhoneNumberExistsState(
+      //       phoneNumber: event.phoneNumber, isExists: isExists),
+      // );
+      // emit(AppStateSuccess());
     });
 
     on<OtpVerificationEvent>(

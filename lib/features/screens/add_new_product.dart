@@ -31,6 +31,7 @@ class AddNewProdcutState extends State<AddNewProdcut> {
   TextEditingController discountedPriceController = TextEditingController();
 
   GlobalKey<FormState> fcFormKey = GlobalKey<FormState>();
+  final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
 
   XFile? _pImage1Pic;
   XFile? _pImage2Pic;
@@ -44,7 +45,7 @@ class AddNewProdcutState extends State<AddNewProdcut> {
   Future<void> _pImage1(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(
       source: source,
-      imageQuality: 50,
+      imageQuality: 25,
     );
     if (pickedImage != null) {
       setState(() {
@@ -56,7 +57,7 @@ class AddNewProdcutState extends State<AddNewProdcut> {
   Future<void> _pImage2(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(
       source: source,
-      imageQuality: 50,
+      imageQuality: 25,
     );
     if (pickedImage != null) {
       setState(() {
@@ -68,7 +69,7 @@ class AddNewProdcutState extends State<AddNewProdcut> {
   Future<void> _pImage3(ImageSource source) async {
     final pickedImage = await ImagePicker().pickImage(
       source: source,
-      imageQuality: 50,
+      imageQuality: 25,
     );
     if (pickedImage != null) {
       setState(() {
@@ -150,18 +151,48 @@ class AddNewProdcutState extends State<AddNewProdcut> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       /// TITLE
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: 1.5.h,
-                          bottom: 3.h,
-                        ),
-                        child: Text(
-                          'Add New Product'.toUpperCase(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge!
-                              .copyWith(fontSize: 14.sp),
-                        ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: 1.5.h,
+                              bottom: 3.h,
+                            ),
+                            child: Text(
+                              'Add New Product'.toUpperCase(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(fontSize: 14.sp),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10.w,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: 1.5.h,
+                              bottom: 3.h,
+                            ),
+                            child: GestureDetector(
+                              onTap: () {
+                                final dynamic tooltip = tooltipkey.currentState;
+                                tooltip.ensureTooltipVisible();
+                              },
+                              child: Tooltip(
+                                message:
+                                    "Reminder! Only genuine products & family-friendly descriptions allowed. Violation may lead to shop removal.",
+                                showDuration: const Duration(seconds: 3),
+                                padding: EdgeInsets.all(8.sp),
+                                triggerMode: TooltipTriggerMode.manual,
+                                preferBelow: true,
+                                key: tooltipkey,
+                                verticalOffset: 48,
+                                child: const Icon(Icons.info),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
 
                       Column(
@@ -473,7 +504,7 @@ class __CategoryDialogState extends State<_CategoryDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('Select Category'),
-      backgroundColor: Color.fromARGB(255, 145, 202, 255),
+      backgroundColor: ColorsManager.offWhiteColor,
       content: SingleChildScrollView(
         child: Column(
           children: [
@@ -483,9 +514,9 @@ class __CategoryDialogState extends State<_CategoryDialog> {
               dropdownColor: Colors.white,
               icon: const Icon(
                 Icons.arrow_drop_down_circle_rounded,
-                color: Colors.white,
+                color: ColorsManager.secondaryColor,
               ),
-              focusColor: Colors.white,
+              focusColor: ColorsManager.primaryColor,
               items: Category.values.map((category) {
                 return DropdownMenuItem<Category>(
                   value: category,
@@ -506,10 +537,8 @@ class __CategoryDialogState extends State<_CategoryDialog> {
               Column(
                 children: _selectedCategory.subCategories.map((subCategory) {
                   return RadioListTile<SubCategory>(
-                    title: Text(
-                      subCategory.name.toUpperCase(),
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
+                    title: Text(subCategory.name.toUpperCase(),
+                        style: Theme.of(context).textTheme.bodyMedium),
                     value: subCategory,
                     groupValue: _selectedSubCategory,
                     onChanged: (value) {
@@ -544,9 +573,12 @@ class __CategoryDialogState extends State<_CategoryDialog> {
             Navigator.of(context).pop();
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color.fromARGB(255, 251, 251, 251),
+            backgroundColor: ColorsManager.secondaryColor,
           ),
-          child: const Text('Select'),
+          child: const Text(
+            'Select',
+            style: TextStyle(color: ColorsManager.whiteColor),
+          ),
         ),
       ],
     );

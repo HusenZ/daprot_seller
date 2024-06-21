@@ -25,7 +25,7 @@ class GoogleSignInBloc extends Bloc<GoogleSignInEvent, GoogleSignInState> {
         final user = FirebaseAuth.instance.currentUser;
         if (user != null) {
           // Check for null user
-          if (await PhoneVerificationApi.emailExists(user.email!) == true) {
+          if (await EmailVerificationRepo.emailExists(user.email!) == true) {
             _preferences.setBool("isAuthenticated", true);
             emit(NavigateToHomeRoute());
           } else {

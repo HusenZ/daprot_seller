@@ -6,11 +6,9 @@ import 'package:daprot_seller/config/theme/fonts_manager.dart';
 import 'package:daprot_seller/domain/user_data_repo.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/delevated_button.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/loading_button.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/profile_photo_widget.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/text_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
@@ -39,24 +37,10 @@ class UpdateProfileScreenState extends State<UpdateProfileScreen> {
   final TextEditingController _phoneController = TextEditingController();
   //Shipping controllers
 
-  XFile? _profileImage;
   bool isLoading = false;
   bool profileUpdated = false;
 
   final GlobalKey<FormState> _setProfileFormKey = GlobalKey<FormState>();
-
-  Future<void> _pickImage(ImageSource source) async {
-    final pickedImage = await ImagePicker().pickImage(
-      source: source,
-      imageQuality: 25,
-    );
-    if (pickedImage != null) {
-      setState(() {
-        profileUpdated = true;
-        _profileImage = pickedImage;
-      });
-    }
-  }
 
   Widget returnLabel(String label) {
     return Container(
@@ -109,36 +93,6 @@ class UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      InkWell(
-                        onTap: () {
-                          _pickImage(ImageSource.gallery);
-                        },
-                        child: Stack(
-                          children: [
-                            _profileImage == null
-                                ? ProfilePhotoNet(
-                                    profileImage: widget.profileImg,
-                                  )
-                                : ProfilePhoto(profileImage: _profileImage),
-                            Positioned(
-                              bottom: 0,
-                              right: 0,
-                              child: Container(
-                                padding: const EdgeInsets.all(4),
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: ColorsManager.whiteColor,
-                                ),
-                                child: const Icon(
-                                  Icons.edit,
-                                  size: 24,
-                                  color: ColorsManager.primaryColor,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                       SizedBox(height: screenHeight * 0.03),
                       Column(
                         children: [
@@ -222,26 +176,13 @@ class UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                 setState(() {
                                   isLoading = true;
                                 });
-                                String profileImgPath = "";
-                                if (_profileImage != null) {
-                                  setState(() {
-                                    profileImgPath = _profileImage!.path;
-                                  });
-                                }
-
-                                print("value is");
-                                print(profileUpdated);
 
                                 BlocProvider.of<UserUpdateBloc>(context)
                                     .add(UpdateUserEvent(
                                   userId: widget.userId!,
                                   phone: widget.userPhone!,
                                   name: _nameController.text,
-                                  newProfileImagePath: profileUpdated
-                                      ? profileImgPath
-                                      : widget.profileImg!,
                                   email: widget.userEmail!,
-                                  isProfileUpdated: profileUpdated,
                                 ));
                               },
                             ),

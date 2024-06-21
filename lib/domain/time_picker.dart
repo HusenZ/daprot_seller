@@ -4,9 +4,10 @@ Future<String?> showCustomTimePicker(
   BuildContext context,
 ) async {
   final selectedTime = await showTimePicker(
-    context: context,
-    initialTime: const TimeOfDay(hour: 12, minute: 00),
-  );
+      context: context,
+      initialTime: const TimeOfDay(hour: 12, minute: 00),
+      barrierLabel: "Close Time",
+      orientation: Orientation.portrait);
   if (selectedTime != null) {
     return selectedTime.format(context);
   }
