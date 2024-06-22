@@ -21,7 +21,6 @@ class ShBloc extends Bloc<ShEvent, ShState> {
           address: event.address!,
           shopLogo: event.brandlogo,
           location: event.location!,
-          phoneNo: event.phoneNumber!,
           openTime: event.openTime!,
           shopDescription: event.procutDescrip!,
           closeTime: event.closeTime!,

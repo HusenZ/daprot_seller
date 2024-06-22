@@ -1,5 +1,6 @@
 import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/custom_form_field.dart';
+import 'package:daprot_seller/features/widgets/common_widgets/i_button.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -35,22 +36,10 @@ class _InputLocationState extends State<InputLocation> {
               SizedBox(
                 width: 5.w,
               ),
-              GestureDetector(
-                onTap: () {
-                  final dynamic tooltip = tooltipkey.currentState;
-                  tooltip.ensureTooltipVisible();
-                },
-                child: Tooltip(
-                  message:
-                      "This address will be used to place your shop on our Daprot Shopping and will be shared with users.",
-                  showDuration: const Duration(seconds: 3),
-                  padding: EdgeInsets.all(8.sp),
-                  triggerMode: TooltipTriggerMode.manual,
-                  preferBelow: true,
-                  key: tooltipkey,
-                  verticalOffset: 48,
-                  child: const Icon(Icons.info),
-                ),
+              IButton(
+                tooltipkey: tooltipkey,
+                message:
+                    "This address will be used to place your shop on our Daprot Shopping and will be shared with users.",
               ),
             ],
           ),

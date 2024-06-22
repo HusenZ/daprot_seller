@@ -75,7 +75,6 @@ class _LoginScreenState extends State<LoginScreen> {
             Stack(
               children: [
                 Image.asset(AppImages.vectorLogin),
-                Image.asset(AppImages.daprotLogin),
                 Positioned(
                   bottom: 0.5.h,
                   child: Container(

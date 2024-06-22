@@ -22,7 +22,7 @@ class ShopFormRepo {
   static late String closetime;
   static late String description;
   static late bool delivery;
-  static late String shPhone;
+  // static late String shPhone;
   static late double latitude1;
   static late double longitude1;
 //step2 data
@@ -44,7 +44,6 @@ class ShopFormRepo {
       {required String shNameIn,
       required XFile? shopLogo,
       required String location,
-      required String phoneNo,
       required String openTime,
       required String closeTime,
       required String address,
@@ -77,7 +76,6 @@ class ShopFormRepo {
 
       shName = shNameIn;
       shLoacation = location;
-      shPhone = phoneNo;
       opentime = openTime;
       closetime = closeTime;
       delivery = isAvailable;
@@ -177,7 +175,6 @@ class ShopFormRepo {
         'name': shName,
         'shopLogo': brandlogoImage,
         'location': shLoacation,
-        'phoneNo': shPhone,
         'openTime': opentime,
         'closeTime': closetime,
         'dilivery': delivery,

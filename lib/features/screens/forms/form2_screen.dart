@@ -8,7 +8,6 @@ import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/loading_dailog.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/profile_photo_widget.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
-import 'package:daprot_seller/features/widgets/form_widgets/d_phone_input_field.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/toggle_button.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/input_brand_logo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -188,21 +187,21 @@ class FCScreen2State extends State<FCScreen2> {
                     ),
 
                     /// MOBILE NUMBER
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 2.h),
-                      child: Column(
-                        children: [
-                          const ReturnLabel(label: "Owner Phone number"),
-                          DPhoneNumFiled(
-                            labelText: false,
-                            hintText: 'Phone number',
-                            contactEditingController: ownerPhoneController,
-                            height: 6.h,
-                            fontSize: 16.sp,
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.only(bottom: 2.h),
+                    //   child: Column(
+                    //     children: [
+                    //       const ReturnLabel(label: "Owner Phone number"),
+                    //       DPhoneNumFiled(
+                    //         labelText: false,
+                    //         hintText: 'Phone number',
+                    //         contactEditingController: ownerPhoneController,
+                    //         height: 6.h,
+                    //         fontSize: 16.sp,
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
 
                     // /// PAN NO.
                     // Column(
@@ -235,8 +234,6 @@ class FCScreen2State extends State<FCScreen2> {
                       },
                       onPressedNext: () {
                         if (fcFormKey.currentState!.validate() &&
-                            ownerPhoneController.text.isNotEmpty &&
-                            ownerPhoneController.text.length == 10 &&
                             _bannerImage != null &&
                             _ownerPic != null) {
                           LoadingDialog.showLoaderDialog(context);

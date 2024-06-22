@@ -141,7 +141,7 @@ class _FCScreen3State extends State<FCScreen3> {
                           /// AGREED TEXT
                           Container(
                             width: 90.w,
-                            height: 10.h,
+                            height: 12.h,
                             //  color: Colors.black,
                             margin: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 5),

@@ -5,11 +5,11 @@ import 'package:daprot_seller/domain/connectivity_helper.dart';
 import 'package:daprot_seller/domain/shop_form_repo.dart';
 import 'package:daprot_seller/domain/time_picker.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/custom_form_field.dart';
+import 'package:daprot_seller/features/widgets/common_widgets/i_button.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/loading_dailog.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/profile_photo_widget.dart';
 import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
-import 'package:daprot_seller/features/widgets/form_widgets/d_phone_input_field.dart';
 import 'package:daprot_seller/features/widgets/form_widgets/toggle_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,9 +34,10 @@ class _FCScreen1State extends State<FCScreen1> {
 
   TextEditingController shNameController = TextEditingController();
   TextEditingController locationController = TextEditingController();
-  TextEditingController phoneNoController = TextEditingController();
+  // TextEditingController phoneNoController = TextEditingController();
   TextEditingController localityController = TextEditingController();
   TextEditingController procutDescripController = TextEditingController();
+  final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
 
   String? openTime;
   String? closeTime;
@@ -140,14 +141,25 @@ class _FCScreen1State extends State<FCScreen1> {
                           top: 1.5.h,
                           bottom: 3.h,
                         ),
-                        child: Text(
-                          'Daprot Seller',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(
-                                  fontWeight: FontWeightManager.semiBold,
-                                  fontSize: 16.sp),
+                        child: Row(
+                          children: [
+                            Text(
+                              'Daprot Seller',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                      fontWeight: FontWeightManager.semiBold,
+                                      fontSize: 16.sp),
+                            ),
+                            SizedBox(
+                              width: 10.sp,
+                            ),
+                            IButton(
+                                tooltipkey: tooltipkey,
+                                message:
+                                    "These details are used to create your shop")
+                          ],
                         ),
                       ),
 
@@ -195,21 +207,21 @@ class _FCScreen1State extends State<FCScreen1> {
                       ),
 
                       /// MOBILE NUMBER
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 2.h),
-                        child: Column(
-                          children: [
-                            const ReturnLabel(label: "Shop Phone number"),
-                            DPhoneNumFiled(
-                              labelText: false,
-                              hintText: "Phone number",
-                              contactEditingController: phoneNoController,
-                              height: 6.h,
-                              fontSize: 16.sp,
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.only(bottom: 2.h),
+                      //   child: Column(
+                      //     children: [
+                      //       const ReturnLabel(label: "Shop Phone number"),
+                      //       DPhoneNumFiled(
+                      //         labelText: false,
+                      //         hintText: "Phone number",
+                      //         contactEditingController: phoneNoController,
+                      //         height: 6.h,
+                      //         fontSize: 16.sp,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
 
                       /// OPEN - CLOSE TIME
                       Row(
@@ -326,8 +338,6 @@ class _FCScreen1State extends State<FCScreen1> {
                         },
                         onPressedNext: () {
                           if (fcFormKey.currentState!.validate() &&
-                              phoneNoController.text.isNotEmpty &&
-                              phoneNoController.text.length == 10 &&
                               openTime != null &&
                               closeTime != null &&
                               procutDescripController.text.isNotEmpty &&
@@ -338,7 +348,6 @@ class _FCScreen1State extends State<FCScreen1> {
                               shNameIn: shNameController.text,
                               location: locationController.text,
                               address: localityController.text,
-                              phoneNo: phoneNoController.text,
                               openTime: openTime ?? '',
                               closeTime: closeTime ?? '',
                               isAvailable: _dilivery,
@@ -348,12 +357,6 @@ class _FCScreen1State extends State<FCScreen1> {
                               ConnectivityHelper.naviagte(
                                   context, Routes.form2);
                             });
-                          } else if (phoneNoController.text.isEmpty) {
-                            customSnackBar(context,
-                                "Please enter your Mobile Number", false);
-                          } else if (phoneNoController.text.length != 10) {
-                            customSnackBar(
-                                context, "Enter a valid Mobile Number", false);
                           } else if (openTime == null) {
                             customSnackBar(
                                 context, "Pick The Open time", false);
