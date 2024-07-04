@@ -117,7 +117,6 @@ class _MyStoreState extends State<MyStore> {
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => UpdateShopData(
                                     shName: snapshot.data!.docs.first['name'],
-                                    phone: snapshot.data!.docs.first["phoneNo"],
                                     description: snapshot
                                         .data!.docs.first["description"],
                                     delivery:

@@ -71,6 +71,7 @@ dependencies:
   flutter_local_notifications: ^17.1.2
   http: ^1.2.1
   awesome_notifications: ^0.9.3+1
+  no_screenshot: ^0.0.1+6
   
 dev_dependencies:
   flutter_test:

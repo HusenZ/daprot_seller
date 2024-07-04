@@ -21,7 +21,6 @@ class UpdateShopData extends StatefulWidget {
   const UpdateShopData({
     super.key,
     required this.shName,
-    required this.phone,
     required this.description,
     required this.delivery,
     required this.openTime,
@@ -30,7 +29,6 @@ class UpdateShopData extends StatefulWidget {
     required this.shopLogo,
   });
   final String shName;
-  final String phone;
   final String description;
   final bool delivery;
   final String openTime;
@@ -50,7 +48,6 @@ class _UpdateShopDataState extends State<UpdateShopData> {
   /// CONTROLLERS
 
   TextEditingController shNameController = TextEditingController();
-  TextEditingController phoneNoController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
   String? openTime;
@@ -63,7 +60,6 @@ class _UpdateShopDataState extends State<UpdateShopData> {
   void initState() {
     super.initState();
     shNameController.text = widget.shName;
-    phoneNoController.text = widget.phone;
     descriptionController.text = widget.description;
     openTime = widget.openTime;
     closeTime = widget.closeTime;
@@ -225,21 +221,21 @@ class _UpdateShopDataState extends State<UpdateShopData> {
                     ),
 
                     /// MOBILE NUMBER
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 2.h),
-                      child: Column(
-                        children: [
-                          const ReturnLabel(label: "Shop Phone number"),
-                          DPhoneNumFiled(
-                            labelText: false,
-                            hintText: "Phone number",
-                            contactEditingController: phoneNoController,
-                            height: 6.h,
-                            fontSize: 16.sp,
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.only(bottom: 2.h),
+                    //   child: Column(
+                    //     children: [
+                    //       const ReturnLabel(label: "Shop Phone number"),
+                    //       DPhoneNumFiled(
+                    //         labelText: false,
+                    //         hintText: "Phone number",
+                    //         contactEditingController: phoneNoController,
+                    //         height: 6.h,
+                    //         fontSize: 16.sp,
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
 
                     /// OPEN - CLOSE TIME
                     Row(
@@ -356,8 +352,6 @@ class _UpdateShopDataState extends State<UpdateShopData> {
                       },
                       onPressedNext: () {
                         if (fcFormKey.currentState!.validate() &&
-                            phoneNoController.text.isNotEmpty &&
-                            phoneNoController.text.length == 10 &&
                             openTime != null &&
                             closeTime != null &&
                             descriptionController.text.isNotEmpty) {
@@ -367,7 +361,6 @@ class _UpdateShopDataState extends State<UpdateShopData> {
                                   closeTime: closeTime,
                                   openTime: openTime,
                                   isParking: _dilivery,
-                                  phoneNumber: phoneNoController.text,
                                   shopImage: _pBannerPic,
                                   shopLogo: _shopLogo,
                                   productDescrip: descriptionController.text,
@@ -376,12 +369,6 @@ class _UpdateShopDataState extends State<UpdateShopData> {
                             Navigator.of(context).pop();
                             Navigator.of(context).pop();
                           });
-                        } else if (phoneNoController.text.isEmpty) {
-                          customSnackBar(context,
-                              "Please enter your Mobile Number", false);
-                        } else if (phoneNoController.text.length != 10) {
-                          customSnackBar(
-                              context, "Enter a valid Mobile Number", false);
                         } else if (openTime == null) {
                           customSnackBar(context, "Pick The Open time", false);
                         } else if (closeTime == null) {

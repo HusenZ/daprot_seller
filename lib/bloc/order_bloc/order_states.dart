@@ -8,6 +8,14 @@ class OrderLoading extends OrderState {
   const OrderLoading();
 }
 
+class OrderStatusLoaded extends OrderState {
+  const OrderStatusLoaded();
+}
+
+class OrderCancelationReq extends OrderState {
+  const OrderCancelationReq();
+}
+
 class OrdersLoaded extends OrderState {
   final List<OrderModel> orders;
 

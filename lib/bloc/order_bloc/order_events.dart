@@ -1,3 +1,5 @@
+import 'package:daprot_seller/domain/model/order_models.dart';
+
 abstract class OrderEvent {
   const OrderEvent();
 }
@@ -15,5 +17,17 @@ class UpdateOrderStatus extends OrderEvent {
     required this.orderId,
     required this.newStatus,
     required this.userId,
+  });
+}
+
+class CheckOrderCancle extends OrderEvent {
+  final String reason;
+  final OrderModel order;
+  final bool hasReason;
+
+  CheckOrderCancle({
+    required this.reason,
+    required this.order,
+    required this.hasReason,
   });
 }

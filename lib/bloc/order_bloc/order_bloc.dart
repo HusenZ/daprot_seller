@@ -8,11 +8,20 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
   OrderBloc() : super(const OrderLoading()) {
     on<UpdateOrderStatus>(_onUpdateOrderStatus);
+    on<CheckOrderCancle>(
+      (event, emit) {
+        if (event.hasReason && event.order.orderStatus == 'pending') {
+          emit(const OrderLoading());
+          emit(const OrderCancelationReq());
+        }
+      },
+    );
   }
 
   void _onUpdateOrderStatus(
       UpdateOrderStatus event, Emitter<OrderState> emit) async {
     try {
+      emit(const OrderLoading());
       await orderRepository.updateOrderStatus(
         orderId: event.orderId,
         newStatus: event.newStatus,

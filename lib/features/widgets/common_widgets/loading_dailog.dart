@@ -62,7 +62,10 @@ class LoadingDialog {
   static showLoaderDialog(BuildContext context) {
     AlertDialog alert = const AlertDialog(
       backgroundColor: Colors.transparent,
-      content: Center(child: CircularProgressIndicator()),
+      content: Center(
+          child: CircularProgressIndicator(
+        color: ColorsManager.primaryColor,
+      )),
     );
     showDialog(
       barrierDismissible: false,
