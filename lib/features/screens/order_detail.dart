@@ -216,7 +216,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                               foregroundColor: ColorsManager.whiteColor,
                             ),
                             child: Text(
-                              'Confirm Cancellation',
+                              'Confirm'.toUpperCase(),
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge!
@@ -404,7 +404,7 @@ class OrderReqCancle extends StatelessWidget {
             foregroundColor: ColorsManager.whiteColor,
           ),
           child: Text(
-            'Confirm Cancellation',
+            'Confirm',
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge!
