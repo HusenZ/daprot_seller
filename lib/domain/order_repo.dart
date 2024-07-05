@@ -33,7 +33,7 @@ class OrderRepository {
       var request = {
         "notification": {
           "title": title,
-          "text": message,
+          "body": message,
           "sound": "default",
           "color": "#990000",
         },
@@ -47,7 +47,6 @@ class OrderRepository {
       print(response.body);
       return true;
     } catch (e) {
-      print(e);
       return false;
     }
   }
@@ -57,13 +56,19 @@ class OrderRepository {
       required String orderId,
       required String userId}) async {
     try {
+      String? message;
+      if (newStatus == OrderStatus.cancelled.name) {
+        message = 'Order has been cancelled';
+      }
+      if (newStatus == OrderStatus.delivered.name) {
+        message = 'Order has been delivered, Please do review the product';
+      }
       final CollectionReference ordersCollection =
           FirebaseFirestore.instance.collection('orders');
 
       // Query orders where shopId matches
       QuerySnapshot ordersSnapshot =
           await ordersCollection.where('orderId', isEqualTo: orderId).get();
-      print("Order Id ---> $orderId");
 
       for (DocumentSnapshot doc in ordersSnapshot.docs) {
         await doc.reference.update({'orderStatus': newStatus});
@@ -75,10 +80,8 @@ class OrderRepository {
           .doc('fcmdoc')
           .get();
       String? userToken = tokendoc['token'];
-      await sendFcmMessage(
-          'Status Update - $newStatus', "Delivery Status Updated", userToken);
-      print("fcm of user -----> $userToken");
-      print('Order status updated successfully.');
+      await sendFcmMessage('${message ?? 'Status Update'} - $newStatus',
+          "Delivery Status Updated", userToken);
     } catch (e) {
       print('Error updating order status: $e');
     }

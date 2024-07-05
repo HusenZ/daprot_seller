@@ -11,7 +11,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     on<CheckOrderCancle>(
       (event, emit) {
         if (event.hasReason && event.order.orderStatus == 'pending') {
-          emit(const OrderLoading());
+          // emit(const OrderLoading());
           emit(const OrderCancelationReq());
         }
       },

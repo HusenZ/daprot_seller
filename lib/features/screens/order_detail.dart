@@ -114,38 +114,38 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           Navigator.of(context).pop();
         }
         if (state is OrderCancelationReq) {
-          showDialog(
-            context: context,
-            builder: (context) => Builder(builder: (context) {
-              return AlertDialog(
-                title: const Text('Requested for cancellation'),
-                content: Text(widget.reason),
-                scrollable: true,
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      LoadingDialog.showLoaderDialog(context);
-                      BlocProvider.of<OrderBloc>(context).add(
-                        UpdateOrderStatus(
-                          orderId: widget.order.orderId,
-                          newStatus: 'cancelled',
-                          userId: widget.order.userId,
-                        ),
-                      );
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      'Confirm',
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: ColorsManager.primaryColor,
-                            fontSize: 12.sp,
-                          ),
-                    ),
-                  ),
-                ],
-              );
-            }),
-          );
+          // showDialog(
+          //   context: context,
+          //   builder: (context) => Builder(builder: (context) {
+          //     return AlertDialog(
+          //       title: const Text('Requested for cancellation'),
+          //       content: Text(widget.reason),
+          //       scrollable: true,
+          //       actions: <Widget>[
+          //         TextButton(
+          //           onPressed: () {
+          //             LoadingDialog.showLoaderDialog(context);
+          //             BlocProvider.of<OrderBloc>(context).add(
+          //               UpdateOrderStatus(
+          //                 orderId: widget.order.orderId,
+          //                 newStatus: 'cancelled',
+          //                 userId: widget.order.userId,
+          //               ),
+          //             );
+          //             Navigator.of(context).pop();
+          //           },
+          //           child: Text(
+          //             'Confirm',
+          //             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+          //                   color: ColorsManager.primaryColor,
+          //                   fontSize: 12.sp,
+          //                 ),
+          //           ),
+          //         ),
+          //       ],
+          //     );
+          //   }),
+          // );
         }
       },
       child: Scaffold(
@@ -171,7 +171,65 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           .copyWith(color: ColorsManager.primaryColor),
                     ),
                   ),
-                if (widget.order.orderStatus == 'pending')
+                if (widget.order.orderStatus == 'pending' && widget.hasReason!)
+                  Card(
+                    color: const Color.fromARGB(209, 245, 161, 161),
+                    child: Padding(
+                      padding: EdgeInsets.all(8.sp),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Requested For Cancellation:",
+                            style:
+                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                      fontSize: 12.sp,
+                                      color: ColorsManager.primaryColor,
+                                    ),
+                          ),
+                          SizedBox(height: 1.h),
+                          Text(
+                            widget.reason,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                          ),
+                          SizedBox(height: 1.h),
+                          ElevatedButton(
+                            onPressed: () {
+                              LoadingDialog.showLoaderDialog(context);
+                              BlocProvider.of<OrderBloc>(context).add(
+                                UpdateOrderStatus(
+                                  orderId: widget.order.orderId,
+                                  newStatus: 'cancelled',
+                                  userId: widget.order.userId,
+                                ),
+                              );
+                              Navigator.of(context).pop();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: ColorsManager.primaryColor,
+                              foregroundColor: ColorsManager.whiteColor,
+                            ),
+                            child: Text(
+                              'Confirm Cancellation',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                      fontSize: 10.sp,
+                                      color: ColorsManager.whiteColor),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                if (widget.order.orderStatus == 'pending' && !widget.hasReason!)
                   ElevatedButton(
                     onPressed: () async {
                       OrderStatus? selectedStatus =
@@ -212,7 +270,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     style: ElevatedButton.styleFrom(
                         backgroundColor: ColorsManager.accentColor),
                     child: Text(
-                      widget.order.orderStatus.toUpperCase(),
+                      widget.order.orderStatus == 'pending' && widget.hasReason!
+                          ? "Requested for Cancellation"
+                          : widget.order.orderStatus.toUpperCase(),
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             fontSize: 9.5.sp,
                             color: widget.order.orderStatus ==
@@ -321,10 +381,13 @@ class OrderReqCancle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Requested for cancellation'),
-      content: Text(reason),
+      title: const Text('Reason for cancellation'),
+      content: Text(
+        reason,
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
       actions: <Widget>[
-        TextButton(
+        ElevatedButton(
           onPressed: () {
             LoadingDialog.showLoaderDialog(context);
             BlocProvider.of<OrderBloc>(context).add(
@@ -336,7 +399,17 @@ class OrderReqCancle extends StatelessWidget {
             );
             Navigator.of(context).pop();
           },
-          child: const Text('Confirm'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: ColorsManager.primaryColor,
+            foregroundColor: ColorsManager.whiteColor,
+          ),
+          child: Text(
+            'Confirm Cancellation',
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(fontSize: 9.sp, color: ColorsManager.whiteColor),
+          ),
         ),
       ],
     );

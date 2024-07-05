@@ -1,3 +1,4 @@
+import 'package:daprot_seller/config/theme/colors_manager.dart';
 import 'package:daprot_seller/domain/model/order_models.dart';
 import 'package:daprot_seller/domain/model/shipping_address.dart';
 import 'package:daprot_seller/domain/model/user_model.dart';
@@ -16,6 +17,7 @@ class UserDetailsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     UserModel? user;
     return Card(
+      color: ColorsManager.whiteColor,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: StreamBuilder<UserModel>(
