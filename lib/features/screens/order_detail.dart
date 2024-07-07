@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daprot_seller/bloc/order_bloc/order_bloc.dart';
 import 'package:daprot_seller/bloc/order_bloc/order_events.dart';
 import 'package:daprot_seller/bloc/order_bloc/order_states.dart';
@@ -10,7 +9,6 @@ import 'package:daprot_seller/features/widgets/order_widgets/product_details_car
 import 'package:daprot_seller/features/widgets/order_widgets/user_detail_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:no_screenshot/no_screenshot.dart';
 import 'package:sizer/sizer.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
@@ -30,11 +28,9 @@ class OrderDetailsScreen extends StatefulWidget {
 
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   OrderStatus _selectedStatus = OrderStatus.pending;
-  final _noScreenshot = NoScreenshot.instance;
 
   @override
   void initState() {
-    _noScreenshot.screenshotOff();
     // showDailogueConfirm();
     super.initState();
     final bool hasReasonNotNull = widget.hasReason ?? false;
