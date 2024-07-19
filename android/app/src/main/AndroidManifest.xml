@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.READE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <application
-        android:label="Daprot Seller"
+        android:label="GoZip Seller"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
