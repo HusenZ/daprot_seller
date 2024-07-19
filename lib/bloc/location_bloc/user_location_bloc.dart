@@ -1,5 +1,5 @@
-// import 'package:daprot_seller/bloc/location_bloc/user_locaion_events.dart';
-// import 'package:daprot_seller/bloc/location_bloc/user_location_state.dart';
+// import 'package:gozip_seller/bloc/location_bloc/user_locaion_events.dart';
+// import 'package:gozip_seller/bloc/location_bloc/user_location_state.dart';
 // import 'package:flutter/foundation.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:fluttertoast/fluttertoast.dart';

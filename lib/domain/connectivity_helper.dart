@@ -1,6 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:daprot_seller/features/screens/no_network.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
+import 'package:gozip_seller/features/screens/no_network.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

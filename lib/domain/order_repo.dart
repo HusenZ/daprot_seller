@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daprot_seller/domain/model/order_models.dart';
-import 'package:daprot_seller/domain/model/shipping_address.dart';
-import 'package:daprot_seller/domain/model/user_model.dart';
+import 'package:gozip_seller/domain/model/order_models.dart';
+import 'package:gozip_seller/domain/model/shipping_address.dart';
+import 'package:gozip_seller/domain/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 

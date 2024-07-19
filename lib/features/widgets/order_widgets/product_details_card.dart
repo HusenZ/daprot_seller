@@ -1,5 +1,5 @@
-import 'package:daprot_seller/config/theme/colors_manager.dart';
-import 'package:daprot_seller/domain/model/order_models.dart';
+import 'package:gozip_seller/config/theme/colors_manager.dart';
+import 'package:gozip_seller/domain/model/order_models.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 

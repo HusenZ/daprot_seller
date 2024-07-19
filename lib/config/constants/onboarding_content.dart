@@ -1,4 +1,4 @@
-import 'package:daprot_seller/config/constants/lottie_img.dart';
+import 'package:gozip_seller/config/constants/lottie_img.dart';
 
 class OnboardingContents {
   final String title;

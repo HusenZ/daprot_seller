@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "daprot_seller" "\0"
+            VALUE "FileDescription", "gozip_seller" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "daprot_seller" "\0"
+            VALUE "InternalName", "gozip_seller" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "daprot_seller.exe" "\0"
-            VALUE "ProductName", "daprot_seller" "\0"
+            VALUE "OriginalFilename", "gozip_seller.exe" "\0"
+            VALUE "ProductName", "gozip_seller" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

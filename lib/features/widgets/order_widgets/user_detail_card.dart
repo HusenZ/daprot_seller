@@ -1,9 +1,9 @@
-import 'package:daprot_seller/config/theme/colors_manager.dart';
-import 'package:daprot_seller/domain/model/order_models.dart';
-import 'package:daprot_seller/domain/model/shipping_address.dart';
-import 'package:daprot_seller/domain/model/user_model.dart';
-import 'package:daprot_seller/domain/order_repo.dart';
-import 'package:daprot_seller/features/widgets/order_widgets/dial_button.dart';
+import 'package:gozip_seller/config/theme/colors_manager.dart';
+import 'package:gozip_seller/domain/model/order_models.dart';
+import 'package:gozip_seller/domain/model/shipping_address.dart';
+import 'package:gozip_seller/domain/model/user_model.dart';
+import 'package:gozip_seller/domain/order_repo.dart';
+import 'package:gozip_seller/features/widgets/order_widgets/dial_button.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 

@@ -43,17 +43,25 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:211804662370:android:3cdc9f82e807ae5f213f3b",
+        "mobilesdk_app_id": "1:211804662370:android:7cb7af910d16bb60213f3b",
         "android_client_info": {
-          "package_name": "com.example.daprot_seller"
+          "package_name": "com.go_zip.go_zip"
         }
       },
       "oauth_client": [
         {
-          "client_id": "211804662370-r6ce9tupj3mvj2i3fhe9v0helsl887lb.apps.googleusercontent.com",
+          "client_id": "211804662370-ua2s1h1msjeklb95a1jec8jdoctro5ss.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.daprot_seller",
+            "package_name": "com.go_zip.go_zip",
+            "certificate_hash": "0f009d89039fa9e34b92d7bade40994ed82a5595"
+          }
+        },
+        {
+          "client_id": "211804662370-valc22e3o1f84q26vu5mo0utdm86416m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.go_zip.go_zip",
             "certificate_hash": "8b692eb166dfbe3def6aa64cc69c1b611bdde800"
           }
         },
@@ -87,108 +95,12 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:211804662370:android:0aaf32034fc13b47213f3b",
+        "mobilesdk_app_id": "1:211804662370:android:01b337287be4b641213f3b",
         "android_client_info": {
-          "package_name": "com.example.daprot_v1"
+          "package_name": "com.gozip_seller.gozip"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "211804662370-i15irr4igmenqt61qm64uln4f4tk3h0c.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.daprot_v1",
-            "certificate_hash": "8b692eb166dfbe3def6aa64cc69c1b611bdde800"
-          }
-        },
-        {
-          "client_id": "211804662370-7nq8mu12a0r28rit54bgrmdhif9i8bm6.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAhySSQ72wsO5k_bXU4X5tmwriJtOoFuLo"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "211804662370-7nq8mu12a0r28rit54bgrmdhif9i8bm6.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "211804662370-fqnv943kclbfqn3lloeu5iqmpj0tgaf0.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.daprotV1"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:211804662370:android:3ad4e5b7dbc78865213f3b",
-        "android_client_info": {
-          "package_name": "com.zharehusen.daprot_seller"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "211804662370-re45llfietagt3nv6d93tnp57v4a0oqf.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.zharehusen.daprot_seller",
-            "certificate_hash": "8b692eb166dfbe3def6aa64cc69c1b611bdde800"
-          }
-        },
-        {
-          "client_id": "211804662370-7nq8mu12a0r28rit54bgrmdhif9i8bm6.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAhySSQ72wsO5k_bXU4X5tmwriJtOoFuLo"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "211804662370-7nq8mu12a0r28rit54bgrmdhif9i8bm6.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "211804662370-fqnv943kclbfqn3lloeu5iqmpj0tgaf0.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.daprotV1"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:211804662370:android:7f7d2a6416b4c6fd213f3b",
-        "android_client_info": {
-          "package_name": "com.zharehusen.daprot_v1"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "211804662370-5a6dvri361b3f171uois4rp58bt0c59r.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.zharehusen.daprot_v1",
-            "certificate_hash": "8b692eb166dfbe3def6aa64cc69c1b611bdde800"
-          }
-        },
         {
           "client_id": "211804662370-7nq8mu12a0r28rit54bgrmdhif9i8bm6.apps.googleusercontent.com",
           "client_type": 3

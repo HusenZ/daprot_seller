@@ -1,6 +1,6 @@
 {
-    "name": "daprot_seller",
-    "short_name": "daprot_seller",
+    "name": "gozip_seller",
+    "short_name": "gozip_seller",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

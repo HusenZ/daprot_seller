@@ -1,6 +1,6 @@
-import 'package:daprot_seller/config/constants/lottie_img.dart';
-import 'package:daprot_seller/domain/connectivity_helper.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/delevated_button.dart';
+import 'package:gozip_seller/config/constants/lottie_img.dart';
+import 'package:gozip_seller/domain/connectivity_helper.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/delevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 

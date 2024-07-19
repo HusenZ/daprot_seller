@@ -1,16 +1,16 @@
-import 'package:daprot_seller/config/routes/routes_manager.dart';
-import 'package:daprot_seller/config/theme/colors_manager.dart';
-import 'package:daprot_seller/config/theme/fonts_manager.dart';
-import 'package:daprot_seller/domain/connectivity_helper.dart';
-import 'package:daprot_seller/domain/shop_form_repo.dart';
-import 'package:daprot_seller/domain/time_picker.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/custom_form_field.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/i_button.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/loading_dailog.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/profile_photo_widget.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
-import 'package:daprot_seller/features/widgets/form_widgets/toggle_button.dart';
+import 'package:gozip_seller/config/routes/routes_manager.dart';
+import 'package:gozip_seller/config/theme/colors_manager.dart';
+import 'package:gozip_seller/config/theme/fonts_manager.dart';
+import 'package:gozip_seller/domain/connectivity_helper.dart';
+import 'package:gozip_seller/domain/shop_form_repo.dart';
+import 'package:gozip_seller/domain/time_picker.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/custom_form_field.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/i_button.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/lable_text.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/loading_dailog.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/profile_photo_widget.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/snack_bar.dart';
+import 'package:gozip_seller/features/widgets/form_widgets/toggle_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -144,7 +144,7 @@ class _FCScreen1State extends State<FCScreen1> {
                         child: Row(
                           children: [
                             Text(
-                              'Daprot Seller',
+                              'GoZip Seller',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!

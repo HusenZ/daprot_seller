@@ -1,5 +1,5 @@
-import 'package:daprot_seller/config/theme/colors_manager.dart';
-import 'package:daprot_seller/config/theme/fonts_manager.dart';
+import 'package:gozip_seller/config/theme/colors_manager.dart';
+import 'package:gozip_seller/config/theme/fonts_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 

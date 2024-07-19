@@ -1,6 +1,6 @@
-import 'package:daprot_seller/bloc/sh_bloc/sh_event.dart';
-import 'package:daprot_seller/bloc/sh_bloc/sh_state.dart';
-import 'package:daprot_seller/domain/shop_form_repo.dart';
+import 'package:gozip_seller/bloc/sh_bloc/sh_event.dart';
+import 'package:gozip_seller/bloc/sh_bloc/sh_state.dart';
+import 'package:gozip_seller/domain/shop_form_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ShBloc extends Bloc<ShEvent, ShState> {

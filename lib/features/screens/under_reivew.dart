@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:daprot_seller/config/routes/routes_manager.dart';
-import 'package:daprot_seller/config/theme/colors_manager.dart';
-import 'package:daprot_seller/config/theme/fonts_manager.dart';
-import 'package:daprot_seller/features/screens/no_network.dart';
-import 'package:daprot_seller/features/screens/shop_dashboard.dart';
+import 'package:gozip_seller/config/routes/routes_manager.dart';
+import 'package:gozip_seller/config/theme/colors_manager.dart';
+import 'package:gozip_seller/config/theme/fonts_manager.dart';
+import 'package:gozip_seller/features/screens/no_network.dart';
+import 'package:gozip_seller/features/screens/shop_dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -25,16 +25,18 @@ class _UnderReivewState extends State<UnderReivew> {
   bool isLoading = true;
   bool isOnline = true;
 
-  void notificationService()async{
+  void notificationService() async {
     FirebaseMessaging fmessaging = FirebaseMessaging.instance;
     await fmessaging.requestPermission();
-    await fmessaging.getToken().then((value) {
-      String userId =  FirebaseAuth.instance.currentUser!.uid;
-      print(userId);
-      FirebaseFirestore.instance.collection('Shops').doc(userId).update({
-        'fcmToken': value,
-      });
-    },);
+    await fmessaging.getToken().then(
+      (value) {
+        String userId = FirebaseAuth.instance.currentUser!.uid;
+        print(userId);
+        FirebaseFirestore.instance.collection('Shops').doc(userId).update({
+          'fcmToken': value,
+        });
+      },
+    );
   }
 
   @override
@@ -181,7 +183,7 @@ class _UnderReivewState extends State<UnderReivew> {
           title: Padding(
             padding: const EdgeInsets.only(top: 18.0),
             child: Text(
-              'Daprot Shop',
+              'GoZip Shop',
               style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   fontSize: 14.sp, fontWeight: FontWeightManager.semiBold),
             ),

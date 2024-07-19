@@ -1,5 +1,5 @@
-import 'package:daprot_seller/domain/add_product_repo.dart';
-import 'package:daprot_seller/domain/model/product_model.dart';
+import 'package:gozip_seller/domain/add_product_repo.dart';
+import 'package:gozip_seller/domain/model/product_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {

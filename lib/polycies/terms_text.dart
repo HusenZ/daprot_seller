@@ -6,15 +6,15 @@ Last updated May 10, 2024
 
 AGREEMENT TO OUR LEGAL TERMS
 
-We are Daprot ('Company', 'we', 'us', or 'our'), a company registered in India at __________, Azaad Nagar, Belagavi 590001, Belagavi, Karnataka 590001.
+We are GoZip ('Company', 'we', 'us', or 'our'), a company registered in India at __________, Azaad Nagar, Belagavi 590001, Belagavi, Karnataka 590001.
 
-We operate the mobile application Daprot (the 'App'), as well as any other related products and services that refer or link to these legal terms (the 'Legal Terms') (collectively, the 'Services').
+We operate the mobile application GoZip (the 'App'), as well as any other related products and services that refer or link to these legal terms (the 'Legal Terms') (collectively, the 'Services').
 
-Daprot is a platform which connects vendors of a particular city to buyers in a particular city. We are a free to use platform and do not charge any commission or any type of fee.
+GoZip is a platform which connects vendors of a particular city to buyers in a particular city. We are a free to use platform and do not charge any commission or any type of fee.
 
-You can contact us by email at daprotorg@gmail.com or by mail to __________, Azaad Nagar, Belagavi 590001, Belagavi, Karnataka 590001, India.
+You can contact us by email at GoZiporg@gmail.com or by mail to __________, Azaad Nagar, Belagavi 590001, Belagavi, Karnataka 590001, India.
 
-These Legal Terms constitute a legally binding agreement made between you, whether personally or on behalf of an entity ('you'), and Daprot, concerning your access to and use of the Services. You agree that by accessing the Services, you have read, understood, and agreed to be bound by all of these Legal Terms. IF YOU DO NOT AGREE WITH ALL OF THESE LEGAL TERMS, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE SERVICES AND YOU MUST DISCONTINUE USE IMMEDIATELY.
+These Legal Terms constitute a legally binding agreement made between you, whether personally or on behalf of an entity ('you'), and GoZip, concerning your access to and use of the Services. You agree that by accessing the Services, you have read, understood, and agreed to be bound by all of these Legal Terms. IF YOU DO NOT AGREE WITH ALL OF THESE LEGAL TERMS, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE SERVICES AND YOU MUST DISCONTINUE USE IMMEDIATELY.
 
 Supplemental terms and conditions or documents that may be posted on the Services from time to time are hereby expressly incorporated herein by reference. We reserve the right, in our sole discretion, to make changes or modifications to these Legal Terms at any time and for any reason. We will alert you about any changes by updating the 'Last updated' date of these Legal Terms, and you waive any right to receive specific notice of each such change. It is your responsibility to periodically review these Legal Terms to stay informed of updates. You will be subject to, and will be deemed to have been made aware of and to have accepted, the changes in any revised Legal Terms by your continued use of the Services after the date such revised Legal Terms are posted.
 
@@ -47,7 +47,7 @@ TABLE OF CONTENTS
 20. USER DATA
 21. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES
 22. MISCELLANEOUS
-23. WHAT IS DAPROT?
+23. WHAT IS GoZip?
 24. WHAT IS OUR ROLE?
 25. CONTACT US
 
@@ -75,7 +75,7 @@ solely for your personal, non-commercial use or internal business purpose.
 
 Except as set out in this section or elsewhere in our Legal Terms, no part of the Services and no Content or Marks may be copied, reproduced, aggregated, republished, uploaded, posted, publicly displayed, encoded, translated, transmitted, distributed, sold, licensed, or otherwise exploited for any commercial purpose whatsoever, without our express prior written permission.
 
-If you wish to make any use of the Services, Content, or Marks other than as set out in this section or elsewhere in our Legal Terms, please address your request to: daprotorg@gmail.com. If we ever grant you the permission to post, reproduce, or publicly display any part of our Services or Content, you must identify us as the owners or licensors of the Services, Content, or Marks and ensure that any copyright or proprietary notice appears or is visible on posting, reproducing, or displaying our Content.
+If you wish to make any use of the Services, Content, or Marks other than as set out in this section or elsewhere in our Legal Terms, please address your request to: GoZiporg@gmail.com. If we ever grant you the permission to post, reproduce, or publicly display any part of our Services or Content, you must identify us as the owners or licensors of the Services, Content, or Marks and ensure that any copyright or proprietary notice appears or is visible on posting, reproducing, or displaying our Content.
 
 We reserve all rights not expressly granted to you in and to the Services, Content, and Marks.
 
@@ -211,7 +211,7 @@ We cannot guarantee the Services will be available at all times. We may experien
 
 14. GOVERNING LAW
 
-These Legal Terms shall be governed by and defined following the laws of India. Daprot and yourself irrevocably consent that the courts of India shall have exclusive jurisdiction to resolve any dispute which may arise in connection with these Legal Terms.
+These Legal Terms shall be governed by and defined following the laws of India. GoZip and yourself irrevocably consent that the courts of India shall have exclusive jurisdiction to resolve any dispute which may arise in connection with these Legal Terms.
 
 15. DISPUTE RESOLUTION
 
@@ -255,9 +255,9 @@ Visiting the Services, sending us emails, and completing online forms constitute
 
 These Legal Terms and any policies or operating rules posted by us on the Services or in respect to the Services constitute the entire agreement and understanding between you and us. Our failure to exercise or enforce any right or provision of these Legal Terms shall not operate as a waiver of such right or provision. These Legal Terms operate to the fullest extent permissible by law. We may assign any or all of our rights and obligations to others at any time. We shall not be responsible or liable for any loss, damage, delay, or failure to act caused by any cause beyond our reasonable control. If any provision or part of a provision of these Legal Terms is determined to be unlawful, void, or unenforceable, that provision or part of the provision is deemed severable from these Legal Terms and does not affect the validity and enforceability of any remaining provisions. There is no joint venture, partnership, employment or agency relationship created between you and us as a result of these Legal Terms or use of the Services. You agree that these Legal Terms will not be construed against us by virtue of having drafted them. You hereby waive any and all defences you may have based on the electronic form of these Legal Terms and the lack of signing by the parties hereto to execute these Legal Terms.
 
-23. WHAT IS DAPROT?
+23. WHAT IS GoZip?
 
-Daprot is a platform where vendors (sellers) of a particular city can list their products and people in that same city can view and purchase those products.
+GoZip is a platform where vendors (sellers) of a particular city can list their products and people in that same city can view and purchase those products.
 
 24. WHAT IS OUR ROLE?
 
@@ -267,9 +267,9 @@ We are a free to use platform and we do not charge any commission from sellers. 
 
 In order to resolve a complaint regarding the Services or to receive further information regarding use of the Services, please contact us at:
 
-Daprot
+GoZip
 Azaad Nagar, Belagavi 590001
 Belagavi, Karnataka 590001
 India
  
-daprotorg@gmail.com''';
+GoZiporg@gmail.com''';

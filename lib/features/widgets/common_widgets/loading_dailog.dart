@@ -1,5 +1,5 @@
-import 'package:daprot_seller/config/constants/lottie_img.dart';
-import 'package:daprot_seller/config/theme/colors_manager.dart';
+import 'package:gozip_seller/config/constants/lottie_img.dart';
+import 'package:gozip_seller/config/theme/colors_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sizer/sizer.dart';

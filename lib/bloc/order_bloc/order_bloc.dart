@@ -1,6 +1,6 @@
-import 'package:daprot_seller/bloc/order_bloc/order_events.dart';
-import 'package:daprot_seller/bloc/order_bloc/order_states.dart';
-import 'package:daprot_seller/domain/order_repo.dart';
+import 'package:gozip_seller/bloc/order_bloc/order_events.dart';
+import 'package:gozip_seller/bloc/order_bloc/order_states.dart';
+import 'package:gozip_seller/domain/order_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OrderBloc extends Bloc<OrderEvent, OrderState> {

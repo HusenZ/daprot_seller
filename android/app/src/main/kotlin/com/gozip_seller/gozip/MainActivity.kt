@@ -1,4 +1,4 @@
-package com.zharehusen.daprot_seller
+package com.gozip_seller.gozip
 
 import io.flutter.embedding.android.FlutterActivity
 

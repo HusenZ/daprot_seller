@@ -1,17 +1,17 @@
-import 'package:daprot_seller/features/screens/add_new_product.dart';
-import 'package:daprot_seller/features/screens/customer_support.dart';
-import 'package:daprot_seller/features/screens/forms/form1_screen.dart';
-import 'package:daprot_seller/features/screens/forms/form2_screen.dart';
-import 'package:daprot_seller/features/screens/forms/form3_screen.dart';
-import 'package:daprot_seller/features/screens/auth_screen/login_screen.dart';
-import 'package:daprot_seller/features/screens/auth_screen/set_profile_screen.dart';
-import 'package:daprot_seller/features/screens/home_screen.dart';
-import 'package:daprot_seller/features/screens/onboarding_screen.dart';
-import 'package:daprot_seller/features/screens/privacy_policy.dart';
-import 'package:daprot_seller/features/screens/shop_dashboard.dart';
-import 'package:daprot_seller/features/screens/splash_screen.dart';
-import 'package:daprot_seller/features/screens/terms_condi.dart';
-import 'package:daprot_seller/features/screens/under_reivew.dart';
+import 'package:gozip_seller/features/screens/add_new_product.dart';
+import 'package:gozip_seller/features/screens/customer_support.dart';
+import 'package:gozip_seller/features/screens/forms/form1_screen.dart';
+import 'package:gozip_seller/features/screens/forms/form2_screen.dart';
+import 'package:gozip_seller/features/screens/forms/form3_screen.dart';
+import 'package:gozip_seller/features/screens/auth_screen/login_screen.dart';
+import 'package:gozip_seller/features/screens/auth_screen/set_profile_screen.dart';
+import 'package:gozip_seller/features/screens/home_screen.dart';
+import 'package:gozip_seller/features/screens/onboarding_screen.dart';
+import 'package:gozip_seller/features/screens/privacy_policy.dart';
+import 'package:gozip_seller/features/screens/shop_dashboard.dart';
+import 'package:gozip_seller/features/screens/splash_screen.dart';
+import 'package:gozip_seller/features/screens/terms_condi.dart';
+import 'package:gozip_seller/features/screens/under_reivew.dart';
 import 'package:flutter/material.dart';
 
 class Routes {

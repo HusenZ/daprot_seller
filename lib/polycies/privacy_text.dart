@@ -4,10 +4,10 @@ Last updated May 05, 2024
 
 
 
-This privacy notice for Daprot inc ('we', 'us', or 'our'), describes how and why we might collect, store, use, and/or share ('process') your information when you use our services ('Services'), such as when you:
-Download and use our mobile application (Daprot seller), or any other application of ours that links to this privacy notice
+This privacy notice for GoZip inc ('we', 'us', or 'our'), describes how and why we might collect, store, use, and/or share ('process') your information when you use our services ('Services'), such as when you:
+Download and use our mobile application (GoZip seller), or any other application of ours that links to this privacy notice
 Engage with us in other related ways, including any sales, marketing, or events
-Questions or concerns? Reading this privacy notice will help you understand your privacy rights and choices. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at daprotorg@gmail.com.
+Questions or concerns? Reading this privacy notice will help you understand your privacy rights and choices. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at GoZiporg@gmail.com.
 
 
 SUMMARY OF KEY POINTS
@@ -148,7 +148,7 @@ Upon your request to terminate your account, we will deactivate or delete your a
 
 Cookies and similar technologies: Most Web browsers are set to accept cookies by default. If you prefer, you can usually choose to set your browser to remove cookies and to reject cookies. If you choose to remove cookies or reject cookies, this could affect certain features or services of our Services.
 
-If you have questions or comments about your privacy rights, you may email us at daprotorg@gmail.com.
+If you have questions or comments about your privacy rights, you may email us at GoZiporg@gmail.com.
 
 9. CONTROLS FOR DO-NOT-TRACK FEATURES
 
@@ -162,9 +162,9 @@ We may update this privacy notice from time to time. The updated version will be
 
 11. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?
 
-If you have questions or comments about this notice, you may email us at daprotorg@gmail.com or contact us by post at:
+If you have questions or comments about this notice, you may email us at GoZiporg@gmail.com or contact us by post at:
 
-Daprot inc
+GoZip inc
 Azaad Nagar, Belagavi 590001
 Belagavi, Karnataka 590001
 India

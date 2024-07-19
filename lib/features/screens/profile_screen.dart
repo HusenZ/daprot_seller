@@ -1,13 +1,13 @@
-import 'package:daprot_seller/bloc/update_user_bloc/update_user_bloc.dart';
-import 'package:daprot_seller/bloc/update_user_bloc/update_user_state.dart';
-import 'package:daprot_seller/config/constants/app_icons.dart';
-import 'package:daprot_seller/config/routes/routes_manager.dart';
-import 'package:daprot_seller/config/theme/colors_manager.dart';
-import 'package:daprot_seller/domain/model/user_model.dart';
-import 'package:daprot_seller/domain/order_repo.dart';
-import 'package:daprot_seller/domain/user_data_repo.dart';
-import 'package:daprot_seller/features/screens/update_profile_screen.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/single_widget.dart';
+import 'package:gozip_seller/bloc/update_user_bloc/update_user_bloc.dart';
+import 'package:gozip_seller/bloc/update_user_bloc/update_user_state.dart';
+import 'package:gozip_seller/config/constants/app_icons.dart';
+import 'package:gozip_seller/config/routes/routes_manager.dart';
+import 'package:gozip_seller/config/theme/colors_manager.dart';
+import 'package:gozip_seller/domain/model/user_model.dart';
+import 'package:gozip_seller/domain/order_repo.dart';
+import 'package:gozip_seller/domain/user_data_repo.dart';
+import 'package:gozip_seller/features/screens/update_profile_screen.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/single_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';

@@ -1,5 +1,5 @@
-import 'package:daprot_seller/bloc/auth_bloc/auth_bloc.dart';
-import 'package:daprot_seller/bloc/google_auth_bloc/googe_auth_bloc.dart';
+import 'package:gozip_seller/bloc/auth_bloc/auth_bloc.dart';
+import 'package:gozip_seller/bloc/google_auth_bloc/googe_auth_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppBlocProvider {

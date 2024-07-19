@@ -1,18 +1,18 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daprot_seller/bloc/google_auth_bloc/googe_auth_bloc.dart';
-import 'package:daprot_seller/bloc/google_auth_bloc/google_auth_event.dart';
-import 'package:daprot_seller/bloc/google_auth_bloc/google_auth_state.dart';
-import 'package:daprot_seller/config/constants/app_images.dart';
-import 'package:daprot_seller/config/routes/routes_manager.dart';
-import 'package:daprot_seller/config/theme/colors_manager.dart';
-import 'package:daprot_seller/domain/connectivity_helper.dart';
-import 'package:daprot_seller/features/screens/home_screen.dart';
-import 'package:daprot_seller/features/screens/splash_screen.dart';
-import 'package:daprot_seller/features/screens/under_reivew.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/loading_button.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/loading_dailog.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
+import 'package:gozip_seller/bloc/google_auth_bloc/googe_auth_bloc.dart';
+import 'package:gozip_seller/bloc/google_auth_bloc/google_auth_event.dart';
+import 'package:gozip_seller/bloc/google_auth_bloc/google_auth_state.dart';
+import 'package:gozip_seller/config/constants/app_images.dart';
+import 'package:gozip_seller/config/routes/routes_manager.dart';
+import 'package:gozip_seller/config/theme/colors_manager.dart';
+import 'package:gozip_seller/domain/connectivity_helper.dart';
+import 'package:gozip_seller/features/screens/home_screen.dart';
+import 'package:gozip_seller/features/screens/splash_screen.dart';
+import 'package:gozip_seller/features/screens/under_reivew.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/loading_button.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/loading_dailog.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -98,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 repeatForever: true,
                 animatedTexts: [
                   WavyAnimatedText('Support local, enjoy fresh'),
-                  WavyAnimatedText(' DAPROT connects you '),
+                  WavyAnimatedText(' GoZip connects you '),
                   WavyAnimatedText(' to your city\'s best'),
                 ],
                 isRepeatingAnimation: true,

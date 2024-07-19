@@ -1,6 +1,6 @@
-import 'package:daprot_seller/config/routes/routes_manager.dart';
-import 'package:daprot_seller/config/theme/colors_manager.dart';
-import 'package:daprot_seller/domain/connectivity_helper.dart';
+import 'package:gozip_seller/config/routes/routes_manager.dart';
+import 'package:gozip_seller/config/theme/colors_manager.dart';
+import 'package:gozip_seller/domain/connectivity_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 

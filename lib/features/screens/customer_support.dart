@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daprot_seller/config/constants/app_icons.dart';
-import 'package:daprot_seller/config/theme/colors_manager.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/delevated_button.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/loading_dailog.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/text_form.dart';
+import 'package:gozip_seller/config/constants/app_icons.dart';
+import 'package:gozip_seller/config/theme/colors_manager.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/delevated_button.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/loading_dailog.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/snack_bar.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/text_form.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -1,5 +1,5 @@
-import 'package:daprot_seller/config/theme/colors_manager.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/expandable_text.dart';
+import 'package:gozip_seller/config/theme/colors_manager.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:sliver_tools/sliver_tools.dart';

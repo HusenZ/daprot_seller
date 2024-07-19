@@ -1,16 +1,16 @@
 import 'dart:io';
 
-import 'package:daprot_seller/bloc/add_product_bloc/add_prodcut_bloc.dart';
-import 'package:daprot_seller/config/theme/colors_manager.dart';
-import 'package:daprot_seller/config/theme/fonts_manager.dart';
-import 'package:daprot_seller/domain/model/category.dart';
-import 'package:daprot_seller/domain/model/product_model.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/custom_form_field.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/delevated_button.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/loading_dailog.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
-import 'package:daprot_seller/features/widgets/form_widgets/toggle_button.dart';
+import 'package:gozip_seller/bloc/add_product_bloc/add_prodcut_bloc.dart';
+import 'package:gozip_seller/config/theme/colors_manager.dart';
+import 'package:gozip_seller/config/theme/fonts_manager.dart';
+import 'package:gozip_seller/domain/model/category.dart';
+import 'package:gozip_seller/domain/model/product_model.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/custom_form_field.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/delevated_button.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/lable_text.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/loading_dailog.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/snack_bar.dart';
+import 'package:gozip_seller/features/widgets/form_widgets/toggle_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';

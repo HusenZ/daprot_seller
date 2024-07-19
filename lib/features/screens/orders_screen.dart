@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daprot_seller/config/constants/lottie_img.dart';
-import 'package:daprot_seller/config/theme/colors_manager.dart';
-import 'package:daprot_seller/domain/model/order_models.dart';
-import 'package:daprot_seller/domain/order_repo.dart';
-import 'package:daprot_seller/features/screens/order_detail.dart';
+import 'package:gozip_seller/config/constants/lottie_img.dart';
+import 'package:gozip_seller/config/theme/colors_manager.dart';
+import 'package:gozip_seller/domain/model/order_models.dart';
+import 'package:gozip_seller/domain/order_repo.dart';
+import 'package:gozip_seller/features/screens/order_detail.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';

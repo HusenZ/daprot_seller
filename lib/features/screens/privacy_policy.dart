@@ -1,4 +1,4 @@
-import 'package:daprot_seller/polycies/privacy_text.dart';
+import 'package:gozip_seller/polycies/privacy_text.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 

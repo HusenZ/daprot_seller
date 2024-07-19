@@ -1,4 +1,4 @@
-import 'package:daprot_seller/features/widgets/common_widgets/delevated_button.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/delevated_button.dart';
 import 'package:flutter/material.dart';
 
 class BottomButtons extends StatelessWidget {

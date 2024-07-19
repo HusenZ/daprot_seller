@@ -1,10 +1,10 @@
-import 'package:daprot_seller/bloc/add_product_bloc/add_prodcut_bloc.dart';
-import 'package:daprot_seller/bloc/app_bloc_provider.dart';
-import 'package:daprot_seller/bloc/auth_bloc/auth_bloc.dart';
-import 'package:daprot_seller/bloc/order_bloc/order_bloc.dart';
-import 'package:daprot_seller/bloc/sh_bloc/sh_bloc.dart';
-import 'package:daprot_seller/bloc/update_user_bloc/update_user_bloc.dart';
-import 'package:daprot_seller/config/app.dart';
+import 'package:gozip_seller/bloc/add_product_bloc/add_prodcut_bloc.dart';
+import 'package:gozip_seller/bloc/app_bloc_provider.dart';
+import 'package:gozip_seller/bloc/auth_bloc/auth_bloc.dart';
+import 'package:gozip_seller/bloc/order_bloc/order_bloc.dart';
+import 'package:gozip_seller/bloc/sh_bloc/sh_bloc.dart';
+import 'package:gozip_seller/bloc/update_user_bloc/update_user_bloc.dart';
+import 'package:gozip_seller/config/app.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';

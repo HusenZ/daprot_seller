@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daprot_seller/domain/model/user_model.dart';
+import 'package:gozip_seller/domain/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserDataManager {

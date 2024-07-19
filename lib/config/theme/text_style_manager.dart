@@ -1,4 +1,4 @@
-import 'package:daprot_seller/config/theme/fonts_manager.dart';
+import 'package:gozip_seller/config/theme/fonts_manager.dart';
 import 'package:flutter/material.dart';
 
 TextStyle _getTextStyle(

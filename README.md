@@ -1,4 +1,4 @@
-# daprot_seller
+# gozip_seller
 
 A new Flutter project.
 

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daprot_seller/domain/model/user_model.dart';
-import 'package:daprot_seller/domain/order_repo.dart';
-import 'package:daprot_seller/domain/shop_data_repo.dart';
+import 'package:gozip_seller/domain/model/user_model.dart';
+import 'package:gozip_seller/domain/order_repo.dart';
+import 'package:gozip_seller/domain/shop_data_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:shimmer/shimmer.dart';

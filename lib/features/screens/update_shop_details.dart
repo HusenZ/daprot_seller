@@ -1,17 +1,17 @@
 import 'dart:io';
 
-import 'package:daprot_seller/config/theme/colors_manager.dart';
-import 'package:daprot_seller/config/theme/fonts_manager.dart';
-import 'package:daprot_seller/domain/shop_data_repo.dart';
-import 'package:daprot_seller/domain/shop_form_repo.dart';
-import 'package:daprot_seller/domain/time_picker.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/custom_form_field.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/loading_dailog.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/profile_photo_widget.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
-import 'package:daprot_seller/features/widgets/form_widgets/d_phone_input_field.dart';
-import 'package:daprot_seller/features/widgets/form_widgets/toggle_button.dart';
+import 'package:gozip_seller/config/theme/colors_manager.dart';
+import 'package:gozip_seller/config/theme/fonts_manager.dart';
+import 'package:gozip_seller/domain/shop_data_repo.dart';
+import 'package:gozip_seller/domain/shop_form_repo.dart';
+import 'package:gozip_seller/domain/time_picker.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/custom_form_field.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/lable_text.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/loading_dailog.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/profile_photo_widget.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/snack_bar.dart';
+import 'package:gozip_seller/features/widgets/form_widgets/d_phone_input_field.dart';
+import 'package:gozip_seller/features/widgets/form_widgets/toggle_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -131,7 +131,7 @@ class _UpdateShopDataState extends State<UpdateShopData> {
                         bottom: 3.h,
                       ),
                       child: Text(
-                        'Daprot Seller',
+                        'GoZip Seller',
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             fontWeight: FontWeightManager.semiBold,
                             fontSize: 16.sp),

@@ -1,7 +1,7 @@
-import 'package:daprot_seller/config/theme/colors_manager.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/custom_form_field.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/i_button.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
+import 'package:gozip_seller/config/theme/colors_manager.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/custom_form_field.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/i_button.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/lable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 

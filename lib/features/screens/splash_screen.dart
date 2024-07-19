@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daprot_seller/config/routes/routes_manager.dart';
-import 'package:daprot_seller/domain/connectivity_helper.dart';
-import 'package:daprot_seller/features/screens/home_screen.dart';
-import 'package:daprot_seller/features/screens/under_reivew.dart';
+import 'package:gozip_seller/config/routes/routes_manager.dart';
+import 'package:gozip_seller/domain/connectivity_helper.dart';
+import 'package:gozip_seller/features/screens/home_screen.dart';
+import 'package:gozip_seller/features/screens/under_reivew.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';

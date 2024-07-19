@@ -1,9 +1,9 @@
-import 'package:daprot_seller/config/constants/onboarding_content.dart';
-import 'package:daprot_seller/config/theme/colors_manager.dart';
-import 'package:daprot_seller/features/widgets/onboarding_widget/animated_container.dart';
-import 'package:daprot_seller/features/widgets/onboarding_widget/bottom_row_buttons.dart';
-import 'package:daprot_seller/features/widgets/onboarding_widget/get_started_button.dart';
-import 'package:daprot_seller/features/widgets/onboarding_widget/onboarding_listview_item_builder.dart';
+import 'package:gozip_seller/config/constants/onboarding_content.dart';
+import 'package:gozip_seller/config/theme/colors_manager.dart';
+import 'package:gozip_seller/features/widgets/onboarding_widget/animated_container.dart';
+import 'package:gozip_seller/features/widgets/onboarding_widget/bottom_row_buttons.dart';
+import 'package:gozip_seller/features/widgets/onboarding_widget/get_started_button.dart';
+import 'package:gozip_seller/features/widgets/onboarding_widget/onboarding_listview_item_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 

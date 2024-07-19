@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daprot_seller/bloc/auth_bloc/auth_events.dart';
-import 'package:daprot_seller/bloc/auth_bloc/auth_state.dart';
-import 'package:daprot_seller/config/routes/routes_manager.dart';
-import 'package:daprot_seller/domain/connectivity_helper.dart';
+import 'package:gozip_seller/bloc/auth_bloc/auth_events.dart';
+import 'package:gozip_seller/bloc/auth_bloc/auth_state.dart';
+import 'package:gozip_seller/config/routes/routes_manager.dart';
+import 'package:gozip_seller/domain/connectivity_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

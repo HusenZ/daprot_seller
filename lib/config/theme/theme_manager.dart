@@ -1,4 +1,4 @@
-import 'package:daprot_seller/config/theme/text_style_manager.dart';
+import 'package:gozip_seller/config/theme/text_style_manager.dart';
 import 'package:flutter/material.dart';
 
 import 'colors_manager.dart';

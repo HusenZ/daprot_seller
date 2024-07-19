@@ -1,15 +1,15 @@
 import 'dart:io';
-import 'package:daprot_seller/config/routes/routes_manager.dart';
-import 'package:daprot_seller/config/theme/colors_manager.dart';
-import 'package:daprot_seller/config/theme/fonts_manager.dart';
-import 'package:daprot_seller/domain/shop_form_repo.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/custom_form_field.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/lable_text.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/loading_dailog.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/profile_photo_widget.dart';
-import 'package:daprot_seller/features/widgets/common_widgets/snack_bar.dart';
-import 'package:daprot_seller/features/widgets/form_widgets/toggle_button.dart';
-import 'package:daprot_seller/features/widgets/form_widgets/input_brand_logo.dart';
+import 'package:gozip_seller/config/routes/routes_manager.dart';
+import 'package:gozip_seller/config/theme/colors_manager.dart';
+import 'package:gozip_seller/config/theme/fonts_manager.dart';
+import 'package:gozip_seller/domain/shop_form_repo.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/custom_form_field.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/lable_text.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/loading_dailog.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/profile_photo_widget.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/snack_bar.dart';
+import 'package:gozip_seller/features/widgets/form_widgets/toggle_button.dart';
+import 'package:gozip_seller/features/widgets/form_widgets/input_brand_logo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -96,7 +96,7 @@ class FCScreen2State extends State<FCScreen2> {
                         bottom: 3.h,
                       ),
                       child: Text(
-                        'Daprot Shop',
+                        'GoZip Shop',
                         style: TextStyle(
                             fontWeight: FontWeightManager.semiBold,
                             fontSize: 16.sp),

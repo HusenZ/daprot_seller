@@ -1,4 +1,4 @@
-import 'package:daprot_seller/domain/model/order_models.dart';
+import 'package:gozip_seller/domain/model/order_models.dart';
 
 abstract class OrderState {
   const OrderState();
