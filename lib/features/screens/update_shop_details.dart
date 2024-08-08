@@ -10,7 +10,6 @@ import 'package:gozip_seller/features/widgets/common_widgets/lable_text.dart';
 import 'package:gozip_seller/features/widgets/common_widgets/loading_dailog.dart';
 import 'package:gozip_seller/features/widgets/common_widgets/profile_photo_widget.dart';
 import 'package:gozip_seller/features/widgets/common_widgets/snack_bar.dart';
-import 'package:gozip_seller/features/widgets/form_widgets/d_phone_input_field.dart';
 import 'package:gozip_seller/features/widgets/form_widgets/toggle_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
