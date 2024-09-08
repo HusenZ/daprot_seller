@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gozip_seller/domain/model/order_models.dart';
 import 'package:gozip_seller/domain/model/shipping_address.dart';
 import 'package:gozip_seller/domain/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gozip_seller/domain/new_fcm.dart';
-import 'package:http/http.dart' as http;
 
 class OrderRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -22,35 +19,35 @@ class OrderRepository {
             snapshot.docs.map((doc) => OrderModel.fromSnapshot(doc)).toList());
   }
 
-  static Future<bool> sendFcmMessage(
-      String title, String message, String? userToken) async {
-    try {
-      var url = 'https://fcm.googleapis.com/fcm/send';
-      var header = {
-        "Content-Type": "application/json",
-        "Authorization":
-            "key=AAAAMVCKqmI:APA91bGVWUfB8ixjD0S17O1g_f20vwmDjjvI4yRymNvOKmAVajqjQEox4UfFzYefq3o31fnt9k5ujyqA-SV8PNb5FWvvcNhe67vKa0Npa6FN2MSXHG8_yIZSimf3UWNrrQgU6G1n_j7r",
-      };
-      var request = {
-        "notification": {
-          "title": title,
-          "body": message,
-          "sound": "default",
-          "color": "#990000",
-        },
-        "priority": "high",
-        "to": "$userToken",
-      };
+  // static Future<bool> sendFcmMessage(
+  //     String title, String message, String? userToken) async {
+  //   try {
+  //     var url = 'https://fcm.googleapis.com/fcm/send';
+  //     var header = {
+  //       "Content-Type": "application/json",
+  //       "Authorization":
+  //           "key=AAAAMVCKqmI:APA91bGVWUfB8ixjD0S17O1g_f20vwmDjjvI4yRymNvOKmAVajqjQEox4UfFzYefq3o31fnt9k5ujyqA-SV8PNb5FWvvcNhe67vKa0Npa6FN2MSXHG8_yIZSimf3UWNrrQgU6G1n_j7r",
+  //     };
+  //     var request = {
+  //       "notification": {
+  //         "title": title,
+  //         "body": message,
+  //         "sound": "default",
+  //         "color": "#990000",
+  //       },
+  //       "priority": "high",
+  //       "to": "$userToken",
+  //     };
 
-      var response = await http.post(Uri.parse(url),
-          headers: header, body: json.encode(request));
+  //     var response = await http.post(Uri.parse(url),
+  //         headers: header, body: json.encode(request));
 
-      print(response.body);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
+  //     print(response.body);
+  //     return true;
+  //   } catch (e) {
+  //     return false;
+  //   }
+  // }
 
   Future<void> updateOrderStatus(
       {required String newStatus,

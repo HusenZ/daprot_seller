@@ -24,7 +24,15 @@ class _ShopDashboardState extends State<ShopDashboard> {
 
   void notificationService() async {
     FirebaseMessaging fmessaging = FirebaseMessaging.instance;
-    await fmessaging.requestPermission();
+    await fmessaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
     await fmessaging.getToken().then(
       (value) {
         String userId = FirebaseAuth.instance.currentUser!.uid;

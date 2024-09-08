@@ -53,9 +53,11 @@ class PushNotificationService {
     final Map<String, dynamic> message = {
       'message': {
         'token': deviceToken,
+        'priority': 'high',
         'notification': {
           'title': title,
           'body': body,
+          'sound': 'default',
         },
         'data': {
           'orderId': orderId,

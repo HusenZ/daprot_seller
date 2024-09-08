@@ -7,6 +7,12 @@ import 'package:sizer/sizer.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+AndroidNotificationChannel channel = const AndroidNotificationChannel(
+  'channel_id',
+  'High Importance Notification',
+  importance: Importance.high,
+);
+
 class MyApp extends StatefulWidget {
   const MyApp._internal(); //private named constructor
 
@@ -36,12 +42,6 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> showNotification(RemoteMessage message) async {
-    AndroidNotificationChannel channel = AndroidNotificationChannel(
-      Random.secure().nextInt(1000).toString(),
-      'High Importance Notification',
-      importance: Importance.max,
-    );
-
     AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
       channel.id.toString(),

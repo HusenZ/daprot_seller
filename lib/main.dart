@@ -44,8 +44,8 @@ void main() async {
   await FirebaseAppCheck.instance.activate();
   AwesomeNotifications().initialize(null, [
     NotificationChannel(
-      channelKey: 'high_importance_channel',
-      channelName: 'channelName',
+      channelKey: channel.id,
+      channelName: channel.name,
       channelDescription: 'channelDescription',
       importance: NotificationImportance.Max,
       locked: true,
