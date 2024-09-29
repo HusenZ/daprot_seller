@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AppBlocProvider {
   static late AppBloc _appBloc;
   static late GoogleSignInBloc _googleSignInBloc;
+
   static AppBloc get appBloc => _appBloc;
   static GoogleSignInBloc get googlebloc => _googleSignInBloc;
 

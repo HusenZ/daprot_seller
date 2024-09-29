@@ -1,5 +1,10 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gozip_seller/bloc/location_bloc/user_locaion_events.dart';
+import 'package:gozip_seller/bloc/location_bloc/user_location_bloc.dart';
+import 'package:gozip_seller/bloc/location_bloc/user_location_state.dart';
 import 'package:gozip_seller/config/theme/colors_manager.dart';
 import 'package:gozip_seller/features/widgets/common_widgets/custom_form_field.dart';
+import 'package:gozip_seller/features/widgets/common_widgets/delevated_button.dart';
 import 'package:gozip_seller/features/widgets/common_widgets/i_button.dart';
 import 'package:gozip_seller/features/widgets/common_widgets/lable_text.dart';
 import 'package:flutter/material.dart';
@@ -22,12 +27,13 @@ class InputLocation extends StatefulWidget {
 class _InputLocationState extends State<InputLocation> {
   String selectedLocality = '';
   final GlobalKey<TooltipState> tooltipkey = GlobalKey<TooltipState>();
+  final LocationBloc locationBloc = LocationBloc();
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 100.w,
-      height: 25.8.h,
+      height: 30.h,
       child: Column(
         children: [
           Row(
@@ -43,28 +49,41 @@ class _InputLocationState extends State<InputLocation> {
               ),
             ],
           ),
-          InkWell(
-            onTap: () => _showLocalityBottomSheet(context),
-            child: Row(
-              children: [
-                Card(
-                  child: Text(
-                    selectedLocality.isEmpty
-                        ? "Select Your Locality"
-                        : selectedLocality,
+          Column(
+            children: [
+              DelevatedButton(
+                onTap: () {
+                  context.read<LocationBloc>().add(GetLocationEvent());
+                },
+                text: "Get The Current Location",
+              ),
+              BlocBuilder<LocationBloc, LocationState>(
+                builder: (context, state) {
+                  if (state is LocationLoadingState) {
+                    return SizedBox(
+                      height: 2.h,
+                      child: const CircularProgressIndicator(
+                        color: ColorsManager.primaryColor,
+                      ),
+                    );
+                  }
+                  if (state is LocationLoadedState) {
+                    selectedLocality = state.placeName;
+                    widget.locality.text = state.placeName;
+                    widget.locationController.text = selectedLocality;
+                    print("SelectedLocality---------> $selectedLocality");
+                  }
+                  return Text(
+                    selectedLocality,
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
                           overflow: TextOverflow.ellipsis,
                         ),
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.arrow_drop_down_circle),
-                  onPressed: () => _showLocalityBottomSheet(context),
-                ),
-              ],
-            ),
+                  );
+                },
+              ),
+            ],
           ),
           SizedBox(
             height: 1.h,
