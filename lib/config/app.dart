@@ -3,7 +3,6 @@ import 'package:gozip_seller/config/theme/theme_manager.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 AndroidNotificationChannel channel = const AndroidNotificationChannel(
@@ -67,8 +66,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    initPlatformState();
-
     FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
@@ -102,18 +99,6 @@ class _MyAppState extends State<MyApp> {
     } catch (e) {
       print('Error updating badge count: $e');
     }
-  }
-
-  initPlatformState() async {
-    // Check if app badge is supported
-    // String appBadgeSupported;
-    try {
-      // bool res = await FlutterAppBadger.isAppBadgeSupported();
-      // appBadgeSupported = res ? 'Supported' : 'Not supported';
-    } on PlatformException {
-      // appBadgeSupported = 'Failed to get badge support.';
-    }
-    // print("AppBadge: $appBadgeSupported");
   }
 
   @override

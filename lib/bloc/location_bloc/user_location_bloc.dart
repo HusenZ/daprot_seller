@@ -11,7 +11,6 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   LocationBloc() : super(LocationInitialState()) {
     on<GetLocationEvent>((event, emit) async {
       emit(LocationLoadingState());
-      print("Emited loading state ---------");
       await requestLocationPermission();
       try {
         Position position = await Geolocator.getCurrentPosition(
@@ -25,13 +24,10 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
             position.latitude,
             position.longitude,
           ));
-          print("Emitted success state---------");
         } else {
-          print("Emitted else state---------");
           emit(LocationErrorState('NO LOCATION FOUND'));
         }
       } catch (e) {
-        print("Emitted Error state---------$e");
         emit(LocationErrorState('Error getting location: $e'));
       }
     });

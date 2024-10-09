@@ -23,8 +23,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("--------------------->>>$title, $body");
   AwesomeNotifications().createNotification(
     content: NotificationContent(
-      id: 123,
-      channelKey: 'high_importance_channel',
+      id: 10,
+      channelKey: 'channelkey',
       color: Colors.white,
       category: NotificationCategory.Event,
       wakeUpScreen: true,
@@ -45,8 +45,8 @@ void main() async {
   await FirebaseAppCheck.instance.activate();
   AwesomeNotifications().initialize(null, [
     NotificationChannel(
-      channelKey: channel.id,
-      channelName: channel.name,
+      channelKey: 'channelkey',
+      channelName: 'notify_channel',
       channelDescription: 'channelDescription',
       importance: NotificationImportance.Max,
       locked: true,
